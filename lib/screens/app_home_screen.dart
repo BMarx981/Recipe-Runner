@@ -34,13 +34,23 @@ class AppHomeScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Icon(
-              Icons.list,
-              color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                print('List icon selected');
+              },
+              child: Icon(
+                Icons.list,
+                color: Colors.white,
+              ),
             ),
-            Icon(
-              Icons.add,
-              color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                print('Add icon selected');
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
