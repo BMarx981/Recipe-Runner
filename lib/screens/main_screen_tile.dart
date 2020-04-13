@@ -26,14 +26,29 @@ class MainScreenTile extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Icon(Icons.beach_access), //To be the image of the recipe
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text('Recipe Title'), //Title of recipe
-                SizedBox(height: 8),
-                Text('description'), //brief description of recipe],
-              ],
+            SizedBox(
+                width: 75,
+                child: Icon(
+                  Icons.beach_access,
+                )), //To be the image of the recipe
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    'Recipe Title',
+                    style: TextStyle(color: white),
+                  ), //Title of recipe
+                  SizedBox(height: 8),
+                  Text(
+                    'This is a description of the recipe to help you understand what you are looking at.',
+                    maxLines: 2,
+                    style:
+                        TextStyle(color: white), //brief description of recipe],
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
