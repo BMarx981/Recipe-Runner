@@ -43,7 +43,7 @@ class AppHomeScreen extends StatelessWidget {
         title: Text(title),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 18, right: 18),
+        padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
         child: ListView.separated(
           separatorBuilder: (BuildContext context, int index) => Divider(
             color: mainTheme,

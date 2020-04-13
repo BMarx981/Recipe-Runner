@@ -10,6 +10,15 @@ class MainScreenTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(2.0, 5.0),
+            )
+          ],
           gradient: colorGrad,
           border: Border.all(width: 1.0),
         ),
