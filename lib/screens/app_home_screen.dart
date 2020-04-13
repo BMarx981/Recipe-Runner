@@ -80,22 +80,31 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey[200],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedScreenIndex,
         elevation: .9,
         backgroundColor: mainTheme,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.list,
               color: white,
             ),
-            title: Text('List'),
+            title: Text(
+              'List',
+              style: TextStyle(
+                  color: (_selectedScreenIndex == 1) ? white : Colors.blue),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.add,
               color: white,
             ),
-            title: Text('Add'),
+            title: Text(
+              'Add',
+              style: TextStyle(
+                  color: (_selectedScreenIndex == 0) ? white : Colors.blue),
+            ),
           ),
         ],
         onTap: (index) => _selectScreen(index),
