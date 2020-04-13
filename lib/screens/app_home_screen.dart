@@ -45,7 +45,6 @@ class AppHomeScreen extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        toolbarOpacity: 0.61,
         flexibleSpace: Container(
           height: 100,
           width: 200,
