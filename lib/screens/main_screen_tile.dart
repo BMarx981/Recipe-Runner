@@ -27,10 +27,15 @@ class MainScreenTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             SizedBox(
-                width: 75,
-                child: Icon(
-                  Icons.beach_access,
-                )), //To be the image of the recipe
+              width: 75,
+              child: Text(
+                '🍔',
+                style: TextStyle(fontSize: 40),
+              ),
+//              child: Icon(
+//                Icons.beach_access,
+//              ),
+            ), //To be the image of the recipe
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
