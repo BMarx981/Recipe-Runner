@@ -14,6 +14,7 @@ class AppHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[200],
       bottomNavigationBar: BottomAppBar(
         elevation: .9,
         color: mainTheme,
@@ -41,13 +42,18 @@ class AppHomeScreen extends StatelessWidget {
         backgroundColor: mainTheme,
         title: Text(title),
       ),
-      body: Center(
-          child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return list[index];
-        },
-      )),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 18, right: 18),
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) => Divider(
+            color: mainTheme,
+          ),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return list[index];
+          },
+        ),
+      ),
     );
   }
 }

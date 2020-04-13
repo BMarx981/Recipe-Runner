@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AppHomeScreen('Recipe Writer'),
+      home: AppHomeScreen('Recipe Runner'),
     );
   }
 }
