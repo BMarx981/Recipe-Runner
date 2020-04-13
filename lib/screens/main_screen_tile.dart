@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
 class MainScreenTile extends StatelessWidget {
+  final String title;
+  final String description;
+  final String icon;
+  MainScreenTile(this.title, this.description, this.icon);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -29,7 +34,7 @@ class MainScreenTile extends StatelessWidget {
             SizedBox(
               width: 75,
               child: Text(
-                '🍔',
+                icon,
                 style: TextStyle(fontSize: 40),
               ),
 //              child: Icon(
@@ -41,12 +46,12 @@ class MainScreenTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    'Recipe Title',
+                    title,
                     style: TextStyle(color: white),
                   ), //Title of recipe
                   SizedBox(height: 8),
                   Text(
-                    'This is a description of the recipe to help you understand what you are looking at.',
+                    description,
                     maxLines: 2,
                     style:
                         TextStyle(color: white), //brief description of recipe],

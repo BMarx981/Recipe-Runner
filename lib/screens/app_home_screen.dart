@@ -5,9 +5,21 @@ import 'package:recipe_writer/screens/main_screen_tile.dart';
 class AppHomeScreen extends StatelessWidget {
   final String title;
   final List<MainScreenTile> list = [
-    MainScreenTile(),
-    MainScreenTile(),
-    MainScreenTile(),
+    MainScreenTile(
+      'Recipe Title',
+      'This is a description of the recipe to help you understand what you are looking at.',
+      '🍔',
+    ),
+    MainScreenTile(
+      'Recipe Title',
+      'This is a description of the recipe to help you understand what you are looking at.',
+      '🍔',
+    ),
+    MainScreenTile(
+      'Recipe Title',
+      'This is a description of the recipe to help you understand what you are looking at.',
+      '🍔',
+    ),
   ];
   AppHomeScreen(this.title);
 
