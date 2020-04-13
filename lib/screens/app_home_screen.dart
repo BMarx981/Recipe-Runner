@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/screens/main_screen_tile.dart';
+import 'main_screen_list.dart';
 
 class AppHomeScreen extends StatelessWidget {
   final String title;
@@ -55,15 +56,7 @@ class AppHomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
-        child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => Divider(
-            color: mainTheme,
-          ),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return list[index];
-          },
-        ),
+        child: MainScreenList(list: list),
       ),
     );
   }
