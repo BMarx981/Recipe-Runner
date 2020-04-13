@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'package:recipe_writer/screens/main_screen_tile.dart';
 
 class AppHomeScreen extends StatelessWidget {
   final String title;
+  final List<MainScreenTile> list = [
+    MainScreenTile(),
+    MainScreenTile(),
+    MainScreenTile(),
+  ];
   AppHomeScreen(this.title);
 
   @override
@@ -36,8 +42,12 @@ class AppHomeScreen extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Text('Welcome to the Home Screen'),
-      ),
+          child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return list[index];
+        },
+      )),
     );
   }
 }
