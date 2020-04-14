@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/utils/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
   final BuildContext context;
@@ -41,6 +42,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       appBar: AppBar(
         title: Text('Settings'),
+        backgroundColor: mainTheme,
+        flexibleSpace: Container(
+          height: 100,
+          width: 200,
+          decoration: BoxDecoration(gradient: colorGrad),
+        ),
       ),
     );
   }
