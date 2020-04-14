@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
 class AddItemScreen extends StatelessWidget {
+  void textFieldCallBack(newText) {}
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,9 +50,11 @@ class AddItemScreen extends StatelessWidget {
 
 class RecipeTextField extends StatelessWidget {
   final String text;
+  final Function callBack;
   const RecipeTextField({
     Key key,
     this.text = '',
+    this.callBack,
   }) : super(key: key);
 
   @override

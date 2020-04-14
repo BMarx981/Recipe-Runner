@@ -3,5 +3,7 @@ class MainModel {
   String description;
   String symbol;
   String url;
-  MainModel({this.title, this.description, this.symbol, this.url});
+  List<String> directions = [];
+  MainModel(
+      {this.title, this.description, this.symbol, this.url, this.directions});
 }
