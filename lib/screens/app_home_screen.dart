@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/add_item_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/screens/main_screen_tile.dart';
+import 'settings_screen.dart';
 import 'main_screen_list.dart';
 
 class AppHomeScreen extends StatefulWidget {
@@ -117,10 +118,29 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         ),
         backgroundColor: mainTheme,
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings, color: white),
+            onPressed: () {
+              openSettings(context);
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
         child: _screenList[_selectedScreenIndex],
+      ),
+    );
+  }
+
+  void openSettings(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return SettingsScreen(context: context);
+        },
       ),
     );
   }
