@@ -66,8 +66,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
     setState(() {
       _selectedScreenIndex = index;
     });
-
-    print(_selectedScreenIndex);
   }
 
   List<Widget> _screenList = <Widget>[
@@ -85,25 +83,27 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         backgroundColor: mainTheme,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            backgroundColor: (_selectedScreenIndex == 1) ? blue : white,
             icon: Icon(
               Icons.list,
-              color: white,
+              color: (_selectedScreenIndex == 1) ? white : blue,
             ),
             title: Text(
               'List',
-              style: TextStyle(
-                  color: (_selectedScreenIndex == 1) ? white : Colors.blue),
+              style:
+                  TextStyle(color: (_selectedScreenIndex == 1) ? white : blue),
             ),
           ),
           BottomNavigationBarItem(
+            backgroundColor: (_selectedScreenIndex == 0) ? blue : white,
             icon: Icon(
               Icons.add,
-              color: white,
+              color: (_selectedScreenIndex == 0) ? white : blue,
             ),
             title: Text(
               'Add',
-              style: TextStyle(
-                  color: (_selectedScreenIndex == 0) ? white : Colors.blue),
+              style:
+                  TextStyle(color: (_selectedScreenIndex == 0) ? white : blue),
             ),
           ),
         ],
