@@ -14,6 +14,7 @@ class AddItemScreen extends StatelessWidget {
               color: white,
             ),
           ),
+          SizedBox(height: 12),
           RecipeTextField(text: 'Recipe title'),
           SizedBox(height: 12),
           RecipeTextField(text: 'Add a description'),

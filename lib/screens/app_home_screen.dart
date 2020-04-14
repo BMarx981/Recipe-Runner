@@ -16,6 +16,7 @@ class AppHomeScreen extends StatefulWidget {
 
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
+  String title = 'Recipe Runner';
   static final List<MainScreenTile> list = [
     MainScreenTile(
       'Recipe Title',
@@ -66,6 +67,11 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   void _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
+      if (_selectedScreenIndex == 0) {
+        title = 'Recipe Runner';
+      } else if (_selectedScreenIndex == 1) {
+        title = 'Add a Recipe';
+      }
     });
   }
 
@@ -117,7 +123,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           decoration: BoxDecoration(gradient: colorGrad),
         ),
         backgroundColor: mainTheme,
-        title: Text(widget.title),
+        title: Text(title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings, color: white),
