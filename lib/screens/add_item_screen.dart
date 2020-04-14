@@ -18,7 +18,9 @@ class AddItemScreen extends StatelessWidget {
           SizedBox(height: 12),
           RecipeTextField(text: 'Add a description'),
           SizedBox(height: 12),
-          RecipeTextField(text: 'Add a direction')
+          RecipeTextField(text: 'Add a direction'),
+          SizedBox(height: 12),
+          RecipeTextField(text: 'URL'),
         ],
       ),
     );
