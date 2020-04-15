@@ -6,18 +6,15 @@ class AddItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: <Widget>[
           SizedBox(height: 12),
           RecipeTextField(text: 'Recipe title'),
           SizedBox(height: 12),
           RecipeTextField(text: 'Add a description'),
           SizedBox(height: 12),
-          RecipeTextField(text: 'Add a direction'),
-          SizedBox(height: 12),
           RecipeTextField(text: 'URL'),
-          SizedBox(height: 52),
+          SizedBox(height: 22),
           Container(
             height: 60,
             child: RaisedButton(
@@ -59,16 +56,28 @@ class RecipeTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (newStringValue) {
-        print(newStringValue);
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: text,
-        fillColor: white,
-        focusColor: white,
-        filled: true,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2.0,
+            spreadRadius: 1.0,
+            color: Colors.grey,
+            offset: Offset(2.0, 5.0),
+          ),
+        ],
+      ),
+      child: TextField(
+        onChanged: (newStringValue) {
+          print(newStringValue);
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: text,
+          fillColor: white,
+          focusColor: white,
+          filled: true,
+        ),
       ),
     );
   }
