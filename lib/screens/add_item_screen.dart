@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
 class AddItemScreen extends StatelessWidget {
-  void textFieldCallBack(newText) {}
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+  final urlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    MainModel model = MainModel();
     return Container(
       child: ListView(
         children: <Widget>[
           SizedBox(height: 12),
-          RecipeTextField(text: 'Recipe title'),
+          RecipeTextField(
+            text: 'Recipe title',
+            controller: titleController,
+          ),
           SizedBox(height: 12),
-          RecipeTextField(text: 'Add a description'),
+          RecipeTextField(
+            text: 'Add a description',
+            controller: descController,
+          ),
           SizedBox(height: 12),
-          RecipeTextField(text: 'URL'),
+          RecipeTextField(
+            text: 'URL',
+            controller: urlController,
+          ),
           SizedBox(height: 22),
           Container(
             height: 60,
@@ -35,7 +48,9 @@ class AddItemScreen extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                print('Something Happened to the button');
+                model.title = titleController.text;
+                model.description = descController.text;
+                model.url = urlController.text;
               },
             ),
           ),
@@ -47,11 +62,11 @@ class AddItemScreen extends StatelessWidget {
 
 class RecipeTextField extends StatelessWidget {
   final String text;
-  final Function callBack;
+  final TextEditingController controller;
   const RecipeTextField({
     Key key,
     this.text = '',
-    this.callBack,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -68,9 +83,7 @@ class RecipeTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
-        onChanged: (newStringValue) {
-          print(newStringValue);
-        },
+        controller: controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: text,
