@@ -23,4 +23,3 @@ class MainScreenList extends StatelessWidget {
     );
   }
 }
-// MainScreenTile(this.title, this.description, this.icon);
