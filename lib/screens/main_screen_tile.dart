@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/screens/recipe_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
 class MainScreenTile extends StatelessWidget {
@@ -11,7 +12,14 @@ class MainScreenTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('I HAVE BEEN PUSHED!');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return RecipeScreen(title);
+            },
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
