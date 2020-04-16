@@ -55,9 +55,15 @@ class AddItemScreen extends StatelessWidget {
                     url: urlController.text);
                 Provider.of<MainModel>(context, listen: false)
                     .addRecipe(recipe);
+                String name = titleController.text.;
                 titleController.text = '';
                 descController.text = '';
                 urlController.text = '';
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('$name recipe added'),
+                  ),
+                );
               },
             ),
           ),
