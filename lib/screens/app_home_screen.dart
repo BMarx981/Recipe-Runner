@@ -13,28 +13,6 @@ class AppHomeScreen extends StatefulWidget {
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
   String title = 'Recipe Runner';
-//  List<MainScreenTile> list = [
-//    MainScreenTile(
-//      'Recipe Title',
-//      'This is a description of the recipe to help you understand what you are looking at.',
-//      '🍔',
-//    ),
-//    MainScreenTile(
-//      'Recipe Title',
-//      'This is a description of the recipe to help you understand what you are looking at.',
-//      '🍔',
-//    ),
-//    MainScreenTile(
-//      'Recipe Title',
-//      'This is a description of the recipe to help you understand what you are looking at.',
-//      '🍔',
-//    ),
-//    MainScreenTile(
-//      'Recipe Title',
-//      'This is a description of the recipe to help you understand what you are looking at.',
-//      '🍔',
-//    ),
-//  ];
   void _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;

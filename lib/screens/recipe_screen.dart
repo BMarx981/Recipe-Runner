@@ -7,8 +7,9 @@ class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[200],
       appBar: AppBar(
-        title: Text('Recipe $title'),
+        title: Text('$title'),
         flexibleSpace: Container(
           height: 100,
           width: 200,
@@ -19,7 +20,6 @@ class RecipeScreen extends StatelessWidget {
       body: Container(
         child: Text('blahblahblah'),
       ),
-      backgroundColor: mainTheme,
     );
   }
 }
