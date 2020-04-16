@@ -38,31 +38,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
       'This is a description of the recipe to help you understand what you are looking at.',
       '🍔',
     ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
   ];
   void _selectScreen(int index) {
     setState(() {
