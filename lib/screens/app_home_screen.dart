@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/add_item_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/screens/main_screen_tile.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_writer/models/main_model.dart';
 import 'settings_screen.dart';
 import 'main_screen_list.dart';
 
 class AppHomeScreen extends StatefulWidget {
-  final String title;
-
-  AppHomeScreen(this.title);
-
   @override
   _AppHomeScreenState createState() => _AppHomeScreenState();
 }
@@ -17,28 +15,28 @@ class AppHomeScreen extends StatefulWidget {
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
   String title = 'Recipe Runner';
-  static final List<MainScreenTile> list = [
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-    MainScreenTile(
-      'Recipe Title',
-      'This is a description of the recipe to help you understand what you are looking at.',
-      '🍔',
-    ),
-  ];
+//  List<MainScreenTile> list = [
+//    MainScreenTile(
+//      'Recipe Title',
+//      'This is a description of the recipe to help you understand what you are looking at.',
+//      '🍔',
+//    ),
+//    MainScreenTile(
+//      'Recipe Title',
+//      'This is a description of the recipe to help you understand what you are looking at.',
+//      '🍔',
+//    ),
+//    MainScreenTile(
+//      'Recipe Title',
+//      'This is a description of the recipe to help you understand what you are looking at.',
+//      '🍔',
+//    ),
+//    MainScreenTile(
+//      'Recipe Title',
+//      'This is a description of the recipe to help you understand what you are looking at.',
+//      '🍔',
+//    ),
+//  ];
   void _selectScreen(int index) {
     setState(() {
       _selectedScreenIndex = index;
@@ -51,7 +49,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   }
 
   List<Widget> _screenList = <Widget>[
-    MainScreenList(list: list),
+    MainScreenList(),
     AddItemScreen(),
   ];
 

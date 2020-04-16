@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 class AddItemScreen extends StatelessWidget {
   final titleController = TextEditingController();
@@ -8,7 +10,6 @@ class AddItemScreen extends StatelessWidget {
   final urlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    MainModel model = MainModel();
     return Container(
       child: ListView(
         children: <Widget>[
@@ -48,9 +49,15 @@ class AddItemScreen extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                model.title = titleController.text;
-                model.description = descController.text;
-                model.url = urlController.text;
+                Recipe recipe = Recipe(
+                    name: titleController.text,
+                    description: descController.text,
+                    symbol: urlController.text);
+                Provider.of<MainModel>(context, listen: false)
+                    .addRecipe(recipe);
+                titleController.text = '';
+                descController.text = '';
+                urlController.text = '';
               },
             ),
           ),
