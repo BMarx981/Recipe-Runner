@@ -52,7 +52,7 @@ class AddItemScreen extends StatelessWidget {
                 Recipe recipe = Recipe(
                     name: titleController.text,
                     description: descController.text,
-                    symbol: urlController.text);
+                    url: urlController.text);
                 Provider.of<MainModel>(context, listen: false)
                     .addRecipe(recipe);
                 titleController.text = '';

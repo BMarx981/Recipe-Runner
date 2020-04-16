@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class MainModel extends ChangeNotifier {
   String title;
   String description;
-  String symbol;
+  String symbol = '🍔';
   String url;
   List<Recipe> recipes = [
     Recipe(
@@ -29,5 +29,6 @@ class MainModel extends ChangeNotifier {
 
   void addRecipe(Recipe recipe) {
     recipes.add(recipe);
+    notifyListeners();
   }
 }
