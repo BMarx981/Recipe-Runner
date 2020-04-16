@@ -1,5 +1,6 @@
-import 'recipe.dart';
 import 'package:flutter/foundation.dart';
+
+import 'recipe.dart';
 
 class MainModel extends ChangeNotifier {
   String title;

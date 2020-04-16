@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_writer/models/recipe.dart';
-import 'package:recipe_writer/models/main_model.dart';
-import 'package:recipe_writer/utils/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:recipe_writer/models/main_model.dart';
+import 'package:recipe_writer/models/recipe.dart';
+import 'package:recipe_writer/utils/colors.dart';
 
 class AddItemScreen extends StatelessWidget {
   final titleController = TextEditingController();

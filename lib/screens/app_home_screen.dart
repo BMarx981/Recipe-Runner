@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/add_item_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
-import 'package:recipe_writer/screens/main_screen_tile.dart';
-import 'package:provider/provider.dart';
-import 'package:recipe_writer/models/main_model.dart';
-import 'settings_screen.dart';
+
 import 'main_screen_list.dart';
+import 'settings_screen.dart';
 
 class AppHomeScreen extends StatefulWidget {
   @override
@@ -95,7 +93,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           width: 200,
           decoration: BoxDecoration(gradient: colorGrad),
         ),
-        backgroundColor: mainTheme,
+//        backgroundColor: mainTheme,
         title: Text(title),
         actions: <Widget>[
           IconButton(

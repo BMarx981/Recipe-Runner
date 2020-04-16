@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/app_home_screen.dart';
 import 'package:provider/provider.dart';
+
 import 'models/main_model.dart';
+import 'screens/app_home_screen.dart';
 
 void main() => runApp(MyApp());
 
