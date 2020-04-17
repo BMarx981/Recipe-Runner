@@ -85,21 +85,14 @@ class RecipeTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2.0,
-            spreadRadius: 1.0,
-            color: Colors.grey,
-            offset: Offset(2.0, 5.0),
-          ),
-        ],
-      ),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: text,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide: BorderSide(width: 0, style: BorderStyle.none),
+          ),
+          hintText: text,
           fillColor: white,
           focusColor: white,
           filled: true,
