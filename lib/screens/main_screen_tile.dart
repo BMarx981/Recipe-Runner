@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/recipe_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'package:recipe_writer/models/recipe.dart';
 
 class MainScreenTile extends StatelessWidget {
-  final String title;
-  final String description;
-  final String icon;
-  MainScreenTile(this.title, this.description, this.icon);
+  final Recipe recipe;
+  MainScreenTile(this.recipe);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,9 @@ class MainScreenTile extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return RecipeScreen(title);
+              return RecipeScreen(
+                recipe.name,
+              );
             },
           ),
         );
@@ -42,24 +43,21 @@ class MainScreenTile extends StatelessWidget {
             SizedBox(
               width: 75,
               child: Text(
-                icon,
+                recipe.symbol,
                 style: TextStyle(fontSize: 40),
               ),
-//              child: Icon(
-//                Icons.beach_access,
-//              ),
-            ), //To be the image of the recipe
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    title,
+                    recipe.name,
                     style: TextStyle(color: white),
-                  ), //Title of recipe
+                  ),
                   SizedBox(height: 8),
                   Text(
-                    description,
+                    recipe.description,
                     maxLines: 2,
                     style:
                         TextStyle(color: white), //brief description of recipe],

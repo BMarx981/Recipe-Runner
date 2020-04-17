@@ -15,9 +15,7 @@ class MainScreenList extends StatelessWidget {
       itemCount: Provider.of<MainModel>(context).recipes.length,
       itemBuilder: (context, index) {
         return MainScreenTile(
-          Provider.of<MainModel>(context).recipes[index].name,
-          Provider.of<MainModel>(context).recipes[index].description,
-          Provider.of<MainModel>(context).recipes[index].symbol,
+          Provider.of<MainModel>(context).recipes[index],
         );
       },
     );

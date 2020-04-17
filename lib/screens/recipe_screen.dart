@@ -18,7 +18,18 @@ class RecipeScreen extends StatelessWidget {
         backgroundColor: mainTheme,
       ),
       body: Container(
-        child: Text('blahblahblah'),
+        padding: EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Title of card'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
