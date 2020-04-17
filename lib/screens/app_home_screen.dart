@@ -14,14 +14,16 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
   String title = 'Recipe Runner';
   void _selectScreen(int index) {
-    setState(() {
-      _selectedScreenIndex = index;
-      if (_selectedScreenIndex == 0) {
-        title = 'Recipe Runner';
-      } else if (_selectedScreenIndex == 1) {
-        title = 'Add a Recipe';
-      }
-    });
+    setState(
+      () {
+        _selectedScreenIndex = index;
+        if (_selectedScreenIndex == 0) {
+          title = 'Recipe Runner';
+        } else if (_selectedScreenIndex == 1) {
+          title = 'Add a Recipe';
+        }
+      },
+    );
   }
 
   List<Widget> _screenList = <Widget>[
@@ -66,11 +68,8 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         onTap: (index) => _selectScreen(index),
       ),
       appBar: AppBar(
-        flexibleSpace: Container(
-          height: 100,
-          width: 200,
-          decoration: BoxDecoration(gradient: colorGrad),
-        ),
+        elevation: 0.0,
+        backgroundColor: red,
         title: Text(title),
         actions: <Widget>[
           IconButton(
