@@ -10,32 +10,34 @@ class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            colors: colors,
-            stops: [0.5, 0.9],
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              colors: colors,
+              stops: [0.5, 0.9],
+            ),
           ),
-        ),
-        child: Container(
-          padding: EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+          child: Container(
+            padding: EdgeInsets.all(18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        size: 30,
-                        color: white,
+                      child: Container(
+//                        padding: EdgeInsets.only(left: ),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          size: 30,
+                          color: white,
+                        ),
                       ),
                     ),
                     GestureDetector(
@@ -49,40 +51,44 @@ class RecipeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text(
-                        'Edit',
-                        style: TextStyle(
-                            fontSize: 20,
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue),
+                      child: Container(
+//                        padding: EdgeInsets.only(right: 6),
+                        child: Text(
+                          'Edit',
+                          style: TextStyle(
+                              fontSize: 20,
+                              decoration: TextDecoration.underline,
+                              color: Colors.blue),
+                        ),
                       ),
                     )
                   ],
                 ),
-              ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        recipe.name,
-                        style: TextStyle(
-                          fontSize: 20,
+                SizedBox(height: 8),
+                Card(
+                  child: Container(
+                    padding: EdgeInsets.all(6.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          recipe.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        recipe.description,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                        SizedBox(height: 8),
+                        Text(
+                          recipe.description,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
