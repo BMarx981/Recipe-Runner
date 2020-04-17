@@ -72,7 +72,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           width: 200,
           decoration: BoxDecoration(gradient: colorGrad),
         ),
-//        backgroundColor: mainTheme,
         title: Text(title),
         actions: <Widget>[
           IconButton(

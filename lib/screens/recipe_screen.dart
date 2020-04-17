@@ -6,29 +6,45 @@ class RecipeScreen extends StatelessWidget {
   RecipeScreen(this.title);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey[200],
-      appBar: AppBar(
-        title: Text('$title'),
-        flexibleSpace: Container(
-          height: 100,
-          width: 200,
-          decoration: BoxDecoration(gradient: colorGrad),
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: colors,
+            stops: [0.5, 0.9],
+          ),
         ),
-        backgroundColor: mainTheme,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Title of card'),
+        child: Container(
+          padding: EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 30,
+                      color: white,
+                    ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(title),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
