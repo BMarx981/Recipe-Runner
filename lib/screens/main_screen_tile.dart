@@ -16,7 +16,7 @@ class MainScreenTile extends StatelessWidget {
           MaterialPageRoute(
             builder: (BuildContext context) {
               return RecipeScreen(
-                recipe.name,
+                recipe,
               );
             },
           ),
