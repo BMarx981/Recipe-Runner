@@ -24,17 +24,11 @@ class MainScreenTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
+          color: Colors.grey[50],
           borderRadius: BorderRadius.all(
             Radius.circular(10.0),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(2.0, 5.0),
-            )
-          ],
-          gradient: colorGrad,
-          border: Border.all(width: 1.0),
+//          border: Border.all(width: 1.0),
         ),
         padding: EdgeInsets.all(4),
         child: Row(
@@ -53,14 +47,13 @@ class MainScreenTile extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     recipe.name,
-                    style: TextStyle(color: white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   SizedBox(height: 8),
                   Text(
                     recipe.description,
                     maxLines: 2,
-                    style:
-                        TextStyle(color: white), //brief description of recipe],
+                    style: TextStyle(color: Colors.black),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],

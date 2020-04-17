@@ -33,7 +33,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[200],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedScreenIndex,
         elevation: .9,
@@ -82,9 +81,12 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
-        child: _screenList[_selectedScreenIndex],
+      body: Container(
+        decoration: BoxDecoration(gradient: colorGrad),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
+          child: _screenList[_selectedScreenIndex],
+        ),
       ),
     );
   }
