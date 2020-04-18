@@ -13,11 +13,7 @@ class RecipeScreen extends StatelessWidget {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: colors,
-              stops: [0.5, 0.9],
-            ),
+            gradient: colorGrad,
           ),
           child: Container(
             padding: EdgeInsets.all(18.0),
@@ -52,7 +48,7 @@ class RecipeScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-//                        padding: EdgeInsets.only(right: 6),
+                        padding: EdgeInsets.only(right: 6),
                         child: Text(
                           'Edit',
                           style: TextStyle(
