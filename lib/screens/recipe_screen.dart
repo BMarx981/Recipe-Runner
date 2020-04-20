@@ -62,8 +62,16 @@ class RecipeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                   child: Container(
-                    padding: EdgeInsets.all(6.0),
+//                    decoration: BoxDecoration(
+//                      borderRadius: BorderRadius.all(
+//                        Radius.circular(10.0),
+//                      ),
+//                    ),
+                    padding: EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
