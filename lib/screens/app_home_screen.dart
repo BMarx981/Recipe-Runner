@@ -83,8 +83,26 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
       body: Container(
         decoration: BoxDecoration(gradient: colorGrad),
         child: Padding(
-          padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
-          child: _screenList[_selectedScreenIndex],
+          padding: const EdgeInsets.only(left: 18, right: 18),
+          child: ShaderMask(
+            shaderCallback: (bounds) {
+              return LinearGradient(
+                begin: Alignment(0.0, -1),
+                end: Alignment(0.0, -0.3),
+                colors: [
+                  Colors.transparent,
+                  Color(0xffffffff),
+                ],
+                stops: [
+                  0.0,
+                  0.3,
+                ],
+              ).createShader(
+                Rect.fromLTRB(0, 0, bounds.width * 0.8, bounds.height * 0.4),
+              );
+            },
+            child: _screenList[_selectedScreenIndex],
+          ),
         ),
       ),
     );
