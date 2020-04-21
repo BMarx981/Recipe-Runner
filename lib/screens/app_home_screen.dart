@@ -21,9 +21,9 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         if (_selectedScreenIndex == 0) {
           title = 'Recipe Runner';
         } else if (_selectedScreenIndex == 1) {
-          title = 'Add a Recipe';
-        } else if (_selectedScreenIndex == 2) {
           title = 'Search';
+        } else if (_selectedScreenIndex == 2) {
+          title = 'Add a Recipe';
         }
       },
     );
@@ -31,8 +31,8 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
 
   List<Widget> _screenList = <Widget>[
     MainScreenList(),
-    AddItemScreen(),
     SearchScreen(),
+    AddItemScreen(),
   ];
 
   @override
