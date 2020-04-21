@@ -14,7 +14,7 @@ class SearchScreen extends StatelessWidget {
         children: <Widget>[
           RecipeTextField(text: 'Search', controller: tc),
           SizedBox(
-            height: 12,
+            height: 22,
           ),
           Container(
             height: 60,
