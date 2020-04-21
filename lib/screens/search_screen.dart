@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
+import 'package:recipe_writer/utils/colors.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController tc = TextEditingController();
@@ -26,7 +27,7 @@ class SearchScreen extends StatelessWidget {
                     'Done',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Color(0xff8a8a8a),
+                      color: textGrey,
                       fontSize: 16,
                     ),
                   ),

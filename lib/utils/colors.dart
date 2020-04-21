@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color mainTheme = Color(0xff992233);
+const Color textGrey = Color(0xff8a8a8a);
 const List<Color> colors = [
 //  Color(0xff886666),
   Color(0xffBB4455),

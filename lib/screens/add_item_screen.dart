@@ -43,9 +43,9 @@ class AddItemScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Enter',
+                    'Done',
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: textGrey),
                   ),
                 ],
               ),
