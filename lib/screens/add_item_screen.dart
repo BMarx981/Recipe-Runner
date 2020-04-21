@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'recipe_textfield.dart';
 
 class AddItemScreen extends StatelessWidget {
   final titleController = TextEditingController();
@@ -68,35 +69,6 @@ class AddItemScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class RecipeTextField extends StatelessWidget {
-  final String text;
-  final TextEditingController controller;
-  const RecipeTextField({
-    Key key,
-    this.text = '',
-    this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(width: 0, style: BorderStyle.none),
-          ),
-          hintText: text,
-          fillColor: white,
-          focusColor: white,
-          filled: true,
-        ),
       ),
     );
   }

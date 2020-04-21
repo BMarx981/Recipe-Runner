@@ -21,7 +21,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         if (_selectedScreenIndex == 0) {
           title = 'Recipe Runner';
         } else if (_selectedScreenIndex == 1) {
-          title = 'Search';
+          title = 'Search for recipes';
         } else if (_selectedScreenIndex == 2) {
           title = 'Add a Recipe';
         }
