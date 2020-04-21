@@ -9,8 +9,38 @@ class SearchScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(gradient: colorGrad),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(child: RecipeTextField(text: 'Search', controller: tc)),
+          RecipeTextField(text: 'Search', controller: tc),
+          SizedBox(
+            height: 12,
+          ),
+          Container(
+            height: 60,
+            child: RaisedButton(
+              elevation: 5.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Done',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Color(0xff8a8a8a),
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(35),
+                ),
+              ),
+              color: white,
+              onPressed: () => print(tc.text),
+            ),
+          ),
         ],
       ),
     );
