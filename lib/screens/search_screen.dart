@@ -40,7 +40,7 @@ class SearchScreen extends StatelessWidget {
               ),
               color: white,
               onPressed: () {
-                tc.text = '';
+                tc.clear();
               },
             ),
           ),

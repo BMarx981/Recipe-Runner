@@ -15,38 +15,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text(fahcel),
-              Switch(
-                value: _metricValue,
-                onChanged: (bool bValue) {
-                  setState(
-                    () {
-                      _metricValue = bValue;
-                      if (_metricValue) {
-                        fahcel = 'Fahrenheit';
-                      } else {
-                        fahcel = 'Celsius';
-                      }
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+      body: Container(
+        decoration: BoxDecoration(gradient: colorGrad),
+        child: ListView(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(fahcel),
+                Switch(
+                  value: _metricValue,
+                  onChanged: (bool bValue) {
+                    setState(
+                      () {
+                        _metricValue = bValue;
+                        if (_metricValue) {
+                          fahcel = 'Fahrenheit';
+                        } else {
+                          fahcel = 'Celsius';
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
         title: Text('Settings'),
         backgroundColor: mainTheme,
+        elevation: 0.0,
         flexibleSpace: Container(
           height: 100,
           width: 200,
-          decoration: BoxDecoration(gradient: colorGrad),
+          decoration: BoxDecoration(color: red),
         ),
       ),
     );
