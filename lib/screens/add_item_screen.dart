@@ -43,7 +43,7 @@ class AddItemScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Done',
+                    'Add',
                     textAlign: TextAlign.left,
                     style: TextStyle(color: textGrey),
                   ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
-import 'package:recipe_writer/utils/colors.dart';
 
 class SearchScreen extends StatelessWidget {
   final TextEditingController tc = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +39,9 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
               color: white,
-              onPressed: () => print(tc.text),
+              onPressed: () {
+                tc.text = '';
+              },
             ),
           ),
         ],

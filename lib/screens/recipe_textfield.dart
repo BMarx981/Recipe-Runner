@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
-class RecipeTextField extends StatelessWidget {
+class RecipeTextField extends StatefulWidget {
   final String text;
   final TextEditingController controller;
 
@@ -12,19 +12,44 @@ class RecipeTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _RecipeTextFieldState createState() => _RecipeTextFieldState();
+}
+
+class _RecipeTextFieldState extends State<RecipeTextField> {
+  Color iconColor = white;
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
-        controller: controller,
+        onChanged: (newText) {
+          setState(() {
+            print(newText);
+            iconColor = (newText.isEmpty) ? white : textGrey;
+          });
+        },
+        controller: widget.controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(35),
             borderSide: BorderSide(width: 0, style: BorderStyle.none),
           ),
-          hintText: text,
+          hintText: widget.text,
           fillColor: white,
           focusColor: white,
           filled: true,
+          suffixIcon: IconButton(
+            icon: Icon(
+              Icons.cancel,
+              color: iconColor,
+            ),
+            onPressed: () {
+              setState(() {
+                widget.controller.clear();
+                iconColor = white;
+              });
+            },
+          ),
         ),
       ),
     );
