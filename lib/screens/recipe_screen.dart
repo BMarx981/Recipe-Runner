@@ -28,7 +28,6 @@ class RecipeScreen extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Container(
-//                        padding: EdgeInsets.only(left: ),
                         child: Icon(
                           Icons.arrow_back_ios,
                           size: 30,
@@ -66,11 +65,6 @@ class RecipeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   child: Container(
-//                    decoration: BoxDecoration(
-//                      borderRadius: BorderRadius.all(
-//                        Radius.circular(10.0),
-//                      ),
-//                    ),
                     padding: EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

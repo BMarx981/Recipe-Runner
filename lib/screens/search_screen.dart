@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
@@ -12,6 +14,13 @@ class SearchScreen extends StatelessWidget {
       style: TextStyle(color: white),
     ),
   ];
+
+  getNetworkData(String query) async {
+    Networking n = Networking();
+    Map<String, dynamic> respMap = await n.getRequest(query);
+    print(respMap);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,8 +56,7 @@ class SearchScreen extends StatelessWidget {
               ),
               color: white,
               onPressed: () {
-                Networking n = Networking();
-                n.getRequest(tc.text);
+                getNetworkData(tc.text);
                 tc.clear();
               },
             ),

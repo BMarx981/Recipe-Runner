@@ -24,7 +24,6 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
       child: TextField(
         onChanged: (newText) {
           setState(() {
-            print(newText);
             iconColor = (newText.isEmpty) ? white : textGrey;
           });
         },
