@@ -5,6 +5,12 @@ import 'recipe_textfield.dart';
 class SearchScreen extends StatelessWidget {
   final TextEditingController tc = TextEditingController();
 
+  final List<Widget> list = [
+    Text(
+      'Something',
+      style: TextStyle(color: white),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,6 +48,21 @@ class SearchScreen extends StatelessWidget {
               onPressed: () {
                 tc.clear();
               },
+            ),
+          ),
+          SizedBox(
+            height: 22,
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(left: 2),
+              color: Colors.transparent,
+              child: ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  return list[index];
+                },
+              ),
             ),
           ),
         ],
