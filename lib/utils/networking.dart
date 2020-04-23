@@ -10,7 +10,8 @@ class Networking {
   Future<Map<String, dynamic>> getRequest(String query) async {
     String apiCall = '$url$query$appID$apiKey';
     http.Response response = await http.get(apiCall);
-    print(response.body);
-    return json.decode(response.body);
+    if (response.statusCode >= 200) {
+      return json.decode(response.body);
+    }
   }
 }

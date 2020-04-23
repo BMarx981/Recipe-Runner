@@ -1,14 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/networking.dart';
+import 'package:recipe_writer/models/search_model.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController tc = TextEditingController();
+  Map<String, dynamic> respMap = {};
 
-  final List<Widget> list = [
+  List<Widget> searchedList = [
     Text(
       'Something',
       style: TextStyle(color: white),
@@ -17,8 +22,20 @@ class SearchScreen extends StatelessWidget {
 
   getNetworkData(String query) async {
     Networking n = Networking();
-    Map<String, dynamic> respMap = await n.getRequest(query);
-    print(respMap);
+    respMap = await n.getRequest(query);
+    List<dynamic> hits = respMap['hits'];
+    hits.forEach((hit) {
+      Map<String, dynamic> recipe = hit['recipe'];
+      List<String> ingredients = List<String>.from(recipe['ingredientLines']);
+      SearchModel model = SearchModel(
+        ingredients: ingredients,
+        label: recipe['label'],
+        image: recipe['image'],
+        sourceURL: recipe['url'],
+        sourceID: recipe['source'],
+      );
+      print(model.toString());
+    });
   }
 
   @override
@@ -69,9 +86,9 @@ class SearchScreen extends StatelessWidget {
               padding: EdgeInsets.only(left: 2),
               color: Colors.transparent,
               child: ListView.builder(
-                itemCount: list.length,
+                itemCount: searchedList.length,
                 itemBuilder: (context, index) {
-                  return list[index];
+                  return searchedList[index];
                 },
               ),
             ),
