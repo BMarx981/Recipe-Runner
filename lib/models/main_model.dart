@@ -5,26 +5,26 @@ import 'recipe.dart';
 class MainModel extends ChangeNotifier {
   String title;
   String description;
-  String symbol = '🍔';
+  String imageURL = '🍔';
   String url;
   List<Recipe> recipes = [
     Recipe(
       name: 'Recipe Title',
       description:
           'This is a description of the recipe to help you understand what you are looking at.',
-      symbol: '🍔',
+      imageURL: '🍔',
     ),
     Recipe(
       name: 'Recipe Title',
       description:
           'This is a description of the recipe to help you understand what you are looking at.',
-      symbol: '🍔',
+      imageURL: '🍔',
     ),
     Recipe(
       name: 'Recipe Title',
       description:
           'This is a description of the recipe to help you understand what you are looking at.',
-      symbol: '🍔',
+      imageURL: '🍔',
     ),
   ];
 

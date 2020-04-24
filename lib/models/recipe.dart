@@ -1,9 +1,9 @@
 class Recipe {
   String name;
   String description;
-  String symbol;
+  String imageURL;
   String url;
   List<String> directions = [];
   List<String> ingredients = [];
-  Recipe({this.name, this.description, this.symbol = '🍔', this.url});
+  Recipe({this.name, this.description, this.imageURL = '🍔', this.url});
 }

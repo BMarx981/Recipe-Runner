@@ -26,9 +26,8 @@ class MainScreenTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey[50],
           borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
+            Radius.circular(35.0),
           ),
-//          border: Border.all(width: 1.0),
         ),
         padding: EdgeInsets.all(4),
         child: Row(
@@ -37,7 +36,7 @@ class MainScreenTile extends StatelessWidget {
             SizedBox(
               width: 75,
               child: Text(
-                recipe.symbol,
+                recipe.imageURL,
                 style: TextStyle(fontSize: 40),
               ),
             ),

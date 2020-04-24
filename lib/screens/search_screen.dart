@@ -3,6 +3,7 @@ import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/networking.dart';
 import 'package:recipe_writer/models/search_model.dart';
+import 'package:recipe_writer/models/recipe.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -27,6 +28,33 @@ class _SearchScreenState extends State<SearchScreen> {
     hits.forEach((hit) {
       Map<String, dynamic> recipe = hit['recipe'];
       List<String> ingredients = List<String>.from(recipe['ingredientLines']);
+      Recipe rec = Recipe(
+        name: recipe['label'],
+        imageURL: recipe[''],
+        url: recipe['url'],
+      );
+      print(rec.imageURL);
+      setState(() {
+        searchedList.add(
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[50],
+              borderRadius: BorderRadius.all(
+                Radius.circular(35.0),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                (rec.imageURL == null)
+                    ? Text('🍔')
+                    : Image.network(rec.imageURL),
+                Text(rec.name),
+              ],
+            ),
+          ),
+        ); //searchList.add
+      });
+
       SearchModel model = SearchModel(
         ingredients: ingredients,
         label: recipe['label'],
