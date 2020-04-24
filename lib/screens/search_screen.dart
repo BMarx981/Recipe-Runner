@@ -14,12 +14,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController tc = TextEditingController();
   Map<String, dynamic> respMap = {};
 
-  List<Widget> searchedList = [
-    Text(
-      'Something',
-      style: TextStyle(color: white),
-    ),
-  ];
+  List<Widget> searchedList = [];
 
   getNetworkData(String query) async {
     Networking n = Networking();
@@ -30,7 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
       List<String> ingredients = List<String>.from(recipe['ingredientLines']);
       Recipe rec = Recipe(
         name: recipe['label'],
-        imageURL: recipe[''],
+        imageURL: recipe['image'],
         url: recipe['url'],
       );
       print(rec.imageURL);
@@ -44,10 +39,11 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 (rec.imageURL == null)
-                    ? Text('🍔')
-                    : Image.network(rec.imageURL),
+                    ? Expanded(child: Text('🍔'))
+                    : Expanded(child: Image.network(rec.imageURL)),
                 Text(rec.name),
               ],
             ),
