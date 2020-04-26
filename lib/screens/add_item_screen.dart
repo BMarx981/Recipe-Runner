@@ -9,6 +9,7 @@ class AddItemScreen extends StatelessWidget {
   final titleController = TextEditingController();
   final descController = TextEditingController();
   final urlController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,9 +58,10 @@ class AddItemScreen extends StatelessWidget {
                 Provider.of<MainModel>(context, listen: false)
                     .addRecipe(recipe);
                 String name = titleController.text;
-                titleController.text = '';
-                descController.text = '';
-                urlController.text = '';
+                titleController.clear();
+                descController.clear();
+                urlController.clear();
+
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text('$name recipe added'),
