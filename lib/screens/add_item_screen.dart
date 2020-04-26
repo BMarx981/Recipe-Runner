@@ -12,7 +12,7 @@ class AddItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView(
+      child: Column(
         children: <Widget>[
           SizedBox(height: 12),
           RecipeTextField(

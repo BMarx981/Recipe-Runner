@@ -16,19 +16,34 @@ class RecipeTextField extends StatefulWidget {
 }
 
 class _RecipeTextFieldState extends State<RecipeTextField> {
-  Color iconColor = white;
+  Icon cancelIcon = Icon(
+    Icons.cancel,
+    color: white,
+  );
 
-  setIconColor() =>
-      (iconColor == white) ? iconColor = textGrey : iconColor = white;
+  Icon setIconColor(Color color) {
+    return Icon(
+      Icons.cancel,
+      color: color,
+    );
+  }
+
+  //TODO: Fix setIconColor to work properly
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
         onChanged: (newText) {
-          setState(() {
-            iconColor = (newText.isEmpty) ? white : textGrey;
-          });
+          if (newText.isEmpty) {
+            setState(() {
+              cancelIcon = setIconColor(white);
+            });
+          } else {
+            setState(() {
+              cancelIcon = setIconColor(textGrey);
+            });
+          }
         },
         controller: widget.controller,
         decoration: InputDecoration(
@@ -41,14 +56,11 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           focusColor: white,
           filled: true,
           suffixIcon: IconButton(
-            icon: Icon(
-              Icons.cancel,
-              color: setIconColor(),
-            ),
+            icon: cancelIcon,
             onPressed: () {
               setState(() {
+                cancelIcon = setIconColor(white);
                 widget.controller.clear();
-                setIconColor();
               });
             },
           ),

@@ -15,6 +15,7 @@ class MainScreenList extends StatelessWidget {
       itemCount: Provider.of<MainModel>(context).recipes.length,
       itemBuilder: (context, index) {
         return MainScreenTile(
+          //TODO: Add Swipe to dismiss
           Provider.of<MainModel>(context).recipes[index],
         );
       },
