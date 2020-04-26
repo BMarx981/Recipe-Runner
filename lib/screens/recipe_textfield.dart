@@ -18,6 +18,9 @@ class RecipeTextField extends StatefulWidget {
 class _RecipeTextFieldState extends State<RecipeTextField> {
   Color iconColor = white;
 
+  setIconColor() =>
+      (iconColor == white) ? iconColor = textGrey : iconColor = white;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,12 +43,12 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           suffixIcon: IconButton(
             icon: Icon(
               Icons.cancel,
-              color: iconColor,
+              color: setIconColor(),
             ),
             onPressed: () {
               setState(() {
                 widget.controller.clear();
-                iconColor = white;
+                setIconColor();
               });
             },
           ),

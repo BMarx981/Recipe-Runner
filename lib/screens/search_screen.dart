@@ -4,6 +4,7 @@ import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/networking.dart';
 import 'package:recipe_writer/models/search_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
+import 'search_result_tile.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -28,37 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
         imageURL: recipe['image'],
         url: recipe['url'],
       );
-      print(rec.imageURL);
-      setState(() {
-        searchedList.add(
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              borderRadius: BorderRadius.all(
-                Radius.circular(35.0),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                (rec.imageURL == null)
-                    ? Expanded(child: Text('🍔'))
-                    : Expanded(child: Image.network(rec.imageURL)),
-                Text(rec.name),
-              ],
-            ),
-          ),
-        ); //searchList.add
-      });
-
-      SearchModel model = SearchModel(
-        ingredients: ingredients,
-        label: recipe['label'],
-        image: recipe['image'],
-        sourceURL: recipe['url'],
-        sourceID: recipe['source'],
-      );
-      print(model.toString());
+      setState(() => searchedList.add(SearchResultTile(rec: rec)));
     });
   }
 
