@@ -5,34 +5,47 @@ import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
 
-class AddItemScreen extends StatelessWidget {
+class AddItemScreen extends StatefulWidget {
+  @override
+  _AddItemScreenState createState() => _AddItemScreenState();
+}
+
+class _AddItemScreenState extends State<AddItemScreen> {
   final titleController = TextEditingController();
+
   final descController = TextEditingController();
+
   final urlController = TextEditingController();
+
+  RecipeTextField title;
+
+  RecipeTextField desc;
+
+  RecipeTextField url;
 
   @override
   Widget build(BuildContext context) {
+    title = RecipeTextField(
+      text: 'Recipe title',
+      controller: titleController,
+    );
+    desc = RecipeTextField(
+      text: 'Add a description',
+      controller: descController,
+    );
+    url = RecipeTextField(
+      text: 'URL',
+      controller: urlController,
+    );
     return Container(
       child: Column(
         children: <Widget>[
           SizedBox(height: 12),
-          RecipeTextField(
-            key: UniqueKey(),
-            text: 'Recipe title',
-            controller: titleController,
-          ),
+          title,
           SizedBox(height: 12),
-          RecipeTextField(
-            key: UniqueKey(),
-            text: 'Add a description',
-            controller: descController,
-          ),
+          desc,
           SizedBox(height: 12),
-          RecipeTextField(
-            key: UniqueKey(),
-            text: 'URL',
-            controller: urlController,
-          ),
+          url,
           SizedBox(height: 22),
           Container(
             height: 60,
@@ -60,15 +73,20 @@ class AddItemScreen extends StatelessWidget {
                     url: urlController.text);
                 Provider.of<MainModel>(context, listen: false)
                     .addRecipe(recipe);
-                String name = titleController.text;
+                setState(() {
+                  title.setIconColorWhite();
+                  desc.setIconColorWhite();
+                  url.setIconColorWhite();
+                });
+
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${titleController.text} recipe added'),
+                  ),
+                );
                 titleController.clear();
                 descController.clear();
                 urlController.clear();
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$name recipe added'),
-                  ),
-                );
               },
             ),
           ),

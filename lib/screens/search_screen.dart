@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/networking.dart';
-import 'package:recipe_writer/models/search_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'search_result_tile.dart';
 
@@ -13,7 +12,9 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController tc = TextEditingController();
+
   RecipeTextField searchfield;
+
   Map<String, dynamic> respMap = {};
 
   List<Widget> searchedList = [];

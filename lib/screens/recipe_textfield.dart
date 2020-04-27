@@ -18,6 +18,10 @@ class RecipeTextField extends StatefulWidget {
     iconColor = textGrey;
   }
 
+  setIconColorWhite() {
+    iconColor = white;
+  }
+
   RecipeTextField({
     Key key,
     this.text = '',
