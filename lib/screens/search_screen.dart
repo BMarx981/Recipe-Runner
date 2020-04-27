@@ -29,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
         imageURL: recipe['image'],
         url: recipe['url'],
       );
-      setState(() => searchedList.add(SearchResultTile(rec: rec)));
+      setState(() => searchedList.insert(0, SearchResultTile(rec: rec)));
     });
   }
 
@@ -38,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Container(
       decoration: BoxDecoration(gradient: colorGrad),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+//        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           RecipeTextField(text: 'Search', controller: tc),
           SizedBox(
