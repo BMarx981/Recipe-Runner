@@ -4,8 +4,21 @@ import 'package:recipe_writer/utils/colors.dart';
 class RecipeTextField extends StatefulWidget {
   final String text;
   final TextEditingController controller;
+  Color iconColor = white;
 
-  const RecipeTextField({
+  toggleIconColor() {
+    if (iconColor == textGrey) {
+      iconColor = white;
+      return;
+    }
+    iconColor = textGrey;
+  }
+
+  setIconColorGrey() {
+    iconColor = textGrey;
+  }
+
+  RecipeTextField({
     Key key,
     this.text = '',
     this.controller,
@@ -16,16 +29,16 @@ class RecipeTextField extends StatefulWidget {
 }
 
 class _RecipeTextFieldState extends State<RecipeTextField> {
-  Color iconColor = white;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
         onChanged: (newText) {
           if (newText.isNotEmpty) {
-            setState(() {
-              iconColor = textGrey;
-            });
+            setState(() => widget.setIconColorGrey());
+          }
+          if (newText.isEmpty) {
+            setState(() => widget.toggleIconColor());
           }
         },
         controller: widget.controller,
@@ -41,11 +54,11 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           suffixIcon: IconButton(
             icon: Icon(
               Icons.cancel,
-              color: iconColor,
+              color: widget.iconColor,
             ),
             onPressed: () {
               setState(() {
-                iconColor = white;
+                widget.toggleIconColor();
                 widget.controller.clear();
               });
             },

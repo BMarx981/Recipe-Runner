@@ -13,6 +13,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController tc = TextEditingController();
+  RecipeTextField searchfield;
   Map<String, dynamic> respMap = {};
 
   List<Widget> searchedList = [];
@@ -35,12 +36,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    searchfield = RecipeTextField(
+      text: 'Search',
+      controller: tc,
+    );
     return Container(
       decoration: BoxDecoration(gradient: colorGrad),
       child: Column(
-//        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          RecipeTextField(text: 'Search', controller: tc),
+          searchfield,
           SizedBox(
             height: 22,
           ),
@@ -68,6 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               color: white,
               onPressed: () {
+                searchfield.toggleIconColor();
                 getNetworkData(tc.text);
                 tc.clear();
               },
