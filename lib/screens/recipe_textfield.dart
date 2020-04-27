@@ -16,32 +16,15 @@ class RecipeTextField extends StatefulWidget {
 }
 
 class _RecipeTextFieldState extends State<RecipeTextField> {
-  Icon cancelIcon = Icon(
-    Icons.cancel,
-    color: white,
-  );
-
-  Icon setIconColor(Color color) {
-    return Icon(
-      Icons.cancel,
-      color: color,
-    );
-  }
-
-  //TODO: Fix setIconColor to work properly
-
+  Color iconColor = white;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
         onChanged: (newText) {
-          if (newText.isEmpty) {
+          if (newText.isNotEmpty) {
             setState(() {
-              cancelIcon = setIconColor(white);
-            });
-          } else {
-            setState(() {
-              cancelIcon = setIconColor(textGrey);
+              iconColor = textGrey;
             });
           }
         },
@@ -56,10 +39,13 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           focusColor: white,
           filled: true,
           suffixIcon: IconButton(
-            icon: cancelIcon,
+            icon: Icon(
+              Icons.cancel,
+              color: iconColor,
+            ),
             onPressed: () {
               setState(() {
-                cancelIcon = setIconColor(white);
+                iconColor = white;
                 widget.controller.clear();
               });
             },

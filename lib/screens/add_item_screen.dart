@@ -17,16 +17,19 @@ class AddItemScreen extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 12),
           RecipeTextField(
+            key: UniqueKey(),
             text: 'Recipe title',
             controller: titleController,
           ),
           SizedBox(height: 12),
           RecipeTextField(
+            key: UniqueKey(),
             text: 'Add a description',
             controller: descController,
           ),
           SizedBox(height: 12),
           RecipeTextField(
+            key: UniqueKey(),
             text: 'URL',
             controller: urlController,
           ),
@@ -61,7 +64,6 @@ class AddItemScreen extends StatelessWidget {
                 titleController.clear();
                 descController.clear();
                 urlController.clear();
-
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text('$name recipe added'),
