@@ -31,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
         imageURL: recipe['image'],
         url: recipe['url'],
       );
+      rec.ingredients = ingredients;
       setState(() => searchedList.insert(0, SearchResultTile(rec: rec)));
     });
   }

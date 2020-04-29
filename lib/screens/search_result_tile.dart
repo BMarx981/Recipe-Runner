@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
-import 'package:recipe_writer/utils/colors.dart';
+import 'recipe_tile.dart';
+import 'recipe_screen.dart';
 
 class SearchResultTile extends StatelessWidget {
   const SearchResultTile({
@@ -12,38 +13,20 @@ class SearchResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[50],
-          borderRadius: BorderRadius.all(
-            Radius.circular(45.0),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return RecipeScreen(
+                rec,
+              );
+            },
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              (rec.imageURL == null)
-                  ? Expanded(child: Text('🍔'))
-                  : CircleAvatar(
-                      backgroundImage: NetworkImage(rec.imageURL),
-                      backgroundColor: textGrey,
-                      maxRadius: 35,
-                    ),
-              SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  rec.name,
-                  softWrap: true,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
+      child: RecipeTile(rec: rec),
     );
   }
 }

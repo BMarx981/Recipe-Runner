@@ -5,5 +5,10 @@ class Recipe {
   String url;
   List<String> directions = [];
   List<String> ingredients = [];
-  Recipe({this.name, this.description, this.imageURL = '🍔', this.url});
+  Recipe({
+    this.name,
+    this.description,
+    this.imageURL = '🍔',
+    this.url,
+  });
 }

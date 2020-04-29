@@ -53,7 +53,7 @@ class RecipeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20,
                               decoration: TextDecoration.underline,
-                              color: Colors.blue),
+                              color: white),
                         ),
                       ),
                     )
@@ -66,25 +66,47 @@ class RecipeScreen extends StatelessWidget {
                   ),
                   child: Container(
                     padding: EdgeInsets.all(16.0),
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          recipe.name,
-                          style: TextStyle(
-                            fontSize: 20,
+                        (recipe.imageURL == '🍔')
+                            ? Expanded(child: Text('🍔'))
+                            : CircleAvatar(
+                                backgroundImage: NetworkImage(recipe.imageURL),
+                                backgroundColor: textGrey,
+                                maxRadius: 35,
+                              ),
+                        SizedBox(height: 8),
+                        Expanded(
+                          child: Text(
+                            recipe.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                         SizedBox(height: 8),
-                        Text(
-                          recipe.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+
+//                        `Text(
+//                          recipe.description,
+//                          maxLines: 3,
+//                          overflow: TextOverflow.ellipsis,
+//                        ),`
                       ],
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Container(
+                      child: ListView.builder(
+                        itemExtent: ,
+                    itemBuilder: (context, index) {
+                      return Text('${index + 1}. ${recipe.ingredients[index]}',
+                          style: TextStyle(fontSize: 18, color: white));
+                    },
+                    itemCount: recipe.ingredients.length,
+                  )),
+                )
               ],
             ),
           ),
