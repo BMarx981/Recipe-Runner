@@ -99,7 +99,6 @@ class RecipeScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                       child: ListView.builder(
-                        itemExtent: ,
                     itemBuilder: (context, index) {
                       return Text('${index + 1}. ${recipe.ingredients[index]}',
                           style: TextStyle(fontSize: 18, color: white));

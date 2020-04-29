@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_writer/screens/recipe_screen.dart';
-import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/models/recipe.dart';
+import 'package:recipe_writer/screens/recipe_screen.dart';
 
 class MainScreenTile extends StatelessWidget {
   final Recipe recipe;
