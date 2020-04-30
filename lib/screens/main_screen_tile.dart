@@ -46,6 +46,7 @@ class MainScreenTile extends StatelessWidget {
                       style: TextStyle(fontSize: 40),
                     ),
                   ),
+            SizedBox(width: 8),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
