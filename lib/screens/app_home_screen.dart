@@ -23,7 +23,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         } else if (_selectedScreenIndex == 1) {
           title = 'Search for recipes';
         } else if (_selectedScreenIndex == 2) {
-          title = 'Add a Recipe';
+          title = 'Add a recipe';
         }
       },
     );
@@ -95,9 +95,13 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         onTap: (index) => _selectScreen(index),
       ),
       appBar: AppBar(
+        centerTitle: false,
         elevation: 0.0,
         backgroundColor: red,
-        title: Text(title),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 4.0),
+          child: Text(title),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings, color: white),
