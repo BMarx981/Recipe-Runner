@@ -10,5 +10,6 @@ class Recipe {
     this.description,
     this.imageURL = '🍔',
     this.url,
+    this.ingredients,
   });
 }

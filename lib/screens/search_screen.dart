@@ -70,6 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Container(
             height: 60,
             child: RaisedButton(
+              //Done button
               elevation: 5.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
