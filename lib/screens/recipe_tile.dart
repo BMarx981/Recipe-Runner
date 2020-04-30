@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/models/recipe.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_writer/models/main_model.dart';
 
 class RecipeTile extends StatelessWidget {
   const RecipeTile({
@@ -40,6 +42,19 @@ class RecipeTile extends StatelessWidget {
                   softWrap: true,
                 ),
               ),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  Provider.of<MainModel>(context, listen: false)
+                      .recipes
+                      .add(rec);
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${rec.name} recipe added'),
+                    ),
+                  );
+                },
+              )
             ],
           ),
         ),

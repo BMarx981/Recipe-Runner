@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'recipe.dart';
 
@@ -27,6 +28,13 @@ class MainModel extends ChangeNotifier {
       imageURL: '🍔',
     ),
   ];
+
+  List<Recipe> searchResults = [];
+
+  void addSearchResults(Recipe recipe) {
+    searchResults.add(recipe);
+    notifyListeners();
+  }
 
   void addRecipe(Recipe recipe) {
     recipes.add(recipe);

@@ -67,31 +67,30 @@ class RecipeScreen extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(16.0),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         (recipe.imageURL == '🍔')
-                            ? Expanded(child: Text('🍔'))
+                            ? Expanded(
+                                child: Text(
+                                  '🍔',
+                                  style: TextStyle(fontSize: 28),
+                                ),
+                              )
                             : CircleAvatar(
                                 backgroundImage: NetworkImage(recipe.imageURL),
                                 backgroundColor: textGrey,
                                 maxRadius: 35,
                               ),
-                        SizedBox(height: 8),
+                        SizedBox(width: 18),
                         Expanded(
                           child: Text(
                             recipe.name,
                             style: TextStyle(
                               fontSize: 20,
                             ),
+                            maxLines: 2,
                           ),
                         ),
-                        SizedBox(height: 8),
-
-//                        `Text(
-//                          recipe.description,
-//                          maxLines: 3,
-//                          overflow: TextOverflow.ellipsis,
-//                        ),`
                       ],
                     ),
                   ),
@@ -105,7 +104,7 @@ class RecipeScreen extends StatelessWidget {
                     },
                     itemCount: recipe.ingredients.length,
                   )),
-                )
+                ),
               ],
             ),
           ),

@@ -4,6 +4,8 @@ import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/networking.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'search_result_tile.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_writer/models/main_model.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -17,7 +19,17 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Map<String, dynamic> respMap = {};
 
-  List<Widget> searchedList = [];
+  List<Widget> _searchedList = [];
+  List<Recipe> _searchedRecipes = [];
+
+  initState() {
+    super.initState();
+    Provider.of<MainModel>(context, listen: false).searchResults.forEach(
+          (recipe) => _searchedList.add(
+            SearchResultTile(rec: recipe),
+          ),
+        );
+  }
 
   getNetworkData(String query) async {
     Networking n = Networking();
@@ -32,8 +44,13 @@ class _SearchScreenState extends State<SearchScreen> {
         url: recipe['url'],
       );
       rec.ingredients = ingredients;
-      setState(() => searchedList.insert(0, SearchResultTile(rec: rec)));
+      rec.description = '';
+      setState(() => _searchedList.insert(0, SearchResultTile(rec: rec)));
+      _searchedRecipes.add(rec);
     });
+    Provider.of<MainModel>(context, listen: false)
+        .searchResults
+        .addAll(_searchedRecipes);
   }
 
   @override
@@ -88,9 +105,9 @@ class _SearchScreenState extends State<SearchScreen> {
               padding: EdgeInsets.only(left: 2),
               color: Colors.transparent,
               child: ListView.builder(
-                itemCount: searchedList.length,
+                itemCount: _searchedList.length,
                 itemBuilder: (context, index) {
-                  return searchedList[index];
+                  return _searchedList[index];
                 },
               ),
             ),
