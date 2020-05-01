@@ -99,16 +99,23 @@ class RecipeScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(
-                              '${index + 1}. ${recipe.ingredients[index]}',
-                              style: TextStyle(fontSize: 18, color: white)),
-                        );
-                      },
-                      itemCount: recipe.ingredients.length,
-                    )),
+                      child: (recipe.ingredients != null)
+                          ? ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  child: Text(
+                                      '${index + 1}. ${recipe.ingredients[index]}',
+                                      style: TextStyle(
+                                          fontSize: 18, color: white)),
+                                );
+                              },
+                              itemCount: recipe.ingredients.length,
+                            )
+                          : Text(
+                              'No ingredients added yet.',
+                              style: TextStyle(fontSize: 18, color: white),
+                            ),
+                    ),
                   ),
                 ),
               ],
