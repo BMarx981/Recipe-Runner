@@ -1,5 +1,5 @@
 name: recipe_writer
-description: A new recipe application to better help with cooking.
+description: A new recipe application to help with cooking.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -28,6 +28,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   provider: ^4.0.4
+  http:
+  flutter_platform_widgets: ^0.32.5
 
 
 # For information on the generic Dart part of this file, see the

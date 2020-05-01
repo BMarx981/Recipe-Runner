@@ -3,31 +3,49 @@ import 'package:provider/provider.dart';
 import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'recipe_textfield.dart';
 
-class AddItemScreen extends StatelessWidget {
+class AddItemScreen extends StatefulWidget {
+  @override
+  _AddItemScreenState createState() => _AddItemScreenState();
+}
+
+class _AddItemScreenState extends State<AddItemScreen> {
   final titleController = TextEditingController();
+
   final descController = TextEditingController();
+
   final urlController = TextEditingController();
+
+  RecipeTextField title;
+
+  RecipeTextField desc;
+
+  RecipeTextField url;
+
   @override
   Widget build(BuildContext context) {
+    title = RecipeTextField(
+      text: 'Recipe title',
+      controller: titleController,
+    );
+    desc = RecipeTextField(
+      text: 'Add a description',
+      controller: descController,
+    );
+    url = RecipeTextField(
+      text: 'URL',
+      controller: urlController,
+    );
     return Container(
-      child: ListView(
+      child: Column(
         children: <Widget>[
           SizedBox(height: 12),
-          RecipeTextField(
-            text: 'Recipe title',
-            controller: titleController,
-          ),
+          title,
           SizedBox(height: 12),
-          RecipeTextField(
-            text: 'Add a description',
-            controller: descController,
-          ),
+          desc,
           SizedBox(height: 12),
-          RecipeTextField(
-            text: 'URL',
-            controller: urlController,
-          ),
+          url,
           SizedBox(height: 22),
           Container(
             height: 60,
@@ -42,9 +60,9 @@ class AddItemScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Enter',
+                    'Add',
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: textGrey),
                   ),
                 ],
               ),
@@ -55,48 +73,24 @@ class AddItemScreen extends StatelessWidget {
                     url: urlController.text);
                 Provider.of<MainModel>(context, listen: false)
                     .addRecipe(recipe);
-                String name = titleController.text;
-                titleController.text = '';
-                descController.text = '';
-                urlController.text = '';
+                setState(() {
+                  title.setIconColorWhite();
+                  desc.setIconColorWhite();
+                  url.setIconColorWhite();
+                });
+
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('$name recipe added'),
+                    content: Text('${titleController.text} recipe added'),
                   ),
                 );
+                titleController.clear();
+                descController.clear();
+                urlController.clear();
               },
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class RecipeTextField extends StatelessWidget {
-  final String text;
-  final TextEditingController controller;
-  const RecipeTextField({
-    Key key,
-    this.text = '',
-    this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(width: 0, style: BorderStyle.none),
-          ),
-          hintText: text,
-          fillColor: white,
-          focusColor: white,
-          filled: true,
-        ),
       ),
     );
   }

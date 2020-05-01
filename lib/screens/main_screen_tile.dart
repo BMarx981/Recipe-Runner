@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/screens/recipe_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
-import 'package:recipe_writer/models/recipe.dart';
 
 class MainScreenTile extends StatelessWidget {
   final Recipe recipe;
@@ -26,21 +26,26 @@ class MainScreenTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey[50],
           borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
+            Radius.circular(35.0),
           ),
-//          border: Border.all(width: 1.0),
         ),
         padding: EdgeInsets.all(4),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(
-              width: 75,
-              child: Text(
-                recipe.symbol,
-                style: TextStyle(fontSize: 40),
-              ),
-            ),
+            (recipe.imageURL.startsWith('https'))
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(recipe.imageURL),
+                    backgroundColor: textGrey,
+                    maxRadius: 35,
+                  )
+                : SizedBox(
+                    width: 75,
+                    child: Text(
+                      recipe.imageURL,
+                      style: TextStyle(fontSize: 40),
+                    ),
+                  ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -28,7 +28,6 @@ class RecipeScreen extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Container(
-//                        padding: EdgeInsets.only(left: ),
                         child: Icon(
                           Icons.arrow_back_ios,
                           size: 30,
@@ -54,7 +53,7 @@ class RecipeScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20,
                               decoration: TextDecoration.underline,
-                              color: Colors.blue),
+                              color: white),
                         ),
                       ),
                     )
@@ -66,29 +65,50 @@ class RecipeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   child: Container(
-//                    decoration: BoxDecoration(
-//                      borderRadius: BorderRadius.all(
-//                        Radius.circular(10.0),
-//                      ),
-//                    ),
                     padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          recipe.name,
-                          style: TextStyle(
-                            fontSize: 20,
+                        (recipe.imageURL == '🍔')
+                            ? Expanded(
+                                child: Text(
+                                  '🍔',
+                                  style: TextStyle(fontSize: 28),
+                                ),
+                              )
+                            : CircleAvatar(
+                                backgroundImage: NetworkImage(recipe.imageURL),
+                                backgroundColor: textGrey,
+                                maxRadius: 35,
+                              ),
+                        SizedBox(width: 18),
+                        Expanded(
+                          child: Text(
+                            recipe.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                            maxLines: 2,
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          recipe.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: Text(
+                              '${index + 1}. ${recipe.ingredients[index]}',
+                              style: TextStyle(fontSize: 18, color: white)),
+                        );
+                      },
+                      itemCount: recipe.ingredients.length,
+                    )),
                   ),
                 ),
               ],

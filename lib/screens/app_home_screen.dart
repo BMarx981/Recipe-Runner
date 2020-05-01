@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/add_item_screen.dart';
+import 'package:recipe_writer/screens/search_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
 import 'main_screen_list.dart';
@@ -12,14 +13,16 @@ class AppHomeScreen extends StatefulWidget {
 
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
-  String title = 'Recipe Runner';
+  String title = 'Comid';
   void _selectScreen(int index) {
     setState(
       () {
         _selectedScreenIndex = index;
         if (_selectedScreenIndex == 0) {
-          title = 'Recipe Runner';
+          title = 'CoBo';
         } else if (_selectedScreenIndex == 1) {
+          title = 'Search for recipes';
+        } else if (_selectedScreenIndex == 2) {
           title = 'Add a Recipe';
         }
       },
@@ -27,8 +30,8 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   }
 
   List<Widget> _screenList = <Widget>[
-    //TODO: Add title to each of these constructors
     MainScreenList(),
+    SearchScreen(),
     AddItemScreen(),
   ];
 
@@ -41,33 +44,58 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         backgroundColor: mainTheme,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: (_selectedScreenIndex == 1) ? blue : white,
             icon: Icon(
               Icons.list,
-              color: (_selectedScreenIndex == 1) ? white : blue,
+              color: (_selectedScreenIndex == 1 || _selectedScreenIndex == 2)
+                  ? white
+                  : blue,
             ),
             title: Text(
               'List',
-              style:
-                  TextStyle(color: (_selectedScreenIndex == 1) ? white : blue),
+              style: TextStyle(
+                  color:
+                      (_selectedScreenIndex == 1 || _selectedScreenIndex == 2)
+                          ? white
+                          : blue),
             ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: (_selectedScreenIndex == 0) ? blue : white,
+            icon: Icon(
+              Icons.search,
+              color: (_selectedScreenIndex == 0 || _selectedScreenIndex == 2)
+                  ? white
+                  : blue,
+            ),
+            title: Text(
+              'Search',
+              style: TextStyle(
+                  color:
+                      (_selectedScreenIndex == 0 || _selectedScreenIndex == 2)
+                          ? white
+                          : blue),
+            ),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(
               Icons.add,
-              color: (_selectedScreenIndex == 0) ? white : blue,
+              color: (_selectedScreenIndex == 0 || _selectedScreenIndex == 1)
+                  ? white
+                  : blue,
             ),
             title: Text(
               'Add',
-              style:
-                  TextStyle(color: (_selectedScreenIndex == 0) ? white : blue),
+              style: TextStyle(
+                  color:
+                      (_selectedScreenIndex == 0 || _selectedScreenIndex == 1)
+                          ? white
+                          : blue),
             ),
           ),
         ],
         onTap: (index) => _selectScreen(index),
       ),
       appBar: AppBar(
+        centerTitle: false,
         elevation: 0.0,
         backgroundColor: red,
         title: Text(title),
