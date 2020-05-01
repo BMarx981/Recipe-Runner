@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   final BuildContext context;
@@ -12,7 +11,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _metricValue;
+  bool _metricValue = false;
   String _fahcel = 'Fahrenheit';
 
   @override
@@ -30,31 +29,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     bottom: BorderSide(width: 1),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        _fahcel,
-                        style: TextStyle(fontSize: 18, color: white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      _fahcel,
+                      style: TextStyle(fontSize: 18, color: white),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(35),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(35),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PlatformSwitch(
-                            value: _metricValue,
-                            onChanged: (bool bValue) =>
-                                setState(() => changeMetricValue(bValue)),
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PlatformSwitch(
+                          value: _metricValue,
+                          onChanged: (bool bValue) =>
+                              setState(() => changeMetricValue(bValue)),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -62,7 +58,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Settings'),
+        centerTitle: false,
+        title: Text(
+          'Settings',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: mainTheme,
         elevation: 0.0,
         flexibleSpace: Container(
@@ -74,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> changeMetricValue(bool bValue) async {
+  changeMetricValue(bool bValue) {
     _metricValue = bValue;
     if (bValue) {
       _fahcel = 'Fahrenheit';
