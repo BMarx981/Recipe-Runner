@@ -19,7 +19,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
       () {
         _selectedScreenIndex = index;
         if (_selectedScreenIndex == 0) {
-          title = 'Comid';
+          title = 'CoBo';
         } else if (_selectedScreenIndex == 1) {
           title = 'Search for recipes';
         } else if (_selectedScreenIndex == 2) {
@@ -95,6 +95,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         onTap: (index) => _selectScreen(index),
       ),
       appBar: AppBar(
+        centerTitle: false,
         elevation: 0.0,
         backgroundColor: red,
         title: Text(title),
