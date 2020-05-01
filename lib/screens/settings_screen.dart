@@ -11,7 +11,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _metricValue = false;
+  bool _metricValue = true;
   String fahcel = 'Fahrenheit';
   @override
   Widget build(BuildContext context) {
