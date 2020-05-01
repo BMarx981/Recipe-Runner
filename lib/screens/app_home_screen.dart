@@ -19,7 +19,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
       () {
         _selectedScreenIndex = index;
         if (_selectedScreenIndex == 0) {
-          title = 'Comid';
+          title = 'CoBo';
         } else if (_selectedScreenIndex == 1) {
           title = 'Search for recipes';
         } else if (_selectedScreenIndex == 2) {
