@@ -35,6 +35,7 @@ class EditRecipeScreen extends StatelessWidget {
               textColor: Colors.white,
               onPressed: () {
                 recipe.name = titleController.text;
+                recipe.description = descriptionController.text;
               },
               child: Text(
                 'Save',

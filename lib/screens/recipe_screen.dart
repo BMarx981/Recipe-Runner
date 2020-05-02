@@ -4,9 +4,15 @@ import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'edit_recipe_screen.dart';
 
-class RecipeScreen extends StatelessWidget {
+class RecipeScreen extends StatefulWidget {
   final Recipe recipe;
   RecipeScreen(this.recipe);
+
+  @override
+  _RecipeScreenState createState() => _RecipeScreenState();
+}
+
+class _RecipeScreenState extends State<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,11 +48,13 @@ class RecipeScreen extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               return EditRecipeScreen(
-                                recipe: recipe,
+                                recipe: widget.recipe,
                               );
                             },
                           ),
-                        );
+                        ).then((value) {
+                          setState(() {});
+                        });
                       },
                       child: Container(
                         padding: EdgeInsets.only(right: 6),
@@ -71,7 +79,7 @@ class RecipeScreen extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        (recipe.imageURL == '🍔')
+                        (widget.recipe.imageURL == '🍔')
                             ? Expanded(
                                 child: Text(
                                   '🍔',
@@ -79,14 +87,15 @@ class RecipeScreen extends StatelessWidget {
                                 ),
                               )
                             : CircleAvatar(
-                                backgroundImage: NetworkImage(recipe.imageURL),
+                                backgroundImage:
+                                    NetworkImage(widget.recipe.imageURL),
                                 backgroundColor: textGrey,
                                 maxRadius: 35,
                               ),
                         SizedBox(width: 18),
                         Expanded(
                           child: Text(
-                            recipe.name,
+                            widget.recipe.name,
                             style: TextStyle(
                               fontSize: 20,
                             ),
@@ -101,17 +110,17 @@ class RecipeScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      child: (recipe.ingredients != null)
+                      child: (widget.recipe.ingredients != null)
                           ? ListView.builder(
                               itemBuilder: (context, index) {
                                 return Container(
                                   child: Text(
-                                      '${index + 1}. ${recipe.ingredients[index]}',
+                                      '${index + 1}. ${widget.recipe.ingredients[index]}',
                                       style: TextStyle(
                                           fontSize: 18, color: white)),
                                 );
                               },
-                              itemCount: recipe.ingredients.length,
+                              itemCount: widget.recipe.ingredients.length,
                             )
                           : Text(
                               'No ingredients added yet.',
