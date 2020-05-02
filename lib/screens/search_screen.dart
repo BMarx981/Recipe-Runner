@@ -56,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     searchfield = RecipeTextField(
-      text: 'Search',
+      text: 'Find the recipe you are looking for here.',
       controller: tc,
     );
     return Container(
@@ -68,6 +68,10 @@ class _SearchScreenState extends State<SearchScreen> {
             height: 22,
           ),
           Container(
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
             height: 60,
             child: RaisedButton(
               //Done button
@@ -76,10 +80,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Done',
+                    'Submit',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: textGrey,
+                      color: white,
                       fontSize: 16,
                     ),
                   ),
@@ -90,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Radius.circular(35),
                 ),
               ),
-              color: white,
+              color: Colors.grey[400],
               onPressed: () {
                 searchfield.toggleIconColor();
                 getNetworkData(tc.text);
