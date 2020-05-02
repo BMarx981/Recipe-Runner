@@ -67,40 +67,82 @@ class _SearchScreenState extends State<SearchScreen> {
           SizedBox(
             height: 22,
           ),
-          Container(
-            padding: EdgeInsets.only(
-              left: 10,
-              right: 10,
-            ),
-            height: 60,
-            child: RaisedButton(
-              //Done button
-              elevation: 5.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Submit',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: white,
-                      fontSize: 16,
-                    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    right: 10,
                   ),
-                ],
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(35),
+                  height: 60,
+                  child: RaisedButton(
+                    //Done button
+                    elevation: 5.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Submit',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      ),
+                    ),
+                    color: Colors.grey[400],
+                    onPressed: () {
+                      searchfield.toggleIconColor();
+                      getNetworkData(tc.text);
+                      tc.clear();
+                    },
+                  ),
                 ),
               ),
-              color: Colors.grey[400],
-              onPressed: () {
-                searchfield.toggleIconColor();
-                getNetworkData(tc.text);
-                tc.clear();
-              },
-            ),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                ),
+                height: 60,
+                child: RaisedButton(
+                  //Done button
+                  elevation: 5.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Clear',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
+                    ),
+                  ),
+                  color: Colors.grey[400],
+                  onPressed: () {
+                    setState(() {
+                      _searchedList.clear();
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 22,
