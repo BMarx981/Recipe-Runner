@@ -10,11 +10,12 @@ class PictureScreen extends StatelessWidget {
         Navigator.pop(context);
       },
       child: Container(
-          child: Center(
-        child: Image(
-          image: NetworkImage(image),
+        child: Center(
+          child: Image(
+            image: NetworkImage(image),
+          ),
         ),
-      )),
+      ),
     );
   }
 }

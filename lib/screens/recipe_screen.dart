@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'edit_recipe_screen.dart';
-import 'picture_screen.dart';
 
 class RecipeScreen extends StatefulWidget {
   final Recipe recipe;
@@ -31,9 +30,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                      onTap: () => Navigator.pop(context),
                       child: Container(
                         child: Icon(
                           Icons.arrow_back_ios,
@@ -53,9 +50,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               );
                             },
                           ),
-                        ).then((value) {
-                          setState(() {});
-                        });
+                        ).then((value) => setState(() {}));
                       },
                       child: Container(
                         padding: EdgeInsets.only(right: 6),
@@ -88,14 +83,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 ),
                               )
                             : GestureDetector(
-                                onTap: () {
-                                  //TODO: put picture page here
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return PictureScreen(
-                                        image: widget.recipe.imageURL);
-                                  }));
-                                },
+                                onTap: () =>
+                                    _showDialog(widget.recipe.imageURL),
                                 child: CircleAvatar(
                                   backgroundImage:
                                       NetworkImage(widget.recipe.imageURL),
@@ -145,6 +134,32 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialog(image) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            child: Center(
+              child: Image(
+                image: NetworkImage(image),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
