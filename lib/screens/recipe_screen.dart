@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'edit_recipe_screen.dart';
+import 'picture_screen.dart';
 
 class RecipeScreen extends StatefulWidget {
   final Recipe recipe;
@@ -86,11 +87,21 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                   style: TextStyle(fontSize: 28),
                                 ),
                               )
-                            : CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(widget.recipe.imageURL),
-                                backgroundColor: textGrey,
-                                maxRadius: 35,
+                            : GestureDetector(
+                                onTap: () {
+                                  //TODO: put picture page here
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                    return PictureScreen(
+                                        image: widget.recipe.imageURL);
+                                  }));
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(widget.recipe.imageURL),
+                                  backgroundColor: textGrey,
+                                  maxRadius: 35,
+                                ),
                               ),
                         SizedBox(width: 18),
                         Expanded(
