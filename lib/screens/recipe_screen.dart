@@ -41,7 +41,9 @@ class RecipeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return EditRecipeScreen();
+                              return EditRecipeScreen(
+                                recipe: recipe,
+                              );
                             },
                           ),
                         );
