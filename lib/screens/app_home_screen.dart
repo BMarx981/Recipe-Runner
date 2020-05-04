@@ -13,13 +13,13 @@ class AppHomeScreen extends StatefulWidget {
 
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
-  String title = 'CoBo';
+  String title = 'Cobo';
   void _selectScreen(int index) {
     setState(
       () {
         _selectedScreenIndex = index;
         if (_selectedScreenIndex == 0) {
-          title = 'CoBo';
+          title = 'Cobo';
         } else if (_selectedScreenIndex == 1) {
           title = 'Search recipes';
         } else if (_selectedScreenIndex == 2) {
