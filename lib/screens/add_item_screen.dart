@@ -47,47 +47,53 @@ class _AddItemScreenState extends State<AddItemScreen> {
           SizedBox(height: 12),
           url,
           SizedBox(height: 22),
-          Container(
-            height: 60,
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(35),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 18.0,
+              right: 18,
+            ),
+            child: Container(
+              height: 60,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(35),
+                  ),
                 ),
-              ),
-              color: white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Add',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: textGrey),
-                  ),
-                ],
-              ),
-              onPressed: () {
-                Recipe recipe = Recipe(
-                    name: titleController.text,
-                    description: descController.text,
-                    url: urlController.text);
-                Provider.of<MainModel>(context, listen: false)
-                    .addRecipe(recipe);
-                setState(() {
-                  title.setIconColorWhite();
-                  desc.setIconColorWhite();
-                  url.setIconColorWhite();
-                });
+                color: Colors.grey[400],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Add',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(color: white),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  Recipe recipe = Recipe(
+                      name: titleController.text,
+                      description: descController.text,
+                      url: urlController.text);
+                  Provider.of<MainModel>(context, listen: false)
+                      .addRecipe(recipe);
+                  setState(() {
+                    title.setIconColorWhite();
+                    desc.setIconColorWhite();
+                    url.setIconColorWhite();
+                  });
 
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${titleController.text} recipe added'),
-                  ),
-                );
-                titleController.clear();
-                descController.clear();
-                urlController.clear();
-              },
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${titleController.text} recipe added'),
+                    ),
+                  );
+                  titleController.clear();
+                  descController.clear();
+                  urlController.clear();
+                },
+              ),
             ),
           ),
         ],
