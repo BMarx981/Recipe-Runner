@@ -31,22 +31,32 @@ class _SearchScreenState extends State<SearchScreen> {
         );
   }
 
+  List<String> extractInstructions(List list) {
+    List<String> steps = [];
+    list.forEach((obj) {
+      List<dynamic> stepsData = obj['steps'];
+      stepsData.forEach((step) {
+        steps.add(step['step']);
+      });
+    });
+    return steps;
+  }
+
   getNetworkData(String query) async {
     Networking n = Networking();
     respMap = await n.getRequest(query);
-    List<dynamic> hits = respMap['hits'];
-    hits.forEach((hit) {
-      Map<String, dynamic> recipe = hit['recipe'];
-      List<String> ingredients = List<String>.from(recipe['ingredientLines']);
-      Recipe rec = Recipe(
-        name: recipe['label'],
-        imageURL: recipe['image'],
-        url: recipe['url'],
-      );
-      rec.ingredients = ingredients;
-      rec.description = '';
-      setState(() => _searchedList.insert(0, SearchResultTile(rec: rec)));
-      _searchedRecipes.add(rec);
+    List<dynamic> results = respMap['results'];
+    results.forEach((result) async {
+      dynamic id = result['id'];
+      List<dynamic> instructionsData = await n.getInstructions(id.toString());
+      List<String> steps = extractInstructions(instructionsData);
+      Recipe recipe = Recipe(
+          name: result['title'],
+          imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
+          directions: steps);
+      print(steps);
+      _searchedRecipes.add(recipe);
+      setState(() => _searchedList.insert(0, SearchResultTile(rec: recipe)));
     });
     Provider.of<MainModel>(context, listen: false)
         .searchResults

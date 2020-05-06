@@ -42,7 +42,7 @@ class MainScreenTile extends StatelessWidget {
                 : SizedBox(
                     width: 75,
                     child: Text(
-                      recipe.imageURL,
+                      recipe.imageURL ?? ' ',
                       style: TextStyle(fontSize: 40),
                     ),
                   ),
@@ -51,12 +51,12 @@ class MainScreenTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    recipe.name,
+                    recipe.name ?? ' ',
                     style: TextStyle(color: Colors.black),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    recipe.description,
+                    recipe.description ?? ' ',
                     maxLines: 2,
                     style: TextStyle(color: Colors.black),
                     overflow: TextOverflow.ellipsis,
