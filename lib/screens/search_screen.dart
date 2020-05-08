@@ -39,6 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
         steps.add(step['step']);
       });
     });
+    debugPrint('getNetworkData ${steps.toString()}', wrapWidth: 1000);
     return steps;
   }
 
@@ -48,13 +49,13 @@ class _SearchScreenState extends State<SearchScreen> {
     List<dynamic> results = respMap['results'];
     results.forEach((result) async {
       dynamic id = result['id'];
+      debugPrint('getNetworkData ${result.toString()}', wrapWidth: 1000);
       List<dynamic> instructionsData = await n.getInstructions(id.toString());
       List<String> steps = extractInstructions(instructionsData);
       Recipe recipe = Recipe(
           name: result['title'],
           imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
           directions: steps);
-      print(steps);
       _searchedRecipes.add(recipe);
       setState(() => _searchedList.insert(0, SearchResultTile(rec: recipe)));
     });
