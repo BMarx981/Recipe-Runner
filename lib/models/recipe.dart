@@ -13,4 +13,8 @@ class Recipe {
     this.ingredients,
     this.directions,
   });
+
+  factory Recipe.fromJson(Map<String, dynamic> parsedJson) {
+    return Recipe(name: parsedJson['title'], imageURL: parsedJson['image']);
+  }
 }

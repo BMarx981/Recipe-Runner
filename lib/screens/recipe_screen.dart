@@ -106,7 +106,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -115,9 +115,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   child: Text(
-                                      '${index + 1}. ${widget.recipe.ingredients[index]}',
-                                      style: TextStyle(
-                                          fontSize: 18, color: white)),
+                                    '${index + 1}. ${widget.recipe.ingredients[index]}',
+                                    style:
+                                        TextStyle(fontSize: 18, color: white),
+                                  ),
                                 );
                               },
                               itemCount: widget.recipe.ingredients.length,
@@ -127,6 +128,26 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               style: TextStyle(fontSize: 18, color: white),
                             ),
                     ),
+                  ),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                    child: (widget.recipe.directions != null)
+                        ? ListView.builder(
+                            itemCount: widget.recipe.directions.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Text(
+                                  '${index + 1}. ${widget.recipe.directions[index]}',
+                                  style: TextStyle(fontSize: 18, color: white),
+                                ),
+                              );
+                            })
+                        : Text(
+                            'No directions added yet.',
+                            style: TextStyle(fontSize: 18, color: white),
+                          ),
                   ),
                 ),
               ],
