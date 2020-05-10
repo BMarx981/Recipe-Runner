@@ -13,6 +13,32 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  PageController _controller = PageController(
+    initialPage: 0,
+  );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  PageView _buildPageView() {
+    return PageView(
+      controller: _controller,
+      children: <Widget>[
+        RecipeList(dataList: widget.recipe.ingredients, title: 'ingredients'),
+        RecipeList(dataList: widget.recipe.directions, title: 'directions'),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -97,7 +123,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                           child: Text(
                             widget.recipe.name,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 28,
                             ),
                             maxLines: 2,
                           ),
@@ -106,49 +132,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: (widget.recipe.ingredients != null)
-                          ? ListView.builder(
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  child: Text(
-                                    '${index + 1}. ${widget.recipe.ingredients[index]}',
-                                    style:
-                                        TextStyle(fontSize: 18, color: white),
-                                  ),
-                                );
-                              },
-                              itemCount: widget.recipe.ingredients.length,
-                            )
-                          : Text(
-                              'No ingredients added yet.',
-                              style: TextStyle(fontSize: 18, color: white),
-                            ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: (widget.recipe.directions != null)
-                        ? ListView.builder(
-                            itemCount: widget.recipe.directions.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: Text(
-                                  '${index + 1}. ${widget.recipe.directions[index]}',
-                                  style: TextStyle(fontSize: 18, color: white),
-                                ),
-                              );
-                            })
-                        : Text(
-                            'No directions added yet.',
-                            style: TextStyle(fontSize: 18, color: white),
-                          ),
-                  ),
-                ),
+                Expanded(child: _buildPageView()),
               ],
             ),
           ),
@@ -180,6 +164,57 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ],
         );
       },
+    );
+  }
+}
+
+class RecipeList extends StatelessWidget {
+  const RecipeList({
+    Key key,
+    this.dataList,
+    @required this.title,
+  }) : super(key: key);
+
+  final List<String> dataList;
+  final String title;
+
+  Widget _buildFirstElement(String title) {
+    return Container(
+      child: Center(
+        child: Text(
+          title.toUpperCase(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 28,
+            color: white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: (dataList != null)
+          ? ListView.builder(
+              itemCount: dataList.length,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return _buildFirstElement(title);
+                }
+                index -= 1;
+                return Container(
+                  child: Text(
+                    '${index + 1}. ${dataList[index]}',
+                    style: TextStyle(fontSize: 20, color: white),
+                  ),
+                );
+              })
+          : Text(
+              'No $title added yet.',
+              style: TextStyle(fontSize: 18, color: white),
+            ),
     );
   }
 }
