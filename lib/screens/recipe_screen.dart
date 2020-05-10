@@ -106,7 +106,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                   ),
                 ),
-                Flexible(
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -130,8 +130,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                   ),
                 ),
-                Flexible(
-                  flex: 3,
+                Expanded(
                   child: Container(
                     child: (widget.recipe.directions != null)
                         ? ListView.builder(
