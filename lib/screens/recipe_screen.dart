@@ -15,6 +15,7 @@ class RecipeScreen extends StatefulWidget {
 class _RecipeScreenState extends State<RecipeScreen> {
   PageController _controller = PageController(
     initialPage: 0,
+    viewportFraction: 0.95,
   );
 
   @override
@@ -179,15 +180,16 @@ class RecipeList extends StatelessWidget {
   final String title;
 
   Widget _buildFirstElement(String title) {
+    TextStyle titleStyles = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 28,
+      color: white,
+    );
     return Container(
       child: Center(
         child: Text(
           title.toUpperCase(),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
-            color: white,
-          ),
+          style: titleStyles,
         ),
       ),
     );
@@ -211,9 +213,14 @@ class RecipeList extends StatelessWidget {
                   ),
                 );
               })
-          : Text(
-              'No $title added yet.',
-              style: TextStyle(fontSize: 18, color: white),
+          : Column(
+              children: <Widget>[
+                _buildFirstElement(title),
+                Text(
+                  'No $title added yet.',
+                  style: TextStyle(fontSize: 18, color: white),
+                ),
+              ],
             ),
     );
   }

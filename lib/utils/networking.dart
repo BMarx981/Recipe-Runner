@@ -14,7 +14,6 @@ class Networking {
 //    http.Response response = await http.get(apiCall);
     http.Response response = await http.get('http://127.0.0.1:8080');
     if (response.statusCode >= 200 && response.statusCode < 300) {
-//      debugPrint(response.body, wrapWidth: 1000);
       return json.decode(response.body);
     }
     return null;
@@ -25,7 +24,6 @@ class Networking {
 //    http.Response response = await http.get(apiCall);
     http.Response response = await http.get('http://127.0.0.1:8080/second');
     if (response.statusCode >= 200 && response.statusCode < 300) {
-//      debugPrint(response.body, wrapWidth: 1000);
       return json.decode(response.body);
     }
     return null;
