@@ -48,10 +48,13 @@ class _SearchScreenState extends State<SearchScreen> {
     data.keys.toList().forEach((ingredient) {
       List<dynamic> objList = data[ingredient];
       objList.forEach((obj) {
-        newList.add(obj['name']);
+        Map<String, dynamic> amountObj = obj['amount'];
+        Map<String, dynamic> metricObj = amountObj['us'];
+        String amount =
+            '${metricObj['value']} ${metricObj['unit']} ${obj['name']}';
+        newList.add(amount);
       });
     });
-    print(newList);
     return newList;
   }
 
