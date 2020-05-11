@@ -15,7 +15,7 @@ class Networking {
 //    http.Response response = await http.get('http://127.0.0.1:8080');
     if (response.statusCode >= 200 && response.statusCode < 300) {
       debugPrint(Utf8Decoder().convert(response.bodyBytes), wrapWidth: 1000);
-      return json.decode(response.body);
+      return json.decode(Utf8Decoder().convert(response.bodyBytes));
     }
     return null;
   }
@@ -26,7 +26,7 @@ class Networking {
 //    http.Response response = await http.get('http://127.0.0.1:8080/second');
     if (response.statusCode >= 200 && response.statusCode < 300) {
       debugPrint(Utf8Decoder().convert(response.bodyBytes), wrapWidth: 1000);
-      return json.decode(response.body);
+      return json.decode(Utf8Decoder().convert(response.bodyBytes));
     }
     return null;
   }
@@ -37,7 +37,7 @@ class Networking {
 //    http.Response response = await http.get('http://127.0.0.1:8080/third');
     if (response.statusCode >= 200 && response.statusCode < 300) {
       debugPrint(Utf8Decoder().convert(response.bodyBytes), wrapWidth: 1000);
-      return json.decode(response.body);
+      return json.decode(Utf8Decoder().convert(response.bodyBytes));
     }
     print('Problem with the response is ${response.statusCode}');
     return null;

@@ -64,7 +64,6 @@ class _SearchScreenState extends State<SearchScreen> {
     List<dynamic> results = respMap['results'];
     results.forEach((result) async {
       dynamic id = result['id'];
-//      debugPrint('getNetworkData ${result.toString()}', wrapWidth: 1000);
       List<String> directions =
           extractDirections(await n.getDirections(id.toString()));
       Map<String, dynamic> ingredientsData =
