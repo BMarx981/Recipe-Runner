@@ -93,47 +93,56 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   ],
                 ),
                 SizedBox(height: 8),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        (widget.recipe.imageURL == '🍔')
-                            ? Expanded(
-                                child: Text(
-                                  '🍔',
-                                  style: TextStyle(fontSize: 28),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          (widget.recipe.imageURL == '🍔')
+                              ? Expanded(
+                                  child: Text(
+                                    '🍔',
+                                    style: TextStyle(fontSize: 28),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () =>
+                                      _showDialog(widget.recipe.imageURL),
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(widget.recipe.imageURL),
+                                    backgroundColor: textGrey,
+                                    maxRadius: 35,
+                                  ),
                                 ),
-                              )
-                            : GestureDetector(
-                                onTap: () =>
-                                    _showDialog(widget.recipe.imageURL),
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(widget.recipe.imageURL),
-                                  backgroundColor: textGrey,
-                                  maxRadius: 35,
-                                ),
+                          SizedBox(width: 18),
+                          Expanded(
+                            child: Text(
+                              widget.recipe.name,
+                              style: TextStyle(
+                                fontSize: 28,
                               ),
-                        SizedBox(width: 18),
-                        Expanded(
-                          child: Text(
-                            widget.recipe.name,
-                            style: TextStyle(
-                              fontSize: 28,
+                              maxLines: 2,
                             ),
-                            maxLines: 2,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                Expanded(child: _buildPageView()),
+                Expanded(
+                  child: Container(
+                    decoration:
+                        BoxDecoration(border: Border.all(), color: textGrey),
+                    child: _buildPageView(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -187,9 +196,12 @@ class RecipeList extends StatelessWidget {
     );
     return Container(
       child: Center(
-        child: Text(
-          title.toUpperCase(),
-          style: titleStyles,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title.toUpperCase(),
+            style: titleStyles,
+          ),
         ),
       ),
     );
@@ -198,6 +210,7 @@ class RecipeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 8),
       child: (dataList != null)
           ? ListView.builder(
               itemCount: dataList.length,
@@ -206,10 +219,13 @@ class RecipeList extends StatelessWidget {
                   return _buildFirstElement(title);
                 }
                 index -= 1;
-                return Container(
-                  child: Text(
-                    '${index + 1}. ${dataList[index]}',
-                    style: TextStyle(fontSize: 20, color: white),
+                return Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Container(
+                    child: Text(
+                      '${index + 1}. ${dataList[index]}',
+                      style: TextStyle(fontSize: 20, color: white),
+                    ),
                   ),
                 );
               })
