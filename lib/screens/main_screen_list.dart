@@ -15,12 +15,15 @@ class _MainScreenListState extends State<MainScreenList> {
     return ListView.builder(
       itemCount: Provider.of<MainModel>(context).recipes.length,
       itemBuilder: (context, index) {
-        final item = Provider.of<MainModel>(context).recipes[index];
+        final item =
+            Provider.of<MainModel>(context, listen: false).recipes[index];
         return Dismissible(
           key: Key(item.toString()),
           onDismissed: (direction) {
             setState(() {
-              Provider.of<MainModel>(context).recipes.removeAt(index);
+              Provider.of<MainModel>(context, listen: false)
+                  .recipes
+                  .removeAt(index);
             });
           },
           child: Padding(
