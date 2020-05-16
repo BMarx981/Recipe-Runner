@@ -17,23 +17,23 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   final urlController = TextEditingController();
 
-  RecipeTextField title;
+  RecipeTextField titleField;
 
-  RecipeTextField desc;
+  RecipeTextField descField;
 
-  RecipeTextField url;
+  RecipeTextField urlField;
 
   @override
   Widget build(BuildContext context) {
-    title = RecipeTextField(
+    titleField = RecipeTextField(
       text: 'Recipe title',
       controller: titleController,
     );
-    desc = RecipeTextField(
+    descField = RecipeTextField(
       text: 'Add a description',
       controller: descController,
     );
-    url = RecipeTextField(
+    urlField = RecipeTextField(
       text: 'URL',
       controller: urlController,
     );
@@ -41,11 +41,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
       child: Column(
         children: <Widget>[
           SizedBox(height: 12),
-          title,
+          titleField,
           SizedBox(height: 12),
-          desc,
+          descField,
           SizedBox(height: 12),
-          url,
+          urlField,
           SizedBox(height: 22),
           Padding(
             padding: const EdgeInsets.only(
@@ -79,9 +79,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Provider.of<MainModel>(context, listen: false)
                       .addRecipe(recipe);
                   setState(() {
-                    title.setIconColorWhite();
-                    desc.setIconColorWhite();
-                    url.setIconColorWhite();
+                    titleField.setIconColorWhite();
+                    descField.setIconColorWhite();
+                    urlField.setIconColorWhite();
                   });
 
                   Scaffold.of(context).showSnackBar(
