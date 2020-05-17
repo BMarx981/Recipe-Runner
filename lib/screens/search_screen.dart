@@ -131,6 +131,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     onPressed: () {
                       getNetworkData(tc.text);
                       tc.clear();
+                      setState(() {});
                     },
                   ),
                 ),
