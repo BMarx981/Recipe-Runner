@@ -23,6 +23,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   RecipeTextField urlField;
 
+  bool colorChange = false;
+
+  bool callBack() {
+    setState(() {
+      return false;
+    });
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     titleField = RecipeTextField(
@@ -78,20 +87,21 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       url: urlController.text);
                   Provider.of<MainModel>(context, listen: false)
                       .addRecipe(recipe);
-                  setState(() {
-                    titleField.setIconColorWhite();
-                    descField.setIconColorWhite();
-                    urlField.setIconColorWhite();
-                  });
-
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${titleController.text} recipe added'),
                     ),
                   );
+                  titleField = RecipeTextField(
+                    text: 'Recipe title',
+                    controller: titleController,
+                  );
+                  descField = descField;
+                  urlField = urlField;
                   titleController.clear();
                   descController.clear();
                   urlController.clear();
+                  setState(() {});
                 },
               ),
             ),

@@ -4,23 +4,6 @@ import 'package:recipe_writer/utils/colors.dart';
 class RecipeTextField extends StatefulWidget {
   final String text;
   final TextEditingController controller;
-  Color iconColor = white;
-
-  toggleIconColor() {
-    if (iconColor == textGrey) {
-      iconColor = white;
-      return;
-    }
-    iconColor = textGrey;
-  }
-
-  setIconColorGrey() {
-    iconColor = textGrey;
-  }
-
-  setIconColorWhite() {
-    iconColor = white;
-  }
 
   RecipeTextField({
     Key key,
@@ -33,17 +16,23 @@ class RecipeTextField extends StatefulWidget {
 }
 
 class _RecipeTextFieldState extends State<RecipeTextField> {
+  bool toggleColor = false;
+
+  @override
+  void didUpdateWidget(RecipeTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    toggleColor = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
         onChanged: (newText) {
-          if (newText.isNotEmpty) {
-            setState(() => widget.setIconColorGrey());
-          }
-          if (newText.isEmpty) {
-            setState(() => widget.toggleIconColor());
-          }
+          setState(() {
+            if (newText.isNotEmpty) toggleColor = true;
+            if (newText.isEmpty) toggleColor = false;
+          });
         },
         controller: widget.controller,
         decoration: InputDecoration(
@@ -56,13 +45,17 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           focusColor: white,
           filled: true,
           suffixIcon: IconButton(
-            icon: Icon(
-              Icons.cancel,
-              color: widget.iconColor,
+            icon: Visibility(
+              visible: toggleColor,
+              replacement: Text(""),
+              child: Icon(
+                Icons.cancel,
+                color: textGrey,
+              ),
             ),
             onPressed: () {
               setState(() {
-                widget.toggleIconColor();
+                toggleColor = false;
                 widget.controller.clear();
               });
             },

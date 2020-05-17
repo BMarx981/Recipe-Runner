@@ -129,7 +129,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     color: Colors.grey[400],
                     onPressed: () {
-                      searchfield.toggleIconColor();
                       getNetworkData(tc.text);
                       tc.clear();
                     },
