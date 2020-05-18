@@ -26,6 +26,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   RecipeTextField urlField;
 
+  RecipeTextField ingredientsField;
+
+  RecipeTextField directionsField;
+
   bool colorChange = false;
 
   @override
@@ -38,17 +42,29 @@ class _AddItemScreenState extends State<AddItemScreen> {
       text: 'Add a description',
       controller: descController,
     );
+    ingredientsField = RecipeTextField(
+      text: 'Add Ingredients',
+      controller: urlController,
+    );
+    directionsField = RecipeTextField(
+      text: 'Add Directions',
+      controller: urlController,
+    );
     urlField = RecipeTextField(
       text: 'URL',
       controller: urlController,
     );
     return Container(
-      child: Column(
+      child: ListView(
         children: <Widget>[
           SizedBox(height: 12),
           titleField,
           SizedBox(height: 12),
           descField,
+          SizedBox(height: 12),
+          ingredientsField,
+          SizedBox(height: 12),
+          directionsField,
           SizedBox(height: 12),
           urlField,
           SizedBox(height: 22),
