@@ -19,8 +19,15 @@ class MainModel extends ChangeNotifier {
             'This is the most delicious roasted garlic recipe you will ever find. It\'s amazing',
         imageURL: '🍔',
         ingredients: [
+          '2 cloves of garlic',
+          '1/2 onion',
+          '2 tbls butter',
+        ],
+        directions: [
           'Heat oven to 350 degrees',
           'chop garlic',
+          'chop onion',
+          'melt butter in a pan with onion',
           'place garlic in a pan',
           'put it in the oven for 45 minutes'
         ]),

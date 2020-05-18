@@ -212,23 +212,27 @@ class RecipeList extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 8),
       child: (dataList != null)
-          ? ListView.builder(
-              itemCount: dataList.length,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return _buildFirstElement(title);
-                }
-                index -= 1;
-                return Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Container(
-                    child: Text(
-                      '${index + 1}. ${dataList[index]}',
-                      style: TextStyle(fontSize: 20, color: white),
-                    ),
+          ? Column(
+              children: <Widget>[
+                _buildFirstElement(title),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: dataList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Container(
+                          child: Text(
+                            '${index + 1}. ${dataList[index]}',
+                            style: TextStyle(fontSize: 20, color: white),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              })
+                ),
+              ],
+            )
           : Column(
               children: <Widget>[
                 _buildFirstElement(title),
