@@ -8,6 +8,8 @@ class MainModel extends ChangeNotifier {
   String description;
   String imageURL = '🍔';
   String url;
+  List<String> directions = [];
+  List<String> ingredients = [];
 
   //The list of recipes for the main screen.
   List<Recipe> recipes = [
