@@ -4,6 +4,7 @@ import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
+import 'package:recipe_writer/utils/db_helper.dart';
 
 class AddItemScreen extends StatefulWidget {
   @override
@@ -11,6 +12,8 @@ class AddItemScreen extends StatefulWidget {
 }
 
 class _AddItemScreenState extends State<AddItemScreen> {
+  final dbHelper = DatabaseHelper.instance;
+
   final titleController = TextEditingController();
 
   final descController = TextEditingController();
@@ -24,13 +27,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   RecipeTextField urlField;
 
   bool colorChange = false;
-
-  bool callBack() {
-    setState(() {
-      return false;
-    });
-    return false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +88,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       content: Text('${titleController.text} recipe added'),
                     ),
                   );
-                  titleField = RecipeTextField(
-                    text: 'Recipe title',
-                    controller: titleController,
-                  );
+                  titleField = titleField;
                   descField = descField;
                   urlField = urlField;
                   titleController.clear();
