@@ -50,46 +50,146 @@ class EditRecipeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Title',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                        color: white,
-                      )),
+                _buildFields(
+                  'Title',
+                  titleController,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RecipeTextField(
-                    controller: titleController,
-                    text: 'Edit recipe title',
-                  ),
+                _buildFields(
+                  'Description',
+                  descriptionController,
                 ),
-                SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Description',
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                        color: white,
-                      )),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Ingredients',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: white,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RecipeTextField(
+                                controller: ingredientsController,
+                                text: 'Edit ingredients'),
+                          ),
+                          SizedBox(width: 6),
+                          Column(
+                            children: <Widget>[
+                              RaisedButton(
+                                color: textGrey,
+                                child: Icon(
+                                  Icons.add,
+                                  color: white,
+                                ),
+                                onPressed: () {},
+                              ),
+                              RaisedButton(
+                                color: textGrey,
+                                child: Icon(
+                                  Icons.remove,
+                                  color: white,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RecipeTextField(
-                    controller: descriptionController,
-                    text: 'Edit description',
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Directions',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          color: white,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RecipeTextField(
+                                controller: directionsController,
+                                text: 'Edit directions'),
+                          ),
+                          SizedBox(width: 6),
+                          Column(
+                            children: <Widget>[
+                              RaisedButton(
+                                color: textGrey,
+                                child: Icon(
+                                  Icons.add,
+                                  color: white,
+                                ),
+                                onPressed: () {},
+                              ),
+                              RaisedButton(
+                                color: textGrey,
+                                child: Icon(
+                                  Icons.remove,
+                                  color: white,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(height: 12),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildFields(String name, TextEditingController controller) {
+    String text = '';
+    if (name == 'Description') text = 'Edit description';
+    if (name == 'Title') text = 'Edit title';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(name,
+              maxLines: 2,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: white,
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RecipeTextField(
+            controller: controller,
+            text: text,
+          ),
+        ),
+        SizedBox(height: 12),
+      ],
     );
   }
 }
