@@ -162,16 +162,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       content: Text('${titleController.text} recipe added'),
                     ),
                   );
-                  titleField = titleField;
-                  descField = descField;
-                  urlField = urlField;
-                  directionsField = directionsField;
-                  ingredientsField = ingredientsField;
-                  titleController.clear();
-                  descController.clear();
-                  ingredientsController.clear();
-                  directionsController.clear();
-                  urlController.clear();
+                  _clear();
                   setState(() {});
                 },
               ),
@@ -180,5 +171,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ],
       ),
     );
+  }
+
+  void _clear() {
+    titleField = titleField;
+    descField = descField;
+    urlField = urlField;
+    directionsField = directionsField;
+    ingredientsField = ingredientsField;
+    titleController.clear();
+    descController.clear();
+    ingredientsController.clear();
+    directionsController.clear();
+    urlController.clear();
   }
 }
