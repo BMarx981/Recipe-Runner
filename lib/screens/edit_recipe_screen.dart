@@ -17,6 +17,8 @@ class EditRecipeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     titleController.text = recipe.name;
     descriptionController.text = recipe.description;
+    ingredientsController.text = recipe.ingredients[0];
+    directionsController.text = recipe.directions[0];
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -58,109 +60,91 @@ class EditRecipeScreen extends StatelessWidget {
                   'Description',
                   descriptionController,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Ingredients',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                          color: white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: RecipeTextField(
-                                controller: ingredientsController,
-                                text: 'Edit ingredients'),
-                          ),
-                          SizedBox(width: 6),
-                          Column(
-                            children: <Widget>[
-                              RaisedButton(
-                                color: textGrey,
-                                child: Icon(
-                                  Icons.add,
-                                  color: white,
-                                ),
-                                onPressed: () {},
-                              ),
-                              RaisedButton(
-                                color: textGrey,
-                                child: Icon(
-                                  Icons.remove,
-                                  color: white,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                buildEditLists(
+                  'Ingredients',
+                  ingredientsController,
+                  recipe.ingredients,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Directions',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                          color: white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: RecipeTextField(
-                                controller: directionsController,
-                                text: 'Edit directions'),
-                          ),
-                          SizedBox(width: 6),
-                          Column(
-                            children: <Widget>[
-                              RaisedButton(
-                                color: textGrey,
-                                child: Icon(
-                                  Icons.add,
-                                  color: white,
-                                ),
-                                onPressed: () {},
-                              ),
-                              RaisedButton(
-                                color: textGrey,
-                                child: Icon(
-                                  Icons.remove,
-                                  color: white,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                buildEditLists(
+                  'Directions',
+                  directionsController,
+                  recipe.directions,
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Column buildEditLists(
+      String title, TextEditingController controller, List<String> list) {
+    String text = '';
+    if (title == 'Ingredients' || recipe.ingredients.isEmpty) {
+      text = 'Add Ingredient';
+    }
+    if (title == 'Directions' || recipe.directions.isEmpty) {
+      text = 'Add Direction';
+    }
+    int index = 0;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              color: white,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: RecipeTextField(
+                  controller: controller,
+                  text: text,
+                ),
+              ),
+              SizedBox(width: 6),
+              Column(
+                children: <Widget>[
+                  RaisedButton(
+                    color: textGrey,
+                    child: Icon(
+                      Icons.add,
+                      color: white,
+                    ),
+                    onPressed: () {
+                      if (index == list.length - 1) return;
+                      index += 1;
+                      controller.text = list.elementAt(index);
+                    },
+                  ),
+                  RaisedButton(
+                    color: textGrey,
+                    child: Icon(
+                      Icons.remove,
+                      color: white,
+                    ),
+                    onPressed: () {
+                      if (index == 0) return;
+                      index -= 1;
+                      controller.text = list.elementAt(index);
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 
