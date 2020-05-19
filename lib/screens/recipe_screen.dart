@@ -50,7 +50,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              decoration: BoxDecoration(border: Border.all(), color: red),
+              decoration: BoxDecoration(
+                border: Border.all(),
+                color: red,
+                borderRadius: BorderRadius.circular(25.0),
+              ),
               child: RecipeList(
                   dataList: widget.recipe.ingredients, title: 'ingredients'),
             ),
@@ -72,8 +76,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              decoration:
-                  BoxDecoration(border: Border.all(), color: Color(0xFFABBA19)),
+              decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: Color(0xFFABBA19)),
               child: RecipeList(
                   dataList: widget.recipe.directions, title: 'directions'),
             ),
@@ -180,10 +186,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.transparent),
-                    child: _buildPageView(),
-                  ),
+                  child: _buildPageView(),
                 ),
               ],
             ),
