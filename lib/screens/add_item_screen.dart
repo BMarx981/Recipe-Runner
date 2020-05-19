@@ -112,7 +112,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       Icons.add,
                     ),
                     onPressed: () {
-                      ingredients.add(directionsController.text);
+                      directions.add(directionsController.text);
                       directionsController.clear();
                       setState(() {
                         colorChange = false;
