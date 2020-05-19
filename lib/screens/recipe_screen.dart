@@ -15,7 +15,7 @@ class RecipeScreen extends StatefulWidget {
 class _RecipeScreenState extends State<RecipeScreen> {
   PageController _controller = PageController(
     initialPage: 0,
-    viewportFraction: 0.95,
+    viewportFraction: 0.75,
   );
 
   @override
@@ -34,8 +34,51 @@ class _RecipeScreenState extends State<RecipeScreen> {
     return PageView(
       controller: _controller,
       children: <Widget>[
-        RecipeList(dataList: widget.recipe.ingredients, title: 'ingredients'),
-        RecipeList(dataList: widget.recipe.directions, title: 'directions'),
+        GestureDetector(
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EditRecipeScreen(
+                    recipe: widget.recipe,
+                  );
+                },
+              ),
+            ).then((value) => setState(() {}));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(), color: red),
+              child: RecipeList(
+                  dataList: widget.recipe.ingredients, title: 'ingredients'),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EditRecipeScreen(
+                    recipe: widget.recipe,
+                  );
+                },
+              ),
+            ).then((value) => setState(() {}));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(), color: Color(0xFFABBA19)),
+              child: RecipeList(
+                  dataList: widget.recipe.directions, title: 'directions'),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -138,8 +181,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(), color: textGrey),
+                    decoration: BoxDecoration(color: Colors.transparent),
                     child: _buildPageView(),
                   ),
                 ),
