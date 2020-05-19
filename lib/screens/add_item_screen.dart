@@ -20,6 +20,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   final urlController = TextEditingController();
 
+  final ingredientsController = TextEditingController();
+
+  final directionsController = TextEditingController();
+
   RecipeTextField titleField;
 
   RecipeTextField descField;
@@ -29,6 +33,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
   RecipeTextField ingredientsField;
 
   RecipeTextField directionsField;
+
+  List<String> ingredients = [];
+
+  List<String> directions = [];
 
   bool colorChange = false;
 
@@ -44,11 +52,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
     );
     ingredientsField = RecipeTextField(
       text: 'Add Ingredients',
-      controller: urlController,
+      controller: ingredientsController,
     );
     directionsField = RecipeTextField(
       text: 'Add Directions',
-      controller: urlController,
+      controller: directionsController,
     );
     urlField = RecipeTextField(
       text: 'URL',
@@ -62,9 +70,57 @@ class _AddItemScreenState extends State<AddItemScreen> {
           SizedBox(height: 12),
           descField,
           SizedBox(height: 12),
-          ingredientsField,
+          Row(
+            children: <Widget>[
+              Expanded(child: ingredientsField),
+              SizedBox(width: 12),
+              Container(
+                child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      ),
+                    ),
+                    color: Colors.grey[400],
+                    child: Icon(
+                      Icons.add,
+                    ),
+                    onPressed: () {
+                      ingredients.add(ingredientsController.text);
+                      ingredientsController.clear();
+                      setState(() {
+                        colorChange = false;
+                      });
+                    }),
+              ),
+            ],
+          ),
           SizedBox(height: 12),
-          directionsField,
+          Row(
+            children: <Widget>[
+              Expanded(child: directionsField),
+              SizedBox(width: 12),
+              Container(
+                child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      ),
+                    ),
+                    color: Colors.grey[400],
+                    child: Icon(
+                      Icons.add,
+                    ),
+                    onPressed: () {
+                      ingredients.add(directionsController.text);
+                      directionsController.clear();
+                      setState(() {
+                        colorChange = false;
+                      });
+                    }),
+              ),
+            ],
+          ),
           SizedBox(height: 12),
           urlField,
           SizedBox(height: 22),
@@ -96,6 +152,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   Recipe recipe = Recipe(
                       name: titleController.text,
                       description: descController.text,
+                      ingredients: ingredients,
+                      directions: directions,
                       url: urlController.text);
                   Provider.of<MainModel>(context, listen: false)
                       .addRecipe(recipe);
@@ -107,8 +165,12 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   titleField = titleField;
                   descField = descField;
                   urlField = urlField;
+                  directionsField = directionsField;
+                  ingredientsField = ingredientsField;
                   titleController.clear();
                   descController.clear();
+                  ingredientsController.clear();
+                  directionsController.clear();
                   urlController.clear();
                   setState(() {});
                 },
