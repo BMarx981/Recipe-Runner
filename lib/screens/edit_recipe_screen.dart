@@ -22,9 +22,30 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   final TextEditingController urlController = TextEditingController();
 
-  final List<String> tempDirections = [];
+  final List<TextEditingController> ingredientsControllers = [];
 
-  final List<String> tempIngredients = [];
+  final List<TextEditingController> directionsControllers = [];
+
+  bool dropped = false;
+
+  bool ingredientExpanded = false;
+
+  bool directionsExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.recipe.ingredients.forEach(
+      (element) => ingredientsControllers.add(
+        TextEditingController(text: element),
+      ),
+    );
+    widget.recipe.directions.forEach(
+      (element) => directionsControllers.add(
+        TextEditingController(text: element),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,60 +53,85 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     descriptionController.text = widget.recipe.description;
     ingredientsController.text = widget.recipe.ingredients[0];
     directionsController.text = widget.recipe.directions[0];
+
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          elevation: 0.0,
-          backgroundColor: red,
-          title: Text(
-            'Edit',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 34,
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.white,
-              onPressed: () {
-                widget.recipe.name = titleController.text;
-                widget.recipe.description = descriptionController.text;
-                widget.recipe.directions.addAll(tempDirections);
-                widget.recipe.ingredients.addAll(tempIngredients);
-              },
-              child: Text(
-                'Save',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: false,
+            elevation: 0.0,
+            backgroundColor: red,
+            title: Text(
+              'Edit',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 34,
               ),
             ),
-          ],
-        ),
-        body: Container(
-          decoration: BoxDecoration(gradient: colorGrad),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                _buildFields(
-                  'Title',
-                  titleController,
+            actions: <Widget>[
+              FlatButton(
+                textColor: Colors.white,
+                onPressed: () {
+                  saveChanges();
+                },
+                child: Text(
+                  'Save',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
-                _buildFields(
-                  'Description',
-                  descriptionController,
-                ),
-                _buildEditLists(
-                  'Ingredients',
-                  ingredientsController,
-                  widget.recipe.ingredients,
-                ),
-                _buildEditLists(
-                  'Directions',
-                  directionsController,
-                  widget.recipe.directions,
-                ),
-              ],
+              ),
+            ],
+          ),
+          body: Container(
+            decoration: BoxDecoration(gradient: colorGrad),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                children: [
+                  _buildFields(
+                    'Title',
+                    titleController,
+                  ),
+                  _buildFields(
+                    'Description',
+                    descriptionController,
+                  ),
+                  ExpansionPanelList(
+                    expansionCallback: (int index, bool isExpanded) {
+                      setState(() {
+                        ingredientExpanded = !ingredientExpanded;
+                      });
+                    },
+                    children: _buildExpansionPanels(
+                      context,
+                      widget.recipe.ingredients,
+                      'Ingredients',
+                      ingredientExpanded,
+                      ingredientsControllers,
+                    ),
+                  ),
+                  ExpansionPanelList(
+                    expansionCallback: (int index, bool isExpanded) {
+                      setState(() {
+                        directionsExpanded = !directionsExpanded;
+                      });
+                    },
+                    children: _buildExpansionPanels(
+                      context,
+                      widget.recipe.directions,
+                      'Directions',
+                      directionsExpanded,
+                      directionsControllers,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -93,76 +139,83 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     );
   }
 
-  Column _buildEditLists(
-      String title, TextEditingController controller, List<String> list) {
-    String text = '';
-    if (title == 'Ingredients' || widget.recipe.ingredients.isEmpty) {
-      text = 'Add Ingredient';
-    }
-    if (title == 'Directions' || widget.recipe.directions.isEmpty) {
-      text = 'Add Direction';
-    }
-    int index = 0;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 28,
-              color: white,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: RecipeTextField(
-                  controller: controller,
-                  text: text,
-                ),
-              ),
-              SizedBox(width: 6),
-              Column(
+  void saveChanges() {
+    widget.recipe.name = titleController.text;
+    widget.recipe.description = descriptionController.text;
+    widget.recipe.ingredients.clear();
+    ingredientsControllers.forEach((controller) {
+      widget.recipe.ingredients.add(controller.text);
+    });
+    directionsControllers.forEach((controller) {
+      widget.recipe.directions.add(controller.text);
+    });
+  }
+
+  List<ExpansionPanel> _buildExpansionPanels(
+    BuildContext context,
+    List<String> list,
+    String title,
+    bool expanded,
+    List<TextEditingController> controllers,
+  ) {
+    List<ExpansionPanel> exPanelList = [];
+    exPanelList.add(
+      ExpansionPanel(
+        canTapOnHeader: true,
+        headerBuilder: (BuildContext context, bool expanded) {
+          return Container(
+              color: Colors.transparent,
+              child: Row(
                 children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          color: textGrey,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                   RaisedButton(
-                    color: textGrey,
+                    color: red,
                     child: Icon(
                       Icons.add,
                       color: white,
                     ),
                     onPressed: () {
-                      if (index >= list.length - 1) return;
-                      index += 1;
-                      controller.text = list.elementAt(index);
-                      setState(() {});
+                      setState(() {
+                        directionsControllers.add(TextEditingController());
+                        ingredientsControllers.add(TextEditingController());
+                      });
                     },
-                  ), //-21 89 -65 nether position
-                  RaisedButton(
-                    color: textGrey,
-                    child: Icon(
-                      Icons.remove,
-                      color: white,
-                    ),
-                    onPressed: () {
-                      if (index == 0) return;
-                      index -= 1;
-                      controller.text = list.elementAt(index);
-                      setState(() {});
-                    },
-                  ),
+                  )
                 ],
-              )
-            ],
+              ));
+        },
+        isExpanded: expanded,
+        body: Container(
+          decoration: BoxDecoration(gradient: colorGrad),
+          height: 200,
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RecipeTextField(
+                  text: '${index + 1}. ${list[index]}',
+                  controller: controllers[index],
+                ),
+              );
+            },
           ),
-        )
-      ],
+        ),
+      ),
     );
+    return exPanelList;
   }
 
   Column _buildFields(String name, TextEditingController controller) {
