@@ -102,32 +102,39 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                     'Description',
                     descriptionController,
                   ),
-                  ExpansionPanelList(
-                    expansionCallback: (int index, bool isExpanded) {
-                      setState(() {
-                        ingredientExpanded = !ingredientExpanded;
-                      });
-                    },
-                    children: _buildExpansionPanels(
-                      context,
-                      widget.recipe.ingredients,
-                      'Ingredients',
-                      ingredientExpanded,
-                      ingredientsControllers,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ExpansionPanelList(
+                      expansionCallback: (int index, bool isExpanded) {
+                        setState(() {
+                          ingredientExpanded = !ingredientExpanded;
+                        });
+                      },
+                      children: _buildExpansionPanels(
+                        context,
+                        widget.recipe.ingredients,
+                        'Ingredients',
+                        ingredientExpanded,
+                        ingredientsControllers,
+                      ),
                     ),
                   ),
-                  ExpansionPanelList(
-                    expansionCallback: (int index, bool isExpanded) {
-                      setState(() {
-                        directionsExpanded = !directionsExpanded;
-                      });
-                    },
-                    children: _buildExpansionPanels(
-                      context,
-                      widget.recipe.directions,
-                      'Directions',
-                      directionsExpanded,
-                      directionsControllers,
+                  SizedBox(height: 18),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ExpansionPanelList(
+                      expansionCallback: (int index, bool isExpanded) {
+                        setState(() {
+                          directionsExpanded = !directionsExpanded;
+                        });
+                      },
+                      children: _buildExpansionPanels(
+                        context,
+                        widget.recipe.directions,
+                        'Directions',
+                        directionsExpanded,
+                        directionsControllers,
+                      ),
                     ),
                   ),
                 ],
