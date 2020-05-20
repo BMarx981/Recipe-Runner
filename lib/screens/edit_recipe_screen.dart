@@ -153,6 +153,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     ingredientsControllers.forEach((controller) {
       widget.recipe.ingredients.add(controller.text);
     });
+    widget.recipe.directions.clear();
     directionsControllers.forEach((controller) {
       widget.recipe.directions.add(controller.text);
     });
@@ -210,11 +211,20 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
           child: ListView.builder(
             itemCount: list.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RecipeTextField(
-                  text: '${index + 1}. ${list[index]}',
-                  controller: controllers[index],
+              return Dismissible(
+                key: Key('$index. list[index]'),
+                onDismissed: (direction) {
+                  setState(() {
+                    list.removeAt(index);
+                    controllers.removeAt(index);
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RecipeTextField(
+                    text: '${index + 1}. ${list[index]}',
+                    controller: controllers[index],
+                  ),
                 ),
               );
             },
@@ -254,3 +264,20 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     );
   }
 }
+
+//class RecipeTextFieldItem extends StatelessWidget {
+//  const RecipeTextFieldItem({
+//    Key key,
+//  }) : super(key: key);
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: const EdgeInsets.all(8.0),
+//      child: RecipeTextField(
+//        text: '${index + 1}. ${list[index]}',
+//        controller: controllers[index],
+//      ),
+//    );
+//  }
+//}
