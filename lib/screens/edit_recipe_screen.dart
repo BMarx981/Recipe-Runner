@@ -26,6 +26,10 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   final List<TextEditingController> directionsControllers = [];
 
+  final List<RecipeTextField> ingredientFields = [];
+
+  final List<RecipeTextField> directionsFields = [];
+
   bool dropped = false;
 
   bool ingredientExpanded = false;
@@ -35,24 +39,49 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
   @override
   void initState() {
     super.initState();
-    widget.recipe.ingredients.forEach(
-      (element) => ingredientsControllers.add(
-        TextEditingController(text: element),
-      ),
-    );
-    widget.recipe.directions.forEach(
-      (element) => directionsControllers.add(
-        TextEditingController(text: element),
-      ),
-    );
+    if (widget.recipe.ingredients == null || widget.recipe.directions == null) {
+      widget.recipe.ingredients = [];
+      widget.recipe.directions = [];
+      return;
+    }
+    if (widget.recipe.ingredients.isNotEmpty) {
+      widget.recipe.ingredients.forEach(
+        (element) {
+          ingredientsControllers.add(
+            TextEditingController(text: element),
+          );
+          ingredientFields.add(
+            RecipeTextField(
+                controller: ingredientsControllers.last, text: element),
+          );
+        },
+      );
+    }
+    if (widget.recipe.directions.isNotEmpty) {
+      widget.recipe.directions.forEach((element) {
+        directionsControllers.add(
+          TextEditingController(text: element),
+        );
+        directionsFields.add(
+          RecipeTextField(
+              controller: directionsControllers.last, text: element),
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     titleController.text = widget.recipe.name;
     descriptionController.text = widget.recipe.description;
-    ingredientsController.text = widget.recipe.ingredients[0];
-    directionsController.text = widget.recipe.directions[0];
+    ingredientsController.text =
+        (widget.recipe.ingredients == null || widget.recipe.ingredients.isEmpty)
+            ? 'no ingredients'
+            : widget.recipe.ingredients[0];
+    directionsController.text =
+        (widget.recipe.directions == null || widget.recipe.directions.isEmpty)
+            ? 'no directions'
+            : widget?.recipe?.directions[0];
 
     return SafeArea(
       child: GestureDetector(
@@ -61,6 +90,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
           if (!currentFocus.hasPrimaryFocus) {
             currentFocus.unfocus();
+            saveChanges();
           }
         },
         child: Scaffold(
@@ -116,6 +146,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                         'Ingredients',
                         ingredientExpanded,
                         ingredientsControllers,
+                        ingredientFields,
                       ),
                     ),
                   ),
@@ -134,6 +165,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                         'Directions',
                         directionsExpanded,
                         directionsControllers,
+                        directionsFields,
                       ),
                     ),
                   ),
@@ -165,6 +197,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     String title,
     bool expanded,
     List<TextEditingController> controllers,
+    List<RecipeTextField> recFields,
   ) {
     List<ExpansionPanel> exPanelList = [];
     exPanelList.add(
@@ -172,37 +205,49 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
         canTapOnHeader: true,
         headerBuilder: (BuildContext context, bool expanded) {
           return Container(
-              color: Colors.transparent,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          color: textGrey,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
+            color: Colors.transparent,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: textGrey,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  RaisedButton(
-                    color: red,
-                    child: Icon(
-                      Icons.add,
-                      color: white,
+                ),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        directionsControllers.add(TextEditingController());
-                        ingredientsControllers.add(TextEditingController());
-                      });
-                    },
-                  )
-                ],
-              ));
+                  ),
+                  color: red,
+                  child: Icon(
+                    Icons.add,
+                    color: white,
+                  ),
+                  onPressed: () {
+                    setState(
+                      () {
+                        controllers.add(TextEditingController());
+                        recFields.add(
+                          RecipeTextField(
+                            controller: controllers.last,
+                          ),
+                        ); // recFields.add
+                      },
+                    );
+                  },
+                )
+              ],
+            ),
+          );
         },
         isExpanded: expanded,
         body: Container(

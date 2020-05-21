@@ -41,7 +41,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return EditRecipeScreen(
-                    recipe: widget.recipe,
+                    recipe: widget?.recipe ??
+                        Recipe(
+                          name: 'Edit name',
+                          ingredients: ['a'],
+                          directions: ['a'],
+                        ),
                   );
                 },
               ),
