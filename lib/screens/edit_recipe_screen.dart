@@ -47,24 +47,24 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     if (widget.recipe.ingredients.isNotEmpty) {
       widget.recipe.ingredients.forEach(
         (element) {
+          TextEditingController tec = TextEditingController(text: element);
           ingredientsControllers.add(
-            TextEditingController(text: element),
+            tec,
           );
           ingredientFields.add(
-            RecipeTextField(
-                controller: ingredientsControllers.last, text: element),
+            RecipeTextField(controller: tec, text: element),
           );
         },
       );
     }
     if (widget.recipe.directions.isNotEmpty) {
       widget.recipe.directions.forEach((element) {
+        TextEditingController tec = TextEditingController(text: element);
         directionsControllers.add(
-          TextEditingController(text: element),
+          tec,
         );
         directionsFields.add(
-          RecipeTextField(
-              controller: directionsControllers.last, text: element),
+          RecipeTextField(controller: tec, text: element),
         );
       });
     }
@@ -193,10 +193,13 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   List<ExpansionPanel> _buildExpansionPanels(
     BuildContext context,
+    // direction or ingredients list
     List<String> list,
     String title,
     bool expanded,
+    // direction or ingredients controllers
     List<TextEditingController> controllers,
+    // List of recipeFields
     List<RecipeTextField> recFields,
   ) {
     List<ExpansionPanel> exPanelList = [];
@@ -205,7 +208,6 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
         canTapOnHeader: true,
         headerBuilder: (BuildContext context, bool expanded) {
           return Container(
-            color: Colors.transparent,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -232,19 +234,13 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                     Icons.add,
                     color: white,
                   ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        controllers.add(TextEditingController());
-                        recFields.add(
-                          RecipeTextField(
-                            controller: controllers.last,
-                          ),
-                        ); // recFields.add
-                      },
-                    );
-                  },
-                )
+                  onPressed: () => setState(() => addField(
+                            controllers,
+                            recFields,
+                            list,
+                          ) // recFields.add
+                      ), // setState
+                ),
               ],
             ),
           );
@@ -262,6 +258,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                   setState(() {
                     list.removeAt(index);
                     controllers.removeAt(index);
+                    recFields.removeAt(index);
                   });
                 },
                 child: Padding(
@@ -278,6 +275,18 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
       ),
     );
     return exPanelList;
+  }
+
+  void addField(List<TextEditingController> controllers,
+      List<RecipeTextField> recFields, List<String> list) {
+    TextEditingController tec = TextEditingController();
+    controllers.add(tec);
+    recFields.add(
+      RecipeTextField(
+        controller: tec,
+      ),
+    );
+    saveChanges();
   }
 
   Column _buildFields(String name, TextEditingController controller) {
@@ -309,20 +318,3 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     );
   }
 }
-
-//class RecipeTextFieldItem extends StatelessWidget {
-//  const RecipeTextFieldItem({
-//    Key key,
-//  }) : super(key: key);
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Padding(
-//      padding: const EdgeInsets.all(8.0),
-//      child: RecipeTextField(
-//        text: '${index + 1}. ${list[index]}',
-//        controller: controllers[index],
-//      ),
-//    );
-//  }
-//}
