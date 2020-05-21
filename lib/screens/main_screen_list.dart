@@ -15,8 +15,6 @@ class _MainScreenListState extends State<MainScreenList> {
     return ListView.builder(
       itemCount: Provider.of<MainModel>(context).recipes.length,
       itemBuilder: (context, index) {
-        final item =
-            Provider.of<MainModel>(context, listen: false).recipes[index];
         return Dismissible(
           key: UniqueKey(),
           onDismissed: (direction) {
@@ -29,7 +27,7 @@ class _MainScreenListState extends State<MainScreenList> {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: MainScreenTile(
-              item,
+              Provider.of<MainModel>(context, listen: false).recipes[index],
             ),
           ),
         );
