@@ -16,10 +16,6 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   final TextEditingController descriptionController = TextEditingController();
 
-  final TextEditingController ingredientsController = TextEditingController();
-
-  final TextEditingController directionsController = TextEditingController();
-
   final TextEditingController urlController = TextEditingController();
 
   final List<TextEditingController> ingredientsControllers = [];
@@ -71,17 +67,18 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
   }
 
   @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    ingredientsControllers.forEach((controller) => controller.dispose());
+    directionsControllers.forEach((controller) => controller.dispose());
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     titleController.text = widget.recipe.name;
     descriptionController.text = widget.recipe.description;
-    ingredientsController.text =
-        (widget.recipe.ingredients == null || widget.recipe.ingredients.isEmpty)
-            ? 'no ingredients'
-            : widget.recipe.ingredients[0];
-    directionsController.text =
-        (widget.recipe.directions == null || widget.recipe.directions.isEmpty)
-            ? 'no directions'
-            : widget?.recipe?.directions[0];
 
     return SafeArea(
       child: GestureDetector(

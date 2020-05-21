@@ -4,11 +4,17 @@ import 'package:recipe_writer/utils/colors.dart';
 class RecipeTextField extends StatefulWidget {
   final String text;
   final TextEditingController controller;
+  final TextInputType tit;
+  final bool autoCorrected;
+  final TextInputAction tia;
 
   RecipeTextField({
     Key key,
     this.text = '',
     this.controller,
+    this.tit = TextInputType.text,
+    this.autoCorrected = true,
+    this.tia = TextInputAction.done,
   }) : super(key: key);
 
   @override
@@ -28,6 +34,9 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
+        autocorrect: widget.autoCorrected,
+        keyboardType: widget.tit,
+        textInputAction: widget.tia,
         onChanged: (newText) {
           setState(() {
             if (newText.isNotEmpty) toggleColor = true;
