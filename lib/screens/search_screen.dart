@@ -180,11 +180,13 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Container(
               padding: EdgeInsets.only(left: 2),
               color: Colors.transparent,
-              child: ListView.builder(
-                itemCount: _searchedList.length,
-                itemBuilder: (context, index) {
-                  return _searchedList[index];
-                },
+              child: Scrollbar(
+                child: ListView.builder(
+                  itemCount: _searchedList.length,
+                  itemBuilder: (context, index) {
+                    return _searchedList[index];
+                  },
+                ),
               ),
             ),
           ),

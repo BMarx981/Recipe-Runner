@@ -193,10 +193,14 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   List<ExpansionPanel> _buildExpansionPanels(
     BuildContext context,
+
     // direction or ingredients list
     List<String> list,
     String title,
+
+    // Is the Panel expanded
     bool expanded,
+
     // direction or ingredients controllers
     List<TextEditingController> controllers,
     // List of recipeFields
@@ -249,27 +253,29 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
         body: Container(
           decoration: BoxDecoration(gradient: colorGrad),
           height: 200,
-          child: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              return Dismissible(
-                key: UniqueKey(),
-                onDismissed: (direction) {
-                  setState(() {
-                    list.removeAt(index);
-                    controllers.removeAt(index);
-                    recFields.removeAt(index);
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RecipeTextField(
-                    text: '${index + 1}. ${list[index]}',
-                    controller: controllers[index],
+          child: Scrollbar(
+            child: ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    setState(() {
+                      list.removeAt(index);
+                      controllers.removeAt(index);
+                      recFields.removeAt(index);
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RecipeTextField(
+                      text: '${index + 1}. ${list[index]}',
+                      controller: controllers[index],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

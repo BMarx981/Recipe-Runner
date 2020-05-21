@@ -12,26 +12,28 @@ class MainScreenList extends StatefulWidget {
 class _MainScreenListState extends State<MainScreenList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: Provider.of<MainModel>(context).recipes.length,
-      itemBuilder: (context, index) {
-        return Dismissible(
-          key: UniqueKey(),
-          onDismissed: (direction) {
-            setState(() {
-              Provider.of<MainModel>(context, listen: false)
-                  .recipes
-                  .removeAt(index);
-            });
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: MainScreenTile(
-              Provider.of<MainModel>(context, listen: false).recipes[index],
+    return Scrollbar(
+      child: ListView.builder(
+        itemCount: Provider.of<MainModel>(context).recipes.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            key: UniqueKey(),
+            onDismissed: (direction) {
+              setState(() {
+                Provider.of<MainModel>(context, listen: false)
+                    .recipes
+                    .removeAt(index);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: MainScreenTile(
+                Provider.of<MainModel>(context, listen: false).recipes[index],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
