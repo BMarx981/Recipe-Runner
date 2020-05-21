@@ -18,7 +18,7 @@ class _MainScreenListState extends State<MainScreenList> {
         final item =
             Provider.of<MainModel>(context, listen: false).recipes[index];
         return Dismissible(
-          key: Key(item.toString()),
+          key: UniqueKey(),
           onDismissed: (direction) {
             setState(() {
               Provider.of<MainModel>(context, listen: false)

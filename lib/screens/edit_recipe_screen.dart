@@ -253,7 +253,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
             itemCount: list.length,
             itemBuilder: (context, index) {
               return Dismissible(
-                key: Key('$index. list[index]'),
+                key: UniqueKey(),
                 onDismissed: (direction) {
                   setState(() {
                     list.removeAt(index);
