@@ -7,6 +7,7 @@ class RecipeTextField extends StatefulWidget {
   final TextInputType tit;
   final bool autoCorrected;
   final TextInputAction tia;
+  final VoidCallback callBack;
 
   RecipeTextField({
     Key key,
@@ -15,6 +16,7 @@ class RecipeTextField extends StatefulWidget {
     this.tit = TextInputType.text,
     this.autoCorrected = true,
     this.tia = TextInputAction.done,
+    this.callBack,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class _RecipeTextFieldState extends State<RecipeTextField> {
           });
         },
         controller: widget.controller,
+        onSubmitted: (newString) => widget.callBack(),
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(35),

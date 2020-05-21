@@ -28,9 +28,9 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
   bool dropped = false;
 
-  bool ingredientExpanded = false;
+  bool ingredientExpanded = true;
 
-  bool directionsExpanded = false;
+  bool directionsExpanded = true;
 
   @override
   void initState() {
@@ -48,7 +48,11 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
             tec,
           );
           ingredientFields.add(
-            RecipeTextField(controller: tec, text: element),
+            RecipeTextField(
+              controller: tec,
+              text: element,
+              callBack: saveChanges,
+            ),
           );
         },
       );
@@ -200,6 +204,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
 
     // direction or ingredients controllers
     List<TextEditingController> controllers,
+
     // List of recipeFields
     List<RecipeTextField> recFields,
   ) {
