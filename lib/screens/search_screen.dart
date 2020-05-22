@@ -212,13 +212,9 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _executeSubmit() async {
-    setState(() {
-      isLoading = !isLoading;
-    });
+    setState(() => isLoading = !isLoading);
     await getNetworkData(tc.text);
     tc.clear();
-    setState(() {
-      isLoading = !isLoading;
-    });
+    setState(() => isLoading = !isLoading);
   }
 }
