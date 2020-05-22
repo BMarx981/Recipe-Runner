@@ -88,19 +88,62 @@ class _SearchScreenState extends State<SearchScreen> {
       text: 'Find the recipe you are looking for here.',
       controller: tc,
     );
-    return Container(
-      decoration: BoxDecoration(gradient: colorGrad),
-      child: Column(
-        children: <Widget>[
-          searchfield,
-          SizedBox(
-            height: 22,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Container(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+          _executeSubmit();
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(gradient: colorGrad),
+        child: Column(
+          children: <Widget>[
+            searchfield,
+            SizedBox(
+              height: 22,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    height: 60,
+                    child: RaisedButton(
+                      //Done button
+                      elevation: 5.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Submit',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(35),
+                        ),
+                      ),
+                      color: Colors.grey[400],
+                      onPressed: () {
+                        _executeSubmit();
+                      },
+                    ),
+                  ),
+                ),
+                Container(
                   padding: EdgeInsets.only(
                     left: 10,
                     right: 10,
@@ -113,7 +156,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Submit',
+                          'Clear',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: white,
@@ -129,69 +172,40 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     color: Colors.grey[400],
                     onPressed: () {
-                      getNetworkData(tc.text);
-                      tc.clear();
-                      setState(() {});
+                      setState(() {
+                        _searchedList.clear();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 22,
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 2),
+                color: Colors.transparent,
+                child: Scrollbar(
+                  child: ListView.builder(
+                    itemCount: _searchedList.length,
+                    itemBuilder: (context, index) {
+                      return _searchedList[index];
                     },
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                ),
-                height: 60,
-                child: RaisedButton(
-                  //Done button
-                  elevation: 5.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Clear',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(35),
-                    ),
-                  ),
-                  color: Colors.grey[400],
-                  onPressed: () {
-                    setState(() {
-                      _searchedList.clear();
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 22,
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(left: 2),
-              color: Colors.transparent,
-              child: Scrollbar(
-                child: ListView.builder(
-                  itemCount: _searchedList.length,
-                  itemBuilder: (context, index) {
-                    return _searchedList[index];
-                  },
-                ),
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void _executeSubmit() {
+    getNetworkData(tc.text);
+    tc.clear();
+    setState(() {});
   }
 }
