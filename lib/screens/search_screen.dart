@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'recipe_textfield.dart';
@@ -20,7 +21,10 @@ class _SearchScreenState extends State<SearchScreen> {
   Map<String, dynamic> respMap = {};
 
   List<Widget> _searchedList = [];
+
   List<Recipe> _searchedRecipes = [];
+
+  bool isLoading = true;
 
   initState() {
     super.initState();
@@ -94,7 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
-          _executeSubmit();
+          if (tc.text.isNotEmpty) _executeSubmit();
         }
       },
       child: Container(
@@ -183,29 +187,38 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(
               height: 22,
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 2),
-                color: Colors.transparent,
-                child: Scrollbar(
-                  child: ListView.builder(
-                    itemCount: _searchedList.length,
-                    itemBuilder: (context, index) {
-                      return _searchedList[index];
-                    },
+            isLoading
+                ? Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 2),
+                      color: Colors.transparent,
+                      child: Scrollbar(
+                        child: ListView.builder(
+                          itemCount: _searchedList.length,
+                          itemBuilder: (context, index) {
+                            return _searchedList[index];
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                : CupertinoActivityIndicator(
+                    animating: true,
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 
-  void _executeSubmit() {
-    getNetworkData(tc.text);
+  void _executeSubmit() async {
+    setState(() {
+      isLoading = !isLoading;
+    });
+    await getNetworkData(tc.text);
     tc.clear();
-    setState(() {});
+    setState(() {
+      isLoading = !isLoading;
+    });
   }
 }
