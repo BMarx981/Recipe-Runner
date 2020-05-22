@@ -9,44 +9,36 @@ class MainScreenTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return RecipeScreen(
-                recipe,
-              );
-            },
-          ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[50],
-          borderRadius: BorderRadius.all(
-            Radius.circular(35.0),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.all(
+          Radius.circular(35.0),
         ),
-        padding: EdgeInsets.all(4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            (recipe.imageURL.startsWith('https'))
-                ? CircleAvatar(
+      ),
+      padding: EdgeInsets.all(4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          (recipe.imageURL.startsWith('https'))
+              ? Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: CircleAvatar(
                     backgroundImage: NetworkImage(recipe.imageURL),
                     backgroundColor: textGrey,
                     maxRadius: 35,
-                  )
-                : SizedBox(
-                    width: 75,
-                    child: Text(
-                      recipe.imageURL ?? ' ',
-                      style: TextStyle(fontSize: 40),
-                    ),
                   ),
-            Expanded(
+                )
+              : SizedBox(
+                  width: 50,
+                  child: Text(
+                    recipe.imageURL ?? ' ',
+                    style: TextStyle(fontSize: 40),
+                  ),
+                ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -64,8 +56,8 @@ class MainScreenTile extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
