@@ -208,6 +208,30 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
     // List of recipeFields
     List<RecipeTextField> recFields,
   ) {
+    List<Dismissible> itemList = [];
+    list.asMap().forEach(
+      (index, element) {
+        itemList.add(
+          Dismissible(
+            key: UniqueKey(),
+            onDismissed: (direction) {
+              setState(() {
+                list.removeAt(index);
+                controllers.removeAt(index);
+                recFields.removeAt(index);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RecipeTextField(
+                text: '${index + 1}. ${list[index]}',
+                controller: controllers[index],
+              ),
+            ),
+          ),
+        );
+      },
+    );
     List<ExpansionPanel> exPanelList = [];
     exPanelList.add(
       ExpansionPanel(
@@ -256,26 +280,14 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
           decoration: BoxDecoration(gradient: colorGrad),
           height: 200,
           child: Scrollbar(
-            child: ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    setState(() {
-                      list.removeAt(index);
-                      controllers.removeAt(index);
-                      recFields.removeAt(index);
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RecipeTextField(
-                      text: '${index + 1}. ${list[index]}',
-                      controller: controllers[index],
-                    ),
-                  ),
-                );
+            child: ReorderableListView(
+              children: itemList,
+              onReorder: (oldIndex, newIndex) {
+                if (oldIndex < newIndex) {
+                  // removing the item at oldIndex will shorten the list by 1.
+                  newIndex -= 1;
+                }
+                itemList.insert(newIndex, itemList.removeAt(oldIndex));
               },
             ),
           ),
