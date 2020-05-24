@@ -5,24 +5,24 @@ import 'package:recipe_writer/utils/db_helper.dart';
 import 'recipe.dart';
 
 class MainModel extends ChangeNotifier {
-  Future<List<Map<String, dynamic>>> getMap() async {
-    List<Map<String, dynamic>> map = await dbHelper.queryAllRows();
-    return map;
-  }
-
-  Future<List<Recipe>> populateRecipes() async {
+  void populateRecipes() async {
     List<Map<String, dynamic>> maps = await dbHelper.queryAllRows();
-    List<Recipe> recs = [];
     maps.forEach((map) {
       Recipe rec = Recipe(
         name: map['name'],
         url: map['url'],
         imageURL: map['image'],
         description: map['description'],
+        ingredients: _getList(map['ingredients']),
+        directions: _getList(map['directions']),
       );
-      recs.add(rec);
+      addRecipe(rec);
     });
-    return recs;
+    print(recipes.length);
+  }
+
+  List<String> _getList(String input) {
+    return input.split('||?');
   }
 
   final dbHelper = DatabaseHelper.instance;

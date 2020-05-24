@@ -165,7 +165,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   );
                   _clear();
                   setState(() {});
-                  dbHelper.queryAllRows();
+//                  dbHelper.queryAllRows();
                 },
               ),
             ),
