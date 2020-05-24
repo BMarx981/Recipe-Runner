@@ -74,10 +74,11 @@ class _SearchScreenState extends State<SearchScreen> {
           await n.getIngredients(id.toString());
       List<String> ingredients = extractIngredients(ingredientsData);
       Recipe recipe = Recipe(
-          name: result['title'],
-          imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
-          ingredients: ingredients,
-          directions: directions);
+        name: result['title'],
+        imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
+        ingredients: ingredients,
+        directions: directions,
+      );
       _searchedRecipes.add(recipe);
       setState(() => _searchedList.insert(0, SearchResultTile(rec: recipe)));
     });

@@ -157,6 +157,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       url: urlController.text);
                   Provider.of<MainModel>(context, listen: false)
                       .addRecipe(recipe);
+                  dbHelper.insertRow(recipe);
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${titleController.text} recipe added'),
@@ -164,6 +165,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   );
                   _clear();
                   setState(() {});
+                  dbHelper.queryAllRows();
                 },
               ),
             ),

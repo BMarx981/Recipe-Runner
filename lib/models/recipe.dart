@@ -3,6 +3,7 @@ class Recipe {
   String description = '';
   String imageURL = '';
   String url = '';
+  int id = 0;
   List<String> directions = [];
   List<String> ingredients = [];
   Recipe({

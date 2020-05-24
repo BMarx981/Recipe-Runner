@@ -3,18 +3,22 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:recipe_writer/models/recipe.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "MyDatabase.db";
+  static final _databaseName = "CoboDatabase.db";
   static final _databaseVersion = 1;
 
   static final table = 'recipes';
 
   static final columnId = '_id';
   static final columnName = 'name';
+  static final columnURL = 'url';
+  static final columnImageURL = 'image';
   static final columnDescription = 'description';
   static final columnIngredients = 'ingredients';
   static final columnDirections = 'directions';
+  final String delimiter = '||?';
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -48,6 +52,8 @@ class DatabaseHelper {
             $columnDescription TEXT NOT NULL,
             $columnDirections TEXT NOT NULL,
             $columnIngredients TEXT NOT NULL,
+            $columnImageURL TEXT NOT NULL,
+            $columnURL TEXT NOT NULL
           )
           ''');
   }
@@ -57,15 +63,23 @@ class DatabaseHelper {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insert(Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    return await db.insert(table, row);
+//  Future<int> insert(Map<String, dynamic> row) async {
+//    Database db = await instance.database;
+//    return await db.insert(table, row);
+//  }
+
+  String processArrayRow(List<String> list) {
+    String str = '';
+    list.forEach((input) => str += input + delimiter);
+    return str;
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
+    List<Map<String, dynamic>> map = await db.query(table);
+    print('Map: $map');
     return await db.query(table);
   }
 
@@ -90,5 +104,27 @@ class DatabaseHelper {
   Future<int> delete(int id) async {
     Database db = await instance.database;
     return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> insertRow(Recipe recipe) async {
+    Database db = await instance.database;
+    int id = recipe.id;
+    String name = recipe.name;
+    String description = recipe.description;
+    String imageURL = recipe.imageURL;
+    String url = recipe.url;
+    String directions = processArrayRow(recipe.directions);
+    String ingredients = processArrayRow(recipe.ingredients);
+    Map<String, dynamic> row = {
+      columnId: id,
+      columnName: name,
+      columnDescription: description,
+      columnDirections: directions,
+      columnIngredients: ingredients,
+      columnURL: url,
+      columnImageURL: imageURL,
+    };
+
+    return await db.insert(table, row);
   }
 }
