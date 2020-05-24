@@ -8,14 +8,7 @@ class MainModel extends ChangeNotifier {
   void populateRecipes() async {
     List<Map<String, dynamic>> maps = await dbHelper.queryAllRows();
     maps.forEach((map) {
-      Recipe rec = Recipe(
-        name: map['name'],
-        url: map['url'],
-        imageURL: map['image'],
-        description: map['description'],
-        ingredients: _getList(map['ingredients']),
-        directions: _getList(map['directions']),
-      );
+      Recipe rec = Recipe.fromDB(map);
       addRecipe(rec);
     });
     print(recipes.length);

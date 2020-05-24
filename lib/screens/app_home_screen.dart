@@ -13,7 +13,9 @@ class AppHomeScreen extends StatefulWidget {
 
 class _AppHomeScreenState extends State<AppHomeScreen> {
   int _selectedScreenIndex = 0;
+
   String title = 'Cobo';
+
   void _selectScreen(int index) {
     setState(
       () {

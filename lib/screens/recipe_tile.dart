@@ -51,7 +51,7 @@ class RecipeTile extends StatelessWidget {
                   Provider.of<MainModel>(context, listen: false)
                       .recipes
                       .add(rec);
-                  dbHelper.insertRow(rec);
+                  dbHelper.insert(rec.toMapForDb());
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${rec.name} recipe added'),

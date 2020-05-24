@@ -63,10 +63,10 @@ class DatabaseHelper {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-//  Future<int> insert(Map<String, dynamic> row) async {
-//    Database db = await instance.database;
-//    return await db.insert(table, row);
-//  }
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(table, row);
+  }
 
   String processArrayRow(List<String> list) {
     String str = '';
@@ -108,21 +108,14 @@ class DatabaseHelper {
 
   Future<int> insertRow(Recipe recipe) async {
     Database db = await instance.database;
-    int id = recipe.id;
-    String name = recipe.name;
-    String description = recipe.description;
-    String imageURL = recipe.imageURL;
-    String url = recipe.url;
-    String directions = processArrayRow(recipe.directions);
-    String ingredients = processArrayRow(recipe.ingredients);
     Map<String, dynamic> row = {
-      columnId: id,
-      columnName: name,
-      columnDescription: description,
-      columnDirections: directions,
-      columnIngredients: ingredients,
-      columnURL: url,
-      columnImageURL: imageURL,
+      columnId: recipe.id,
+      columnName: recipe.name,
+      columnDescription: recipe.description,
+      columnDirections: processArrayRow(recipe.directions),
+      columnIngredients: processArrayRow(recipe.ingredients),
+      columnURL: recipe.url,
+      columnImageURL: recipe.imageURL,
     };
 
     return await db.insert(table, row);
