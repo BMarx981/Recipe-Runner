@@ -74,7 +74,11 @@ class _SearchScreenState extends State<SearchScreen> {
       Map<String, dynamic> ingredientsData =
           await n.getIngredients(id.toString());
       List<String> ingredients = extractIngredients(ingredientsData);
+      var i = UniqueKey();
+      // var info =
+      print(i);
       Recipe recipe = Recipe(
+        // id: info,
         name: result['title'],
         imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
         ingredients: ingredients,
