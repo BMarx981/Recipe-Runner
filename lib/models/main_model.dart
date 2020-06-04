@@ -14,10 +14,6 @@ class MainModel extends ChangeNotifier {
     print(recipes.length);
   }
 
-  List<String> _getList(String input) {
-    return input.split('||?');
-  }
-
   final dbHelper = DatabaseHelper.instance;
 
   String title;

@@ -19,12 +19,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
   );
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();

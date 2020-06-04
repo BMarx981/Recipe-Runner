@@ -26,6 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   bool isLoading = true;
 
+  @override
   initState() {
     super.initState();
     Provider.of<MainModel>(context, listen: false).searchResults.forEach(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/screens/recipe_textfield.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'package:recipe_writer/utils/db_helper.dart';
 
 class EditRecipeScreen extends StatefulWidget {
   final Recipe recipe;
@@ -31,6 +32,8 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
   bool ingredientExpanded = true;
 
   bool directionsExpanded = true;
+
+  DatabaseHelper dbh = DatabaseHelper.instance;
 
   @override
   void initState() {
