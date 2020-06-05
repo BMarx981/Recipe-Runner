@@ -7,6 +7,7 @@ class Recipe {
   List<String> directions = [];
   List<String> ingredients = [];
   Recipe({
+    this.id,
     this.name,
     this.description,
     this.imageURL = '🍔',

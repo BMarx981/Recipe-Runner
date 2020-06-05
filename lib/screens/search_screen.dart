@@ -8,6 +8,8 @@ import 'search_result_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_writer/models/main_model.dart';
 
+import 'dart:math' as math;
+
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -74,11 +76,8 @@ class _SearchScreenState extends State<SearchScreen> {
       Map<String, dynamic> ingredientsData =
           await n.getIngredients(id.toString());
       List<String> ingredients = extractIngredients(ingredientsData);
-      var i = UniqueKey();
-      // var info =
-      print(i);
       Recipe recipe = Recipe(
-        // id: info,
+        id: math.Random().nextInt(100000000),
         name: result['title'],
         imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
         ingredients: ingredients,
@@ -100,6 +99,8 @@ class _SearchScreenState extends State<SearchScreen> {
     );
     return GestureDetector(
       onTap: () {
+        // This allows you to disiss the keyboard by tapping
+        // anywhere thats not the keyboard
         FocusScopeNode currentFocus = FocusScope.of(context);
 
         if (!currentFocus.hasPrimaryFocus) {

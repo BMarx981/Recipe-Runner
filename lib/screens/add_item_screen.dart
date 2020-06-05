@@ -150,6 +150,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 onPressed: () {
                   Recipe recipe = Recipe(
+                      // id: dbHelper.,
                       name: titleController.text,
                       description: descController.text,
                       ingredients: ingredients,

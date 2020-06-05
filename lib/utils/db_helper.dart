@@ -11,7 +11,7 @@ class DatabaseHelper {
 
   static final table = 'recipes';
 
-  static final columnId = '_id';
+  static final columnId = 'id';
   static final columnName = 'name';
   static final columnURL = 'url';
   static final columnImageURL = 'image';
@@ -47,7 +47,7 @@ class DatabaseHelper {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
             $columnName TEXT NOT NULL,
             $columnDescription TEXT NOT NULL,
             $columnDirections TEXT NOT NULL,
@@ -65,7 +65,16 @@ class DatabaseHelper {
   // inserted row.
   Future<int> insert(Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.insert(table, row);
+    // row.forEach((key, value) {
+    //   print('Key: $key, Val: $value');
+    // });
+    int outputId = 0;
+    try {
+      outputId = await db.insert(table, row);
+    } catch (e) {
+      print('Error found with $e');
+    }
+    return outputId;
   }
 
   String processArrayRow(List<String> list) {
@@ -108,6 +117,7 @@ class DatabaseHelper {
 
   Future<int> insertRow(Recipe recipe) async {
     Database db = await instance.database;
+    print('Inside insert row');
     Map<String, dynamic> row = {
       columnId: recipe.id,
       columnName: recipe.name,
