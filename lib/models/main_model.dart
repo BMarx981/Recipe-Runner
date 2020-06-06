@@ -24,7 +24,6 @@ class MainModel extends ChangeNotifier {
       Recipe rec = Recipe.fromDB(map);
       addRecipe(rec);
     });
-    print(recipes.length);
   }
 
   //The list of recipes for the main screen.

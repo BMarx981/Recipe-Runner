@@ -84,7 +84,7 @@ class DatabaseHelper {
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
-    List<Map<String, dynamic>> map = await db.query(table);
+    // List<Map<String, dynamic>> map = await db.query(table);
     return await db.query(table);
   }
 
