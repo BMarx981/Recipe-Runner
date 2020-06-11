@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_writer/utils/colors.dart';
 // import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 
@@ -40,9 +41,11 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Camera Screen'),
+          title: Text('Take a picture of your recipe.'),
+          backgroundColor: red,
         ),
         body: Container(
+          decoration: BoxDecoration(gradient: colorGrad),
           child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,7 +122,45 @@ class _CameraScreenState extends State<CameraScreen> {
     print('Error: ${e.code}\n${e.description}');
   }
 
-  _cameraTogglesRowWidget() {}
+  Widget _cameraTogglesRowWidget() {
+    if (cameras == null || cameras.isEmpty) {
+      return Spacer();
+    }
+
+    CameraDescription selectedCamera = cameras[selectedCameraIndex];
+    CameraLensDirection lensDirection = selectedCamera.lensDirection;
+
+    return Expanded(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: FlatButton.icon(
+            onPressed: _onSwitchCamera,
+            icon: Icon(_getCameraLensIcon(lensDirection)),
+            label: Text(
+                "${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1)}")),
+      ),
+    );
+  }
+
+  void _onSwitchCamera() {
+    selectedCameraIndex =
+        selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
+    CameraDescription selectedCamera = cameras[selectedCameraIndex];
+    _initCameraController(selectedCamera);
+  }
+
+  IconData _getCameraLensIcon(CameraLensDirection direction) {
+    switch (direction) {
+      case CameraLensDirection.back:
+        return Icons.camera_rear;
+      case CameraLensDirection.front:
+        return Icons.camera_front;
+      case CameraLensDirection.external:
+        return Icons.camera;
+      default:
+        return Icons.device_unknown;
+    }
+  }
 
   Widget _captureControlRowWidget(context) {
     return Expanded(
@@ -134,7 +175,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 backgroundColor: Colors.blueGrey,
                 onPressed: () {
                   _onCapturePressed(context);
-                })
+                }),
           ],
         ),
       ),

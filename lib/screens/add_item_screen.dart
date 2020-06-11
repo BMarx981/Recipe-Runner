@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'camera_screen.dart';
 import 'recipe_textfield.dart';
 import 'package:recipe_writer/utils/db_helper.dart';
 
@@ -118,6 +119,29 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         colorChange = false;
                       });
                     }),
+              ),
+            ],
+          ),
+          SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Center(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.photo_camera,
+                    color: white,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CameraScreen(),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
