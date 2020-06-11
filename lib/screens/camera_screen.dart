@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
 
 class CameraScreen extends StatefulWidget {
   CameraScreen({Key key}) : super(key: key);
@@ -120,8 +120,6 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   _cameraTogglesRowWidget() {}
-
-  _captureControlRowWidget(BuildContext context) {}
 
   Widget _captureControlRowWidget(context) {
     return Expanded(
