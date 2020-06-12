@@ -4,6 +4,8 @@ import 'package:recipe_writer/screens/recipe_textfield.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/utils/db_helper.dart';
 
+import 'camera_screen.dart';
+
 class EditRecipeScreen extends StatefulWidget {
   final Recipe recipe;
   EditRecipeScreen({this.recipe});
@@ -136,6 +138,8 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                     'Description',
                     descriptionController,
                   ),
+                  buildRaisedButton(context),
+                  SizedBox(height: 18),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ExpansionPanelList(
@@ -173,12 +177,38 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 18),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  RaisedButton buildRaisedButton(BuildContext context) {
+    return RaisedButton(
+      elevation: 7.5,
+      color: Colors.limeAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(35),
+        ),
+      ),
+      child: Icon(
+        Icons.photo_camera,
+        color: red,
+        size: 28,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CameraScreen(),
+          ),
+        );
+      },
     );
   }
 
