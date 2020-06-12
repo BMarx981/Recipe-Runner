@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:recipe_writer/utils/colors.dart';
 // import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
@@ -185,27 +187,27 @@ class _CameraScreenState extends State<CameraScreen> {
   void _onCapturePressed(context) async {
     // Take the Picture in a try / catch block. If anything goes wrong,
     // catch the error.
-    // try {
-    //   // Attempt to take a picture and log where it's been saved
-    //   final path = join(
-    //     // In this example, store the picture in the temp directory. Find
-    //     // the temp directory using the `path_provider` plugin.
-    //     (await getTemporaryDirectory()).path,
-    //     '${DateTime.now()}.png',
-    //   );
-    //   print(path);
-    //   await controller.takePicture(path);
+    try {
+      // Attempt to take a picture and log where it's been saved
+      final path = join(
+        // In this example, store the picture in the temp directory. Find
+        // the temp directory using the `path_provider` plugin.
+        (await getTemporaryDirectory()).path,
+        '${DateTime.now()}.png',
+      );
+      print(path);
+      await controller.takePicture(path);
 
-    //   // If the picture was taken, display it on a new screen
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => PreviewImageScreen(imagePath: path),
-    //     ),
-    //   );
-    // } catch (e) {
-    //   // If an error occurs, log the error to the console.
-    //   print(e);
-    // }
+      //   // If the picture was taken, display it on a new screen
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => PreviewImageScreen(imagePath: path),
+      //     ),
+      //   );
+    } catch (e) {
+      // If an error occurs, log the error to the console.
+      print(e);
+    }
   }
 }
