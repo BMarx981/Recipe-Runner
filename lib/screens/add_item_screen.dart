@@ -64,139 +64,152 @@ class _AddItemScreenState extends State<AddItemScreen> {
       controller: urlController,
     );
     Recipe recipe = Recipe();
-    return Container(
-      child: ListView(
-        children: <Widget>[
-          SizedBox(height: 12),
-          titleField,
-          SizedBox(height: 12),
-          descField,
-          SizedBox(height: 12),
-          Row(
-            children: <Widget>[
-              Expanded(child: ingredientsField),
-              SizedBox(width: 12),
-              Container(
-                child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(35),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+          // saveChanges(recipe, context);
+        }
+      },
+      child: Container(
+        child: ListView(
+          children: <Widget>[
+            SizedBox(height: 12),
+            titleField,
+            SizedBox(height: 12),
+            descField,
+            SizedBox(height: 12),
+            Row(
+              children: <Widget>[
+                Expanded(child: ingredientsField),
+                SizedBox(width: 12),
+                Container(
+                  child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(35),
+                        ),
                       ),
-                    ),
-                    color: Colors.grey[400],
-                    child: Icon(
-                      Icons.add,
+                      color: Colors.grey[400],
+                      child: Icon(
+                        Icons.add,
+                      ),
+                      onPressed: () {
+                        ingredients.add(ingredientsController.text);
+                        ingredientsController.clear();
+                        setState(() {
+                          colorChange = false;
+                        });
+                      }),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Row(
+              children: <Widget>[
+                Expanded(child: directionsField),
+                SizedBox(width: 12),
+                Container(
+                  child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(35),
+                        ),
+                      ),
+                      color: Colors.grey[400],
+                      child: Icon(
+                        Icons.add,
+                      ),
+                      onPressed: () {
+                        directions.add(directionsController.text);
+                        directionsController.clear();
+                        setState(() {
+                          colorChange = false;
+                        });
+                      }),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.photo_camera,
+                      color: white,
+                      size: 28,
                     ),
                     onPressed: () {
-                      ingredients.add(ingredientsController.text);
-                      ingredientsController.clear();
-                      setState(() {
-                        colorChange = false;
-                      });
-                    }),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CameraScreen(recipe: recipe),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            urlField,
+            SizedBox(height: 22),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 18.0,
+                right: 18,
               ),
-            ],
-          ),
-          SizedBox(height: 12),
-          Row(
-            children: <Widget>[
-              Expanded(child: directionsField),
-              SizedBox(width: 12),
-              Container(
+              child: Container(
+                height: 60,
                 child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(35),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
+                    ),
+                  ),
+                  color: Colors.grey[400],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Add',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: white),
                       ),
-                    ),
-                    color: Colors.grey[400],
-                    child: Icon(
-                      Icons.add,
-                    ),
-                    onPressed: () {
-                      directions.add(directionsController.text);
-                      directionsController.clear();
-                      setState(() {
-                        colorChange = false;
-                      });
-                    }),
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: IconButton(
-                  icon: Icon(
-                    Icons.photo_camera,
-                    color: white,
-                    size: 28,
+                    ],
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CameraScreen(recipe: recipe),
-                      ),
-                    );
+                    saveChanges(recipe, context);
                   },
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 12),
-          urlField,
-          SizedBox(height: 22),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 18.0,
-              right: 18,
             ),
-            child: Container(
-              height: 60,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(35),
-                  ),
-                ),
-                color: Colors.grey[400],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Add',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(color: white),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  recipe = Recipe(
-                      name: titleController.text,
-                      description: descController.text,
-                      ingredients: ingredients,
-                      directions: directions,
-                      url: urlController.text);
-                  Provider.of<MainModel>(context, listen: false)
-                      .addRecipe(recipe);
-                  dbHelper.insertRow(recipe);
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${titleController.text} recipe added'),
-                    ),
-                  );
-                  _clear();
-                  setState(() {});
-                },
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void saveChanges(Recipe recipe, BuildContext context) {
+    recipe = Recipe(
+        name: titleController.text,
+        description: descController.text,
+        ingredients: ingredients,
+        directions: directions,
+        url: urlController.text);
+    Provider.of<MainModel>(context, listen: false).addRecipe(recipe);
+    dbHelper.insertRow(recipe);
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${titleController.text} recipe added'),
+      ),
+    );
+    _clear();
+    setState(() {});
   }
 
   void _clear() {
