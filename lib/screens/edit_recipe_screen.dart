@@ -205,9 +205,9 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CameraScreen(),
+            builder: (context) => CameraScreen(recipe: widget.recipe),
           ),
-        );
+        ).then((v) => setState(() {}));
       },
     );
   }

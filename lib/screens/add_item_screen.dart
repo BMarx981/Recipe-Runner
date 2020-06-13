@@ -63,6 +63,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       text: 'URL',
       controller: urlController,
     );
+    Recipe recipe = Recipe();
     return Container(
       child: ListView(
         children: <Widget>[
@@ -137,7 +138,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CameraScreen(),
+                        builder: (context) => CameraScreen(recipe: recipe),
                       ),
                     );
                   },
@@ -173,7 +174,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   ],
                 ),
                 onPressed: () {
-                  Recipe recipe = Recipe(
+                  recipe = Recipe(
                       name: titleController.text,
                       description: descController.text,
                       ingredients: ingredients,
@@ -189,7 +190,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   );
                   _clear();
                   setState(() {});
-//                  dbHelper.queryAllRows();
                 },
               ),
             ),

@@ -2,12 +2,14 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 // import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 
 class CameraScreen extends StatefulWidget {
-  CameraScreen({Key key}) : super(key: key);
+  final Recipe recipe;
+  CameraScreen({Key key, this.recipe}) : super(key: key);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -195,8 +197,9 @@ class _CameraScreenState extends State<CameraScreen> {
         (await getTemporaryDirectory()).path,
         '${DateTime.now()}.png',
       );
-      print(path);
+      widget.recipe.imageURL = path;
       await controller.takePicture(path);
+      Navigator.pop(context);
 
       //   // If the picture was taken, display it on a new screen
       //   Navigator.push(
