@@ -23,7 +23,7 @@ class MainScreenTile extends StatelessWidget {
         children: <Widget>[
           (recipe.imageURL.startsWith('https'))
               ? Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(1.0),
                   child: CircleAvatar(
                     backgroundImage: NetworkImage(recipe.imageURL),
                     backgroundColor: textGrey,
@@ -31,10 +31,15 @@ class MainScreenTile extends StatelessWidget {
                   ),
                 )
               : SizedBox(
-                  width: 50,
+                  width: 75,
                   child: (recipe.imageURL != null)
-                      ? Image(
-                          image: FileImage(File(recipe.imageURL)),
+                      ? Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: CircleAvatar(
+                            maxRadius: 35,
+                            backgroundColor: textGrey,
+                            backgroundImage: FileImage(File(recipe.imageURL)),
+                          ),
                         )
                       : Text(' '),
                 ),
