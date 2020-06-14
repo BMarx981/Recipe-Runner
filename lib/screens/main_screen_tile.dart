@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
@@ -30,10 +32,11 @@ class MainScreenTile extends StatelessWidget {
                 )
               : SizedBox(
                   width: 50,
-                  child: Text(
-                    recipe.imageURL ?? ' ',
-                    style: TextStyle(fontSize: 40),
-                  ),
+                  child: (recipe.imageURL != null)
+                      ? Image(
+                          image: FileImage(File(recipe.imageURL)),
+                        )
+                      : Text(' '),
                 ),
           Expanded(
             child: Padding(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
@@ -55,7 +57,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: RecipeList(
-                  dataList: widget.recipe.ingredients, title: 'ingredients'),
+                dataList: widget.recipe.ingredients,
+                title: 'ingredients',
+              ),
             ),
           ),
         ),
@@ -78,7 +82,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
               decoration: BoxDecoration(
                   border: Border.all(),
                   borderRadius: BorderRadius.circular(25.0),
-                  color: Color(0xFFABBA19)),
+                  color: Color(0xFFCDAA3B)),
               child: RecipeList(
                   dataList: widget.recipe.directions, title: 'directions'),
             ),
@@ -163,8 +167,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                   onTap: () =>
                                       _showDialog(widget.recipe.imageURL),
                                   child: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(widget.recipe.imageURL),
+                                    backgroundImage: (widget.recipe.imageURL
+                                            .startsWith('http'))
+                                        ? NetworkImage(widget.recipe.imageURL)
+                                        : FileImage(
+                                            File(widget.recipe.imageURL)),
                                     backgroundColor: textGrey,
                                     maxRadius: 35,
                                   ),

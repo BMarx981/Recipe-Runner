@@ -133,28 +133,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               ],
             ),
             SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.photo_camera,
-                      color: white,
-                      size: 28,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CameraScreen(recipe: recipe),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+            buildRaisedButton(context, recipe),
             SizedBox(height: 12),
             urlField,
             SizedBox(height: 22),
@@ -223,5 +202,30 @@ class _AddItemScreenState extends State<AddItemScreen> {
     ingredientsController.clear();
     directionsController.clear();
     urlController.clear();
+  }
+
+  RaisedButton buildRaisedButton(BuildContext context, Recipe recipe) {
+    return RaisedButton(
+      elevation: 7.5,
+      color: Colors.limeAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(35),
+        ),
+      ),
+      child: Icon(
+        Icons.photo_camera,
+        color: red,
+        size: 28,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CameraScreen(recipe: recipe),
+          ),
+        ).then((v) => setState(() {}));
+      },
+    );
   }
 }
