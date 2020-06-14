@@ -20,14 +20,15 @@ class Recipe {
     return Recipe(name: parsedJson['title'], imageURL: parsedJson['image']);
   }
 
-  Recipe.fromDB(Map<String, dynamic> map)
-      : id = map['id'],
-        name = map['name'],
-        description = map['description'],
-        url = map['url'],
-        imageURL = map['image'],
-        ingredients = map['ingredients'].split('||?'),
-        directions = map['directions'].split('||?');
+  Recipe.fromDB(Map<String, dynamic> map) {
+    id = map['id'];
+    name = map['name'];
+    description = map['description'];
+    url = map['url'];
+    imageURL = map['image'];
+    ingredients = splitMap(map['ingredients']);
+    directions = splitMap(map['directions']);
+  }
 
   Map<String, dynamic> toMapForDb() {
     var map = Map<String, dynamic>();
