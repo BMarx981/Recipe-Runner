@@ -43,8 +43,14 @@ class Recipe {
 
   String processArrayRow(List<String> list) {
     if (list.length == 0) return ' ';
-    String str = '';
-    list.forEach((input) => str += input + '||?');
-    return str;
+    // String str = '';
+    // list.forEach((input) => str += input + '||?');
+    return list.join('||?');
+  }
+
+  List<String> splitMap(String input) {
+    List<String> list = input.split('||?');
+    list.removeLast();
+    return list;
   }
 }
