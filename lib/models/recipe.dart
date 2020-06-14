@@ -44,8 +44,6 @@ class Recipe {
 
   String processArrayRow(List<String> list) {
     if (list.length == 0) return ' ';
-    // String str = '';
-    // list.forEach((input) => str += input + '||?');
     return list.join('||?');
   }
 
