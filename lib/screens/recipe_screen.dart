@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/models/recipe.dart';
+import 'package:recipe_writer/screens/camera_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'edit_recipe_screen.dart';
 
@@ -157,11 +158,34 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           (widget.recipe.imageURL == '🍔')
-                              ? Expanded(
-                                  child: Text(
-                                    '🍔',
-                                    style: TextStyle(fontSize: 28),
-                                  ),
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 38,
+                                      width: 38,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(35),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      color: Colors.limeAccent,
+                                      icon: Icon(
+                                        Icons.photo_camera,
+                                        size: 28,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CameraScreen(
+                                                recipe: widget.recipe),
+                                          ),
+                                        ).then((v) => setState(() {}));
+                                      },
+                                    ),
+                                  ],
                                 )
                               : GestureDetector(
                                   onTap: () =>
@@ -173,7 +197,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                         : FileImage(
                                             File(widget.recipe.imageURL)),
                                     backgroundColor: textGrey,
-                                    maxRadius: 35,
+                                    maxRadius: 30,
                                   ),
                                 ),
                           SizedBox(width: 18),
