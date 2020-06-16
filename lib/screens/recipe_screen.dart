@@ -245,7 +245,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
           content: Container(
             child: Center(
               child: Image(
-                image: NetworkImage(image),
+                image: (image.startsWith('http'))
+                    ? NetworkImage(image)
+                    : getFileImage(image),
               ),
             ),
           ),
