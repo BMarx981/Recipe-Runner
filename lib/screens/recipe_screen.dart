@@ -194,8 +194,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                     backgroundImage: (widget.recipe.imageURL
                                             .startsWith('http'))
                                         ? NetworkImage(widget.recipe.imageURL)
-                                        : FileImage(
-                                            File(widget.recipe.imageURL)),
+                                        : getFileImage(widget.recipe.imageURL),
                                     backgroundColor: textGrey,
                                     maxRadius: 30,
                                   ),
@@ -224,6 +223,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ),
       ),
     );
+  }
+
+  FileImage getFileImage(String input) {
+    FileImage fi;
+    try {
+      File f = File(input);
+      fi = FileImage(f);
+    } catch (e) {
+      print(e);
+    }
+    return fi;
   }
 
   void _showDialog(image) {

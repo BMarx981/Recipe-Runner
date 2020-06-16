@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_writer/models/main_model.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/utils/colors.dart';
 // import 'package:path/path.dart';
@@ -192,22 +194,16 @@ class _CameraScreenState extends State<CameraScreen> {
     try {
       // Attempt to take a picture and log where it's been saved
       final path = join(
-        // In this example, store the picture in the temp directory. Find
-        // the temp directory using the `path_provider` plugin.
-        (await getTemporaryDirectory()).path,
+        (await getApplicationDocumentsDirectory()).path,
         '${DateTime.now()}.png',
       );
+      //change the image with the new file path
       widget.recipe.imageURL = path;
+      //update the DataBase with the new imageURL.
+      Provider.of<MainModel>(context, listen: false).updateDB(widget.recipe.id);
+
       await controller.takePicture(path);
       Navigator.pop(context);
-
-      //   // If the picture was taken, display it on a new screen
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => PreviewImageScreen(imagePath: path),
-      //     ),
-      //   );
     } catch (e) {
       // If an error occurs, log the error to the console.
       print(e);

@@ -26,6 +26,14 @@ class MainModel extends ChangeNotifier {
     });
   }
 
+  //Update a row of the database with new data
+  //Must have id of the recipe.
+  void updateDB(int id) {
+    Map<String, dynamic> map = recipes.firstWhere(
+      (element) => element.id == id).toMapForDb();
+    dbHelper.update(map);
+  }
+
   //The list of recipes for the main screen.
   List<Recipe> recipes = [];
 
