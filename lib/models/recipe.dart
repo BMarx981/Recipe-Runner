@@ -49,7 +49,9 @@ class Recipe {
 
   List<String> splitMap(String input) {
     List<String> list = input.split('||?');
-    list.removeLast();
+    if (list[list.length - 1] == '') {
+      list.removeLast();
+    }
     return list;
   }
 }

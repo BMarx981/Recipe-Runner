@@ -41,6 +41,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   bool colorChange = false;
 
+  String localImageUrl;
+
+  //The new Recipe to be added
+  Recipe recipe = Recipe();
+
   @override
   Widget build(BuildContext context) {
     titleField = RecipeTextField(
@@ -63,7 +68,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       text: 'URL',
       controller: urlController,
     );
-    Recipe recipe = Recipe();
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -180,6 +185,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         ingredients: ingredients,
         directions: directions,
         url: urlController.text);
+    recipe.imageURL = localImageUrl;
     Provider.of<MainModel>(context, listen: false).addRecipe(recipe);
     dbHelper.insertRow(recipe);
     Scaffold.of(context).showSnackBar(
@@ -202,6 +208,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     ingredientsController.clear();
     directionsController.clear();
     urlController.clear();
+    recipe = Recipe();
   }
 
   RaisedButton buildRaisedButton(BuildContext context, Recipe recipe) {
@@ -224,7 +231,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
           MaterialPageRoute(
             builder: (context) => CameraScreen(recipe: recipe),
           ),
-        ).then((v) => setState(() {}));
+        ).then((v) => setState(() => localImageUrl = recipe.imageURL));
       },
     );
   }
