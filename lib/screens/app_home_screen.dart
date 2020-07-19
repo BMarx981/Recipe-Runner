@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_writer/screens/add_item_screen.dart';
+import 'package:recipe_writer/screens/planner_screen.dart';
 import 'package:recipe_writer/screens/search_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 
@@ -35,6 +36,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
     MainScreenList(),
     SearchScreen(),
     AddItemScreen(),
+    PlannerScreen(),
   ];
 
   @override
@@ -45,57 +47,44 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           currentIndex: _selectedScreenIndex,
           elevation: .9,
           backgroundColor: mainTheme,
+          selectedItemColor: blue,
+          unselectedItemColor: white,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) => _selectScreen(index),
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
-                color: (_selectedScreenIndex == 1 || _selectedScreenIndex == 2)
-                    ? white
-                    : blue,
               ),
               title: Text(
                 'List',
-                style: TextStyle(
-                    color:
-                        (_selectedScreenIndex == 1 || _selectedScreenIndex == 2)
-                            ? white
-                            : blue),
               ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.search,
-                color: (_selectedScreenIndex == 0 || _selectedScreenIndex == 2)
-                    ? white
-                    : blue,
               ),
               title: Text(
                 'Search',
-                style: TextStyle(
-                    color:
-                        (_selectedScreenIndex == 0 || _selectedScreenIndex == 2)
-                            ? white
-                            : blue),
               ),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.add,
-                color: (_selectedScreenIndex == 0 || _selectedScreenIndex == 1)
-                    ? white
-                    : blue,
               ),
               title: Text(
                 'Add',
-                style: TextStyle(
-                    color:
-                        (_selectedScreenIndex == 0 || _selectedScreenIndex == 1)
-                            ? white
-                            : blue),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.calendar_today,
+              ),
+              title: Text(
+                'Planner',
               ),
             ),
           ],
-          onTap: (index) => _selectScreen(index),
         ),
         appBar: AppBar(
           centerTitle: false,
