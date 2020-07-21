@@ -120,7 +120,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 elevation: 5.0,
                 context: context,
                 builder: (context) {
-                  String dateString = DateFormat('MM-dd-yyyy').format(date);
+                  String dateString = DateFormat('MM/dd/yyyy').format(date);
                   return Container(
                     child: Column(
                       children: <Widget>[
@@ -131,9 +131,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
                         RaisedButton(
                           child: Text('Add'),
                           onPressed: () {
-                            print('added');
-                            setState(() {
+                            this.setState(() {
                               addEvent(date, _editingController.text);
+                              items.add(_editingController.text);
                             });
                             _editingController.clear();
                             Navigator.pop(context);
