@@ -10,23 +10,29 @@ class PlannerScreen extends StatefulWidget {
 }
 
 class _PlannerScreenState extends State<PlannerScreen> {
+  List items = [];
+  DateTime _currentDate = DateTime.now();
+  TextEditingController _editingController = TextEditingController();
+  CalendarCarousel calendarCarousel;
+
   addEvent(DateTime date, String title) {
-    _eventList.add(
-      date,
-      Event(
-        date: date,
-        title: title,
-        dot: Container(
-          margin: EdgeInsets.symmetric(horizontal: 1.0),
-          color: Colors.red,
-          height: 5.0,
-          width: 5.0,
-        ),
+    Event ev = Event(
+      date: date,
+      title: title,
+      dot: Container(
+        margin: EdgeInsets.symmetric(horizontal: 1.0),
+        color: Colors.red,
+        height: 5.0,
+        width: 5.0,
       ),
     );
+    _eventList.add(
+      date,
+      ev,
+    );
+    items.add(ev.title);
   }
 
-  DateTime _currentDate = DateTime.now();
   EventList<Event> _eventList = EventList(events: {
     DateTime(2020, 7, 21): [
       Event(
@@ -42,7 +48,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       ),
       Event(
         date: DateTime(2020, 7, 21),
-        title: 'Tilapia',
+        title: 'Chicken',
         // icon: _eventIcon,
         dot: Container(
           margin: EdgeInsets.symmetric(horizontal: 1.0),
@@ -65,9 +71,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
     ],
   });
 
-  List items = [];
-  TextEditingController _editingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,24 +80,31 @@ class _PlannerScreenState extends State<PlannerScreen> {
             borderRadius: BorderRadius.circular(35),
             color: Colors.amberAccent,
           ),
-          child: CalendarCarousel<Event>(
+          child: calendarCarousel = CalendarCarousel<Event>(
             onDayPressed: (DateTime date, List<Event> events) {
               items.clear();
-              this.setState(() {
+              setState(() {
                 _currentDate = date;
                 events.forEach((event) => items.add(event.title));
               });
             },
+            prevDaysTextStyle: TextStyle(
+              fontSize: 16,
+              color: Colors.pinkAccent,
+            ),
+            inactiveDaysTextStyle: TextStyle(
+              color: Colors.tealAccent,
+              fontSize: 16,
+            ),
+            showOnlyCurrentMonthDate: true,
             weekendTextStyle: null,
             thisMonthDayBorderColor: Colors.grey,
-//          weekDays: null, /// for pass null when you do not want to render weekDays
-            headerText: 'Weekly Planner',
+            headerText:
+                '${DateFormat.LLLL().format(_currentDate)} Weekly Planner',
             weekFormat: true,
             markedDatesMap: _eventList,
             height: 200.0,
-            // selectedDateTime: _currentDate2,
             showIconBehindDayText: true,
-//          daysHaveCircularBorder: false, /// null for not rendering any border, true for circular border, false for rectangular border
             customGridViewPhysics: NeverScrollableScrollPhysics(),
             markedDateShowIcon: true,
             markedDateIconMaxShown: 1,
@@ -111,64 +121,71 @@ class _PlannerScreenState extends State<PlannerScreen> {
             maxSelectedDate: _currentDate.add(Duration(days: 360)),
             todayButtonColor: Colors.transparent,
             todayBorderColor: Colors.red,
-            markedDateMoreShowTotal:
-                true, // null for not showing hidden events indicator
+            markedDateMoreShowTotal: true,
             markedDateIconMargin: 9,
             markedDateIconOffset: 3,
             onDayLongPressed: (DateTime date) {
-              showModalBottomSheet(
-                elevation: 5.0,
-                context: context,
-                builder: (context) {
-                  String dateString = DateFormat('MM/dd/yyyy').format(date);
-                  return Container(
-                    child: Column(
-                      children: <Widget>[
-                        Text('Enter a recipe for $dateString'),
-                        TextField(
-                          controller: _editingController,
-                        ),
-                        RaisedButton(
-                          child: Text('Add'),
-                          onPressed: () {
-                            this.setState(() {
-                              addEvent(date, _editingController.text);
-                              items.add(_editingController.text);
-                            });
-                            _editingController.clear();
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                }, //builder
-              ); // end showBottomSheet
+              setState(() {
+                _currentDate = date;
+                buildShowModalBottomSheet(context, _currentDate);
+              });
             },
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 18),
         Container(
           child: ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => Divider(
-                    color: white,
-                  ),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Center(
-                    child: Text(
-                      items[index] ?? ' ',
-                      style: TextStyle(
-                        color: white,
-                      ),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) => Divider(
+              color: white,
+            ),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return Container(
+                child: Center(
+                  child: Text(
+                    items[index] ?? ' ',
+                    style: TextStyle(
+                      color: white,
                     ),
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         ),
       ],
+    );
+  }
+
+  Future buildShowModalBottomSheet(BuildContext context, DateTime date) {
+    return showModalBottomSheet(
+      elevation: 5.0,
+      context: context,
+      builder: (context) {
+        String dateString = DateFormat('MM/dd/yyyy').format(date);
+        return Container(
+          child: Column(
+            children: <Widget>[
+              Text('Enter a recipe for $dateString'),
+              TextField(
+                controller: _editingController,
+              ),
+              RaisedButton(
+                child: Text('Add'),
+                onPressed: () {
+                  setState(() {
+                    addEvent(date, _editingController.text);
+                    // items.add(_editingController.text);
+                  });
+                  _editingController.clear();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      }, //builder
     );
   }
 }
