@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:recipe_writer/utils/colors.dart';
+// ignore: unused_import
+import 'package:recipe_writer/models/event.dart';
 
 class PlannerScreen extends StatefulWidget {
   @override
@@ -10,24 +12,29 @@ class PlannerScreen extends StatefulWidget {
 class _PlannerScreenState extends State<PlannerScreen> {
   addEvent(DateTime date, String title) {}
 
-  // DateTime _currentDate = DateTime.now();
-
   List _selectedEvents = [];
 
   Map<DateTime, List<dynamic>> _events = {
     DateTime(2020, 8, 5): [
       {'name': 'Apples', 'isDone': true},
+    ],
+    DateTime(2020, 8, 6): [
+      {'name': 'Broccoli', 'isDone': true},
+      {'name': 'Shrimp', 'isDone': true},
     ]
   };
   DateTime _selectedDay;
-  // TextEditinRgController _editingController = TextEditingController();
 
   void _handleNewDate(date) {
     setState(() {
       _selectedDay = date;
       _selectedEvents = _events[_selectedDay] ?? [];
     });
-    print(_selectedEvents);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -40,6 +47,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
             color: Colors.amberAccent,
           ),
           child: Calendar(
+            initialDate: DateTime.now(),
             startOnMonday: true,
             weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
             events: _events,
@@ -68,17 +76,21 @@ class _PlannerScreenState extends State<PlannerScreen> {
               child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      child: Text(
-                        _selectedEvents[index]['name'].toString(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: white,
+                    return Center(
+                      child: Container(
+                        child: Text(
+                          _selectedEvents[index]['name'].toString(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: white,
+                          ),
                         ),
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => Divider(),
+                  separatorBuilder: (context, index) => Divider(
+                        color: Colors.amberAccent,
+                      ),
                   itemCount: _selectedEvents.length),
             ),
           ),
