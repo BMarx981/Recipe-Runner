@@ -19,21 +19,22 @@ class _PlannerScreenState extends State<PlannerScreen> {
       {'name': 'Apples', 'isDone': true},
     ],
     DateTime(2020, 8, 6): [
-      {'name': 'Broccoli', 'isDone': true},
+      {'name': 'Broccoli', 'isDone': false},
       {'name': 'Shrimp', 'isDone': true},
     ]
   };
   DateTime _selectedDay;
 
-  void _handleNewDate(date) {
+  void _handleNewDate(DateTime date) {
     setState(() {
-      _selectedDay = date;
+      _selectedDay = DateTime(date.year, date.month, date.day);
       _selectedEvents = _events[_selectedDay] ?? [];
     });
   }
 
   @override
   void initState() {
+    _handleNewDate(DateTime.now());
     super.initState();
   }
 
@@ -51,8 +52,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
             startOnMonday: true,
             weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
             events: _events,
-            onRangeSelected: (range) =>
-                print("Range is ${range.from}, ${range.to}"),
             onDateSelected: (date) => _handleNewDate(date),
             isExpandable: true,
             eventDoneColor: Colors.green,
@@ -60,7 +59,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
             todayColor: Colors.blue,
             eventColor: Colors.grey,
             dayOfWeekStyle: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w800, fontSize: 11),
+              color: Colors.black,
+              fontWeight: FontWeight.w800,
+              fontSize: 11,
+            ),
           ),
         ),
         SizedBox(
@@ -73,7 +75,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
               decoration: BoxDecoration(
                 border: Border.all(color: white),
               ),
-              child: ListView.separated(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Center(
@@ -89,9 +93,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     );
                   },
                   separatorBuilder: (context, index) => Divider(
-                        color: Colors.amberAccent,
-                      ),
-                  itemCount: _selectedEvents.length),
+                    color: Colors.amberAccent,
+                  ),
+                  itemCount: _selectedEvents.length,
+                ),
+              ),
             ),
           ),
         )

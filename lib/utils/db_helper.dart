@@ -10,6 +10,12 @@ class DatabaseHelper {
   static final _databaseVersion = 1;
 
   static final table = 'recipes';
+  static final plannerTable = 'planner';
+
+  static final plannerId = 'id';
+  static final plannerDate = 'date';
+  static final plannerName = 'name';
+  static final plannerIsDone = 'isDone';
 
   static final columnId = 'id';
   static final columnName = 'name';
