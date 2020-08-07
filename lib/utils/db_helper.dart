@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
+import 'package:recipe_writer/models/event.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recipe_writer/models/recipe.dart';
@@ -62,6 +63,14 @@ class DatabaseHelper {
             $columnURL TEXT NOT NULL
           )
           ''');
+    await db.execute('''
+            CREATE TABLE $plannerTable (
+            $plannerId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $plannerDate TEXT NOT NULL,
+            $plannerName TEXT NOT NULL,
+            $plannerIsDone INTEGER, 
+          )
+          ''');
   }
 
   // Helper methods
@@ -74,6 +83,17 @@ class DatabaseHelper {
     int outputId = 0;
     try {
       outputId = await db.insert(table, row);
+    } catch (e) {
+      print('Error found with $e');
+    }
+    return outputId;
+  }
+
+  Future<int> insertEvent(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    int outputId = 0;
+    try {
+      outputId = await db.insert(plannerTable, row);
     } catch (e) {
       print('Error found with $e');
     }
@@ -130,5 +150,14 @@ class DatabaseHelper {
     };
 
     return await db.insert(table, row);
+  }
+
+  Future<int> insertPlannerRow(Event event) async {
+    Database db = await instance.database;
+    Map<String, dynamic> row = {
+      plannerId: event.id,
+      plannerDate: event.date,
+    };
+    return await db.insert(plannerTable, row);
   }
 }
