@@ -10,7 +10,16 @@ class PlannerScreen extends StatefulWidget {
 }
 
 class _PlannerScreenState extends State<PlannerScreen> {
-  addEvent(DateTime date, String title) {}
+  addEvent(DateTime date, String title) {
+    List list = _events[DateTime(date.year, date.month, date.day)];
+    if (list == null) {
+      _events[DateTime(date.year, date.month, date.day)] = [
+        {'name': title, 'isDone': false}
+      ];
+    } else {
+      list.add({'name': title, 'isDone': false});
+    }
+  }
 
   List _selectedEvents = [];
 
@@ -75,8 +84,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
               TextEditingController controller = TextEditingController();
 
               showModalBottomSheet(
-                  backgroundColor: Color(0x11FFFF54),
-                  // backgroundColor: Colors.amber,
+                  backgroundColor: Color(0x00FFFF54),
                   context: context,
                   builder: (context) {
                     return Container(
@@ -88,10 +96,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
                       child: Column(
                         children: <Widget>[
                           TextField(
+                            cursorColor: white,
                             decoration: InputDecoration(
                               hintStyle: TextStyle(
                                 color: white,
                               ),
+                              fillColor: white,
                               focusColor: white,
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -101,12 +111,34 @@ class _PlannerScreenState extends State<PlannerScreen> {
                               hintText: 'Enter a recipe',
                             ),
                             controller: controller,
-                          )
+                          ),
+                          SizedBox(height: 20),
+                          FlatButton(
+                            onPressed: () {
+                              addEvent(_selectedDay, controller.text);
+                              setState(() {});
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(35),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Submit',
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );
                   });
-              addEvent(_selectedDay, controller.text);
             },
           ),
         ),
