@@ -40,7 +40,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
@@ -68,35 +68,78 @@ class _PlannerScreenState extends State<PlannerScreen> {
         SizedBox(
           height: 18,
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: white),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Center(
-                      child: Container(
-                        child: Text(
-                          _selectedEvents[index]['name'].toString(),
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: white,
-                          ),
-                        ),
+        Center(
+          child: RaisedButton(
+            child: Text('Add'),
+            onPressed: () {
+              TextEditingController controller = TextEditingController();
+
+              showModalBottomSheet(
+                  backgroundColor: Color(0x11FFFF54),
+                  // backgroundColor: Colors.amber,
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35),
+                        color: red,
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: white,
+                              ),
+                              focusColor: white,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: white,
+                                ),
+                              ),
+                              hintText: 'Enter a recipe',
+                            ),
+                            controller: controller,
+                          )
+                        ],
                       ),
                     );
-                  },
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.amberAccent,
-                  ),
-                  itemCount: _selectedEvents.length,
+                  });
+              addEvent(_selectedDay, controller.text);
+            },
+          ),
+        ),
+        SizedBox(
+          height: 18,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: white),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Center(
+                    child: Container(
+                      child: Text(
+                        _selectedEvents[index]['name'].toString(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: white,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.amberAccent,
                 ),
+                itemCount: _selectedEvents.length,
               ),
             ),
           ),
