@@ -19,6 +19,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
     } else {
       list.add({'name': title, 'isDone': false});
     }
+    _handleNewDate(date);
   }
 
   List _selectedEvents = [];
@@ -147,34 +148,36 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: white),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: Container(
-                      child: Text(
-                        _selectedEvents[index]['name'].toString(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: white,
-                        ),
+          child: (_selectedEvents.length == 0)
+              ? SizedBox(height: 1)
+              : Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: white),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Center(
+                          child: Container(
+                            child: Text(
+                              _selectedEvents[index]['name'].toString(),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: white,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.amberAccent,
                       ),
+                      itemCount: _selectedEvents.length,
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.amberAccent,
+                  ),
                 ),
-                itemCount: _selectedEvents.length,
-              ),
-            ),
-          ),
         )
       ],
     );
