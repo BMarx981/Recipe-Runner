@@ -171,14 +171,14 @@ class _PlannerScreenState extends State<PlannerScreen> {
       builder: (context) {
         return AnimatedPadding(
           padding: MediaQuery.of(context).viewInsets,
-          duration: const Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 400),
           curve: Curves.decelerate,
           child: Container(
             padding: EdgeInsets.all(18),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
               ),
               color: red,
             ),
