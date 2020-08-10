@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:recipe_writer/utils/colors.dart';
-// ignore: unused_import
-import 'package:recipe_writer/models/event.dart';
 
 class PlannerScreen extends StatefulWidget {
   @override
