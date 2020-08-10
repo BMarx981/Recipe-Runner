@@ -165,76 +165,92 @@ class _PlannerScreenState extends State<PlannerScreen> {
   void modalSheet(BuildContext context) {
     TextEditingController controller = TextEditingController();
     showModalBottomSheet(
-        backgroundColor: Color(0x00FFFF54),
-        context: context,
-        builder: (context) {
-          return Container(
+      backgroundColor: Color(0x00FFFF54),
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AnimatedPadding(
+          padding: MediaQuery.of(context).viewInsets,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.decelerate,
+          child: Container(
             padding: EdgeInsets.all(18),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(35),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
               color: red,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: Wrap(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            style: TextStyle(
+                              color: white,
+                            ),
+                            cursorColor: white,
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: white,
+                              ),
+                              fillColor: white,
+                              focusColor: white,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: white,
+                                ),
+                              ),
+                              hintText: 'Enter a recipe',
+                            ),
+                            controller: controller,
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Icon(
+                            Icons.close,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
                     FlatButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.close,
-                        color: white,
+                      onPressed: () {
+                        addEvent(_selectedDay, controller.text);
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(35),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Submit',
+                          ),
+                        ),
                       ),
-                    )
+                    ),
                   ],
-                ),
-                TextField(
-                  autofocus: true,
-                  style: TextStyle(
-                    color: white,
-                  ),
-                  cursorColor: white,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(
-                      color: white,
-                    ),
-                    fillColor: white,
-                    focusColor: white,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: white,
-                      ),
-                    ),
-                    hintText: 'Enter a recipe',
-                  ),
-                  controller: controller,
-                ),
-                SizedBox(height: 20),
-                FlatButton(
-                  onPressed: () {
-                    addEvent(_selectedDay, controller.text);
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(35),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Submit',
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

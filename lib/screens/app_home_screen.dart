@@ -43,6 +43,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedScreenIndex,
           elevation: .9,
