@@ -157,6 +157,7 @@ class DatabaseHelper {
     Map<String, dynamic> row = {
       plannerId: event.id,
       plannerDate: event.date,
+      plannerName: processArrayRow(event.names),
     };
     return await db.insert(plannerTable, row);
   }

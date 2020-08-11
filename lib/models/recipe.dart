@@ -6,6 +6,7 @@ class Recipe {
   int id = 0;
   List<String> directions = [];
   List<String> ingredients = [];
+  String delimiter = '||?';
   Recipe({
     this.id,
     this.name,
@@ -44,11 +45,11 @@ class Recipe {
 
   String processArrayRow(List<String> list) {
     if (list.length == 0) return ' ';
-    return list.join('||?');
+    return list.join(delimiter);
   }
 
   List<String> splitMap(String input) {
-    List<String> list = input.split('||?');
+    List<String> list = input.split(delimiter);
     if (list[list.length - 1] == '') {
       list.removeLast();
     }
