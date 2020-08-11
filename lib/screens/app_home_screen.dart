@@ -27,6 +27,8 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           title = 'Search recipes';
         } else if (_selectedScreenIndex == 2) {
           title = 'Add a Recipe';
+        } else if (_selectedScreenIndex == 3) {
+          title = 'Planner';
         }
       },
     );
