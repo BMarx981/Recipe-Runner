@@ -1,10 +1,11 @@
 class Event {
-  final int id;
   final DateTime date;
-  final List<String> names;
   final String delimiter = '||?';
 
-  Event({this.id, this.date, this.names});
+  int id;
+  List<String> names;
+  bool isDone;
+  Event({this.id, this.date, this.names, this.isDone});
 
   Map<String, dynamic> toMapForDB() {
     var map = Map<String, dynamic>();
