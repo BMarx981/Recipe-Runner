@@ -100,12 +100,6 @@ class DatabaseHelper {
     return outputId;
   }
 
-  String processArrayRow(List<String> list) {
-    String str = '';
-    list.forEach((input) => str += input + delimiter);
-    return str;
-  }
-
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
@@ -139,26 +133,11 @@ class DatabaseHelper {
 
   Future<int> insertRow(Recipe recipe) async {
     Database db = await instance.database;
-    Map<String, dynamic> row = {
-      columnId: recipe.id,
-      columnName: recipe.name,
-      columnDescription: recipe.description,
-      columnDirections: processArrayRow(recipe.directions),
-      columnIngredients: processArrayRow(recipe.ingredients),
-      columnURL: recipe.url,
-      columnImageURL: recipe.imageURL,
-    };
-
-    return await db.insert(table, row);
+    return await db.insert(table, recipe.toMapForDb());
   }
 
   Future<int> insertPlannerRow(Event event) async {
     Database db = await instance.database;
-    Map<String, dynamic> row = {
-      plannerId: event.id,
-      plannerDate: event.date,
-      plannerName: processArrayRow(event.names),
-    };
-    return await db.insert(plannerTable, row);
+    return await db.insert(plannerTable, event.toMapForDB());
   }
 }
