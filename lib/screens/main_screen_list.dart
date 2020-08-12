@@ -17,13 +17,8 @@ class _MainScreenListState extends State<MainScreenList> {
   final List<Recipe> mainList = [];
 
   @override
-  void initState() {
-    
-    super.initState();
-  }
-  
-  @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<MainModel>(context, listen: false);
     return Scrollbar(
       child: ListView.builder(
         itemCount: Provider.of<MainModel>(context).recipes.length,
@@ -35,8 +30,7 @@ class _MainScreenListState extends State<MainScreenList> {
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return RecipeScreen(
-                      Provider.of<MainModel>(context, listen: false)
-                          .recipes[index],
+                      provider.recipes[index],
                     );
                   },
                 ),
@@ -46,18 +40,14 @@ class _MainScreenListState extends State<MainScreenList> {
               key: UniqueKey(),
               onDismissed: (direction) {
                 setState(() {
-                  dbh.delete(Provider.of<MainModel>(context, listen: false)
-                      .recipes[index]
-                      .id);
-                  Provider.of<MainModel>(context, listen: false)
-                      .recipes
-                      .removeAt(index);
+                  dbh.delete(provider.recipes[index].id);
+                  provider.recipes.removeAt(index);
                 });
               },
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: MainScreenTile(
-                  Provider.of<MainModel>(context, listen: false).recipes[index],
+                  provider.recipes[index],
                 ),
               ),
             ),
