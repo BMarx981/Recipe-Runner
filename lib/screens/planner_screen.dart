@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:recipe_writer/models/event.dart';
 import 'package:recipe_writer/utils/colors.dart';
+import 'package:recipe_writer/utils/db_helper.dart';
 
 class PlannerScreen extends StatefulWidget {
   @override
@@ -8,16 +10,24 @@ class PlannerScreen extends StatefulWidget {
 }
 
 class _PlannerScreenState extends State<PlannerScreen> {
-  addEvent(DateTime date, String title) {
-    List list = _events[DateTime(date.year, date.month, date.day)];
+  final dbHelper = DatabaseHelper.instance;
+
+  addEvent(DateTime date, String title) async {
+    DateTime formattedDate = DateTime(date.year, date.month, date.day);
+    List list = _events[formattedDate];
+    Event event = Event(date: formattedDate, isDone: false);
     if (list == null) {
-      _events[DateTime(date.year, date.month, date.day)] = [
+      event.names = [];
+      event.names.add(title);
+      _events[formattedDate] = [
         {'name': title, 'isDone': false}
       ];
     } else {
+      event.names.add(title);
       list.add({'name': title, 'isDone': false});
     }
     _handleNewDate(date);
+    event.id = await dbHelper.insertPlannerRow(event);
   }
 
   List _selectedEvents = [];
