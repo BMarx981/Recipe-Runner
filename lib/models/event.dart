@@ -1,11 +1,35 @@
 class Event {
-  final DateTime date;
   final String delimiter = '||?';
 
+  DateTime date;
   int id;
-  List<String> names;
-  bool isDone;
-  Event({this.id, this.date, this.names, this.isDone});
+  List<String> names = [];
+  bool isDone = false;
+  Event({this.id, this.date, this.names});
+
+  Event.fromDB(Map<String, dynamic> map) {
+    date = getDateTimeFromDB(map['date']);
+    names = getNamesFromDB(map['names']);
+    id = map['id'] ?? 0;
+  }
+
+  DateTime getDateTimeFromDB(String input) {
+    List<String> list = input?.split(delimiter) ?? [];
+    var d = DateTime.now();
+    if (list.isNotEmpty) {
+      return DateTime(
+        int.parse(list[0]),
+        int.parse(list[1]),
+        int.parse(list[2]),
+      );
+    } else {
+      return d;
+    }
+  }
+
+  List<String> getNamesFromDB(String input) {
+    return input?.split(delimiter) ?? [];
+  }
 
   Map<String, dynamic> toMapForDB() {
     var map = Map<String, dynamic>();
