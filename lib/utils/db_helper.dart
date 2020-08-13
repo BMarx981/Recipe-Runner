@@ -15,7 +15,7 @@ class DatabaseHelper {
 
   static final plannerId = 'id';
   static final plannerDate = 'date';
-  static final plannerName = 'name';
+  static final plannerName = 'names';
   static final plannerIsDone = 'isDone';
 
   static final columnId = 'id';
@@ -68,7 +68,7 @@ class DatabaseHelper {
             $plannerId INTEGER PRIMARY KEY AUTOINCREMENT,
             $plannerDate TEXT NOT NULL,
             $plannerName TEXT NOT NULL,
-            $plannerIsDone INTEGER, 
+            $plannerIsDone INTEGER,
           )
           ''');
   }
@@ -139,5 +139,16 @@ class DatabaseHelper {
   Future<int> insertPlannerRow(Event event) async {
     Database db = await instance.database;
     return await db.insert(plannerTable, event.toMapForDB());
+  }
+
+  Future<int> deletePlannerRow(int id) async {
+    Database db = await instance.database;
+    return await db
+        .delete(plannerTable, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<List<Map<String, dynamic>>> getPlannerTable() async {
+    Database db = await instance.database;
+    return await db.query(plannerTable);
   }
 }
