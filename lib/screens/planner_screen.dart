@@ -10,48 +10,53 @@ class PlannerScreen extends StatefulWidget {
 }
 
 class _PlannerScreenState extends State<PlannerScreen> {
-  final dbHelper = DatabaseHelper.instance;
+  final _dbHelper = DatabaseHelper.instance;
 
   addEvent(DateTime date, String title) async {
     DateTime formattedDate = DateTime(date.year, date.month, date.day);
     List list = _events[formattedDate];
-    Event event = Event(date: formattedDate, isDone: false);
+    Event event = Event(date: formattedDate);
+    event.names = [];
+    event.names.add(title);
     if (list == null) {
-      event.names = [];
-      event.names.add(title);
       _events[formattedDate] = [
         {'name': title, 'isDone': false}
       ];
     } else {
-      event.names.add(title);
       list.add({'name': title, 'isDone': false});
     }
     _handleNewDate(date);
-    event.id = await dbHelper.insertPlannerRow(event);
+    event.id = await _dbHelper.insertPlannerRow(event);
+  }
+
+  void populateEvents() async {
+    var temp = await _dbHelper.getPlannerTable();
+    temp.forEach((element) {
+      var eve = Event.fromDB(element);
+      List inputNames = [];
+      eve.names.forEach((name) {
+        Map<String, dynamic> inputMap = {'name': name, 'isDone': false};
+        inputNames.add(inputMap);
+      });
+      _events[eve.date] = inputNames;
+    });
   }
 
   List _selectedEvents = [];
 
-  Map<DateTime, List<dynamic>> _events = {
-    DateTime(2020, 8, 5): [
-      {'name': 'Apples', 'isDone': true},
-    ],
-    DateTime(2020, 8, 6): [
-      {'name': 'Broccoli', 'isDone': false},
-      {'name': 'Shrimp', 'isDone': true},
-    ]
-  };
+  Map<DateTime, List<dynamic>> _events = {};
   DateTime _selectedDay;
 
   void _handleNewDate(DateTime date) {
+    _selectedDay = DateTime(date.year, date.month, date.day);
     setState(() {
-      _selectedDay = DateTime(date.year, date.month, date.day);
       _selectedEvents = _events[_selectedDay] ?? [];
     });
   }
 
   @override
   void initState() {
+    populateEvents();
     _handleNewDate(DateTime.now());
     super.initState();
   }
@@ -139,6 +144,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
               onDismissed: (direction) {
                 // Remove the item from the data source.
                 setState(() {
+                  _dbHelper.deletePlannerRow(_selectedEvents[index]['id']);
                   _selectedEvents.removeAt(index);
                 });
                 Scaffold.of(context).showSnackBar(
