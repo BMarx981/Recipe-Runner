@@ -68,7 +68,7 @@ class DatabaseHelper {
             $plannerId INTEGER PRIMARY KEY AUTOINCREMENT,
             $plannerDate TEXT NOT NULL,
             $plannerName TEXT NOT NULL,
-            $plannerIsDone INTEGER,
+            $plannerIsDone INTEGER
           )
           ''');
   }
