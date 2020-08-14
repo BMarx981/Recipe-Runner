@@ -4,13 +4,15 @@ class Event {
   DateTime date;
   int id;
   List<String> names = [];
+  int isDoneDB = 0;
   bool isDone = false;
-  Event({this.id, this.date, this.names});
+  Event({this.id, this.date, this.names, this.isDone});
 
   Event.fromDB(Map<String, dynamic> map) {
     date = getDateTimeFromDB(map['date']);
     names = getNamesFromDB(map['names']);
     id = map['id'] ?? 0;
+    isDone = isDoneDB == 0;
   }
 
   DateTime getDateTimeFromDB(String input) {
@@ -36,6 +38,7 @@ class Event {
     map['id'] = id;
     map['date'] = '${date.year}$delimiter${date.month}$delimiter${date.day}';
     map['names'] = processNamesArray(names);
+    map['isDone'] = 0;
     return map;
   }
 
