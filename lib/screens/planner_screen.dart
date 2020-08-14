@@ -15,17 +15,18 @@ class _PlannerScreenState extends State<PlannerScreen> {
   addEvent(DateTime date, String title) async {
     DateTime formattedDate = DateTime(date.year, date.month, date.day);
     List list = _events[formattedDate];
-    Event event = Event(date: formattedDate);
+    Event event = Event(date: formattedDate, isDone: false);
     event.names = [];
     event.names.add(title);
     if (list == null) {
-      _events[formattedDate] = [
+      list = [
         {'name': title, 'isDone': false}
       ];
     } else {
       list.add({'name': title, 'isDone': false});
     }
     _handleNewDate(date);
+    event.isDoneDB = event.isDone ? 1 : 0;
     event.id = await _dbHelper.insertPlannerRow(event);
   }
 
@@ -40,6 +41,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       });
       _events[eve.date] = inputNames;
     });
+    _handleNewDate(DateTime.now());
   }
 
   List _selectedEvents = [];
@@ -48,17 +50,16 @@ class _PlannerScreenState extends State<PlannerScreen> {
   DateTime _selectedDay;
 
   void _handleNewDate(DateTime date) {
-    _selectedDay = DateTime(date.year, date.month, date.day);
     setState(() {
+      _selectedDay = DateTime(date.year, date.month, date.day);
       _selectedEvents = _events[_selectedDay] ?? [];
     });
   }
 
   @override
   void initState() {
-    populateEvents();
-    _handleNewDate(DateTime.now());
     super.initState();
+    populateEvents();
   }
 
   @override
@@ -138,34 +139,36 @@ class _PlannerScreenState extends State<PlannerScreen> {
         child: ListView.separated(
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return Dismissible(
-              key: Key(
-                  index.toString() + _selectedEvents[index]['name'].toString()),
-              onDismissed: (direction) {
-                // Remove the item from the data source.
-                setState(() {
-                  _dbHelper.deletePlannerRow(_selectedEvents[index]['id']);
-                  _selectedEvents.removeAt(index);
-                });
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        "${_selectedEvents[index]['name'].toString()} dismissed"),
-                  ),
-                );
-              },
-              child: Center(
-                child: Container(
-                  child: Text(
-                    _selectedEvents[index]['name'].toString(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: white,
+            var element = _selectedEvents[index];
+            return (_selectedEvents.length == 0)
+                ? SizedBox(height: 1)
+                : Dismissible(
+                    key: Key(index.toString() + element['name'].toString()),
+                    onDismissed: (direction) {
+                      // Remove the item from the data source.
+                      setState(() {
+                        _dbHelper.deletePlannerRow(element['id']);
+                        _selectedEvents.removeAt(index);
+                      });
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text("${element['name'].toString()} dismissed"),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: Container(
+                        child: Text(
+                          element['name'].toString(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            );
+                  );
           },
           separatorBuilder: (context, index) => Divider(
             color: Colors.amberAccent,
