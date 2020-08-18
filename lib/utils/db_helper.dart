@@ -15,7 +15,7 @@ class DatabaseHelper {
 
   static final plannerId = 'id';
   static final plannerDate = 'date';
-  static final plannerName = 'names';
+  static final plannerName = 'name';
   static final plannerIsDone = 'isDone';
 
   static final columnId = 'id';
