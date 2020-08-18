@@ -12,42 +12,53 @@ class PlannerScreen extends StatefulWidget {
 class _PlannerScreenState extends State<PlannerScreen> {
   final _dbHelper = DatabaseHelper.instance;
 
-  addEvent(DateTime date, String title) async {
-    DateTime formattedDate = DateTime(date.year, date.month, date.day);
-    List list = _events[formattedDate];
-    Event event = Event(date: formattedDate, isDone: false);
-    event.names = [];
-    event.names.add(title);
-    if (list == null) {
-      list = [
-        {'name': title, 'isDone': false}
-      ];
-    } else {
-      list.add({'name': title, 'isDone': false});
-    }
-    _handleNewDate(date);
-    event.isDoneDB = event.isDone ? 1 : 0;
-    event.id = await _dbHelper.insertPlannerRow(event);
-  }
-
-  void populateEvents() async {
-    var temp = await _dbHelper.getPlannerTable();
-    temp.forEach((element) {
-      var eve = Event.fromDB(element);
-      List inputNames = [];
-      eve.names.forEach((name) {
-        Map<String, dynamic> inputMap = {'name': name, 'isDone': false};
-        inputNames.add(inputMap);
-      });
-      _events[eve.date] = inputNames;
-    });
-    _handleNewDate(DateTime.now());
-  }
-
   List _selectedEvents = [];
 
   Map<DateTime, List<dynamic>> _events = {};
   DateTime _selectedDay;
+
+  addEvent(DateTime date, String title) {
+    DateTime formattedDate = getFormattedDate(date);
+    List list = _events[formattedDate];
+    if (list == null) {
+      list = [
+        {'name': title, 'isDone': false}
+      ];
+      _events[formattedDate] = list;
+    } else {
+      _events[formattedDate].add({'name': title, 'isDone': false});
+    }
+    _addEventToDB(date, title);
+    _handleNewDate(date);
+  }
+
+  _addEventToDB(DateTime date, String title) async {
+    DateTime formattedDate = getFormattedDate(date);
+    Event event = Event(date: formattedDate, isDone: false);
+    event.name = title;
+    event.isDoneDB = event.isDone ? 1 : 0;
+    event.id = await _dbHelper.insertPlannerRow(event);
+  }
+
+  DateTime getFormattedDate(DateTime input) {
+    return DateTime(input.year, input.month, input.day);
+  }
+
+  Future populateEvents() async {
+    var table = await _dbHelper.getPlannerTable();
+    table.forEach((element) => print(element));
+    table.forEach((row) {
+      var eve = Event.fromDB(row);
+      Map<String, dynamic> inputMap = {'name': eve.name, 'isDone': false};
+      if (_events[eve.date] == null) {
+        _events[eve.date] = [];
+        _events[eve.date].add(inputMap);
+      } else {
+        _events[eve.date].add(inputMap);
+      }
+    });
+    _handleNewDate(DateTime.now());
+  }
 
   void _handleNewDate(DateTime date) {
     setState(() {
@@ -143,7 +154,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
             return (_selectedEvents.length == 0)
                 ? SizedBox(height: 1)
                 : Dismissible(
-                    key: Key(index.toString() + element['name'].toString()),
+                    key: Key(
+                        DateTime.now().toString() + element['name'].toString()),
                     onDismissed: (direction) {
                       // Remove the item from the data source.
                       setState(() {
