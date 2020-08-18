@@ -30,7 +30,6 @@ class Event {
   }
 
   Map<String, dynamic> toMapForDB() {
-    print('toMapforDb Name: $name');
     var map = Map<String, dynamic>();
     map['id'] = id;
     map['date'] = '${date.year}$delimiter${date.month}$delimiter${date.day}';

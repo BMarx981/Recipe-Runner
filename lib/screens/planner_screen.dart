@@ -46,7 +46,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   Future populateEvents() async {
     var table = await _dbHelper.getPlannerTable();
-    table.forEach((element) => print(element));
     table.forEach((row) {
       var eve = Event.fromDB(row);
       Map<String, dynamic> inputMap = {'name': eve.name, 'isDone': false};
