@@ -33,7 +33,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            print('Pressed directinos');
+            print('Pressed ingredients');
             //TODO: Say the Directions out loud
           },
           onLongPress: () {
@@ -61,16 +61,19 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 color: red,
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              child: RecipeList(
-                dataList: widget.recipe.ingredients,
-                title: 'ingredients',
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RecipeList(
+                  dataList: widget.recipe.ingredients,
+                  title: 'ingredients',
+                ),
               ),
             ),
           ),
         ),
         GestureDetector(
           onTap: () {
-            print('Pressed ingredients');
+            print('Pressed directions');
             //TODO: Say the ingredients out loud
           },
           onLongPress: () {
@@ -92,8 +95,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   border: Border.all(),
                   borderRadius: BorderRadius.circular(25.0),
                   color: Color(0xFFCDAA3B)),
-              child: RecipeList(
-                  dataList: widget.recipe.directions, title: 'directions'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RecipeList(
+                    dataList: widget.recipe.directions, title: 'directions'),
+              ),
             ),
           ),
         ),
