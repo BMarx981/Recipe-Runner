@@ -32,6 +32,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
       controller: _controller,
       children: <Widget>[
         GestureDetector(
+          onTap: () {
+            print('Pressed directinos');
+            //TODO: Say the Directions out loud
+          },
           onLongPress: () {
             Navigator.push(
               context,
@@ -65,6 +69,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ),
         ),
         GestureDetector(
+          onTap: () {
+            print('Pressed ingredients');
+            //TODO: Say the ingredients out loud
+          },
           onLongPress: () {
             Navigator.push(
               context,
