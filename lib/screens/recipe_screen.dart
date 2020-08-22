@@ -22,7 +22,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
     viewportFraction: 0.75,
   );
   final FlutterTts tts = FlutterTts();
-  bool stopPlaying = false;
+  bool playing = false;
 
   @override
   void dispose() {
@@ -36,6 +36,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   void _stop() async {
     await tts.stop();
+    playing = !playing;
+  }
+
+  void _playList(List<String> list) {
+    list.forEach((element) {
+      _speak(element);
+    });
   }
 
   PageView _buildPageView() {
@@ -44,12 +51,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            if (stopPlaying) {
-              widget.recipe.ingredients.forEach((element) {
-                _stop();
-                stopPlaying = !stopPlaying;
-                _speak(element);
-              });
+            if (playing) {
+              _stop();
+            } else {
+              playing = !playing;
+              _playList(widget.recipe.ingredients);
             }
           },
           onLongPress: () {
@@ -89,7 +95,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ),
         GestureDetector(
           onTap: () {
-            widget.recipe.directions.forEach((element) => _speak(element));
+            if (playing) {
+              _stop();
+            } else {
+              playing = !playing;
+              _playList(widget.recipe.directions);
+            }
           },
           onLongPress: () {
             Navigator.push(
