@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:recipe_writer/screens/camera_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
@@ -20,11 +21,21 @@ class _RecipeScreenState extends State<RecipeScreen> {
     initialPage: 0,
     viewportFraction: 0.75,
   );
+  final FlutterTts tts = FlutterTts();
+  bool stopPlaying = false;
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _speak(String sentance) async {
+    await tts.speak(sentance);
+  }
+
+  void _stop() async {
+    await tts.stop();
   }
 
   PageView _buildPageView() {
@@ -33,8 +44,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            print('Pressed ingredients');
-            //TODO: Say the Directions out loud
+            if (stopPlaying) {
+              widget.recipe.ingredients.forEach((element) {
+                _stop();
+                stopPlaying = !stopPlaying;
+                _speak(element);
+              });
+            }
           },
           onLongPress: () {
             Navigator.push(
@@ -73,8 +89,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ),
         GestureDetector(
           onTap: () {
-            print('Pressed directions');
-            //TODO: Say the ingredients out loud
+            widget.recipe.directions.forEach((element) => _speak(element));
           },
           onLongPress: () {
             Navigator.push(
