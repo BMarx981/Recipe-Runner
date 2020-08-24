@@ -1,12 +1,138 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:recipe_writer/models/recipe.dart';
+import 'package:recipe_writer/screens/camera_screen.dart';
 import 'package:recipe_writer/utils/colors.dart';
 import 'edit_recipe_screen.dart';
 
-class RecipeScreen extends StatelessWidget {
+class RecipeScreen extends StatefulWidget {
   final Recipe recipe;
   RecipeScreen(this.recipe);
+
+  @override
+  _RecipeScreenState createState() => _RecipeScreenState();
+}
+
+class _RecipeScreenState extends State<RecipeScreen> {
+  PageController _controller = PageController(
+    initialPage: 0,
+    viewportFraction: 0.75,
+  );
+  final FlutterTts tts = FlutterTts();
+  bool playing = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _speak(String sentance) async {
+    await tts.speak(sentance);
+  }
+
+  void _stop() async {
+    await tts.stop();
+    playing = !playing;
+  }
+
+  void _playList(List<String> list) {
+    list.forEach((element) {
+      _speak(element);
+    });
+  }
+
+  PageView _buildPageView() {
+    return PageView(
+      controller: _controller,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            if (playing) {
+              _stop();
+            } else {
+              playing = !playing;
+              _playList(widget.recipe.ingredients);
+            }
+          },
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EditRecipeScreen(
+                    recipe: widget?.recipe ??
+                        Recipe(
+                          name: 'Edit name',
+                          ingredients: ['a'],
+                          directions: ['a'],
+                        ),
+                  );
+                },
+              ),
+            ).then((value) => setState(() {}));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(),
+                color: red,
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RecipeList(
+                  dataList: widget.recipe.ingredients,
+                  title: 'ingredients',
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            if (playing) {
+              _stop();
+            } else {
+              playing = !playing;
+              _playList(widget.recipe.directions);
+            }
+          },
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EditRecipeScreen(
+                    recipe: widget.recipe,
+                  );
+                },
+              ),
+            ).then((value) => setState(() {}));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: Color(0xFFCDAA3B)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RecipeList(
+                    dataList: widget.recipe.directions, title: 'directions'),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,9 +150,7 @@ class RecipeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                      onTap: () => Navigator.pop(context),
                       child: Container(
                         child: Icon(
                           Icons.arrow_back_ios,
@@ -41,10 +165,12 @@ class RecipeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return EditRecipeScreen();
+                              return EditRecipeScreen(
+                                recipe: widget.recipe,
+                              );
                             },
                           ),
-                        );
+                        ).then((value) => setState(() {}));
                       },
                       child: Container(
                         padding: EdgeInsets.only(right: 6),
@@ -60,62 +186,189 @@ class RecipeScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 8),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        (recipe.imageURL == '🍔')
-                            ? Expanded(
-                                child: Text(
-                                  '🍔',
-                                  style: TextStyle(fontSize: 28),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          (widget.recipe.imageURL == '🍔')
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 38,
+                                      width: 38,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(35),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      color: Colors.limeAccent,
+                                      icon: Icon(
+                                        Icons.photo_camera,
+                                        size: 28,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CameraScreen(
+                                                recipe: widget.recipe),
+                                          ),
+                                        ).then((v) => setState(() {}));
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : GestureDetector(
+                                  onTap: () =>
+                                      _showDialog(widget.recipe.imageURL),
+                                  child: CircleAvatar(
+                                    backgroundImage: (widget.recipe.imageURL
+                                            .startsWith('http'))
+                                        ? NetworkImage(widget.recipe.imageURL)
+                                        : getFileImage(widget.recipe.imageURL),
+                                    backgroundColor: textGrey,
+                                    maxRadius: 30,
+                                  ),
                                 ),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(recipe.imageURL),
-                                backgroundColor: textGrey,
-                                maxRadius: 35,
+                          SizedBox(width: 18),
+                          Expanded(
+                            child: Text(
+                              widget.recipe.name,
+                              style: TextStyle(
+                                fontSize: 28,
                               ),
-                        SizedBox(width: 18),
-                        Expanded(
-                          child: Text(
-                            recipe.name,
-                            style: TextStyle(
-                              fontSize: 20,
+                              maxLines: 2,
                             ),
-                            maxLines: 2,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: Text(
-                              '${index + 1}. ${recipe.ingredients[index]}',
-                              style: TextStyle(fontSize: 18, color: white)),
-                        );
-                      },
-                      itemCount: recipe.ingredients.length,
-                    )),
-                  ),
+                  child: _buildPageView(),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  FileImage getFileImage(String input) {
+    FileImage fi;
+    try {
+      File f = File(input);
+      fi = FileImage(f);
+    } catch (e) {
+      print(e);
+    }
+    return fi;
+  }
+
+  void _showDialog(image) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            child: Center(
+              child: Image(
+                image: (image.startsWith('http'))
+                    ? NetworkImage(image)
+                    : getFileImage(image),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class RecipeList extends StatelessWidget {
+  const RecipeList({
+    Key key,
+    this.dataList,
+    @required this.title,
+  }) : super(key: key);
+
+  final List<String> dataList;
+  final String title;
+
+  Widget _buildFirstElement(String title) {
+    TextStyle titleStyles = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 28,
+      color: white,
+    );
+    return Container(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title.toUpperCase(),
+            style: titleStyles,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 8),
+      child: (dataList != null)
+          ? Column(
+              children: <Widget>[
+                _buildFirstElement(title),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: dataList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Container(
+                          child: Text(
+                            '${index + 1}. ${dataList[index]}',
+                            style: TextStyle(fontSize: 20, color: white),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              children: <Widget>[
+                _buildFirstElement(title),
+                Text(
+                  'No $title added yet.',
+                  style: TextStyle(fontSize: 18, color: white),
+                ),
+              ],
+            ),
     );
   }
 }

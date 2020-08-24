@@ -3,14 +3,17 @@ import 'package:recipe_writer/utils/colors.dart';
 import 'package:recipe_writer/models/recipe.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_writer/models/main_model.dart';
+import 'package:recipe_writer/utils/db_helper.dart';
 
 class RecipeTile extends StatelessWidget {
-  const RecipeTile({
+  RecipeTile({
     Key key,
     @required this.rec,
   }) : super(key: key);
 
   final Recipe rec;
+
+  final dbHelper = DatabaseHelper.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ class RecipeTile extends StatelessWidget {
                   Provider.of<MainModel>(context, listen: false)
                       .recipes
                       .add(rec);
+                  dbHelper.insert(rec.toMapForDb());
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${rec.name} recipe added'),

@@ -35,7 +35,11 @@ end
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> dev
   # Flutter Pod
 
   copied_flutter_dir = File.join(__dir__, 'Flutter')
@@ -78,9 +82,12 @@ target 'Runner' do
   end
 end
 
+<<<<<<< HEAD
 # Prevent Cocoapods from embedding a second Flutter framework and causing an error with the new Xcode build system.
 install! 'cocoapods', :disable_input_output_paths => true
 
+=======
+>>>>>>> dev
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
