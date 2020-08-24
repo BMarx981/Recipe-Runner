@@ -29,10 +29,6 @@ class MainScreenTile extends StatelessWidget {
                     backgroundColor: textGrey,
                     maxRadius: 35,
                   ),
-<<<<<<< HEAD
-            SizedBox(width: 8),
-            Expanded(
-=======
                 )
               : SizedBox(
                   width: 75,
@@ -50,7 +46,6 @@ class MainScreenTile extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
->>>>>>> dev
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

@@ -26,13 +26,9 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         } else if (_selectedScreenIndex == 1) {
           title = 'Search recipes';
         } else if (_selectedScreenIndex == 2) {
-<<<<<<< HEAD
-          title = 'Add a recipe';
-=======
           title = 'Add a Recipe';
         } else if (_selectedScreenIndex == 3) {
           title = 'Planner';
->>>>>>> dev
         }
       },
     );
@@ -104,25 +100,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
               fontSize: 34,
             ),
           ),
-<<<<<<< HEAD
-        ],
-        onTap: (index) => _selectScreen(index),
-      ),
-      appBar: AppBar(
-        centerTitle: false,
-        elevation: 0.0,
-        backgroundColor: red,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 4.0),
-          child: Text(title),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings, color: white),
-            onPressed: () {
-              openSettings(context);
-            },
-=======
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.settings, color: white),
@@ -137,7 +114,6 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           child: Padding(
             padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
             child: _screenList[_selectedScreenIndex],
->>>>>>> dev
           ),
         ),
       ),
