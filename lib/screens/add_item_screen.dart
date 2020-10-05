@@ -184,7 +184,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
         description: descController.text,
         ingredients: ingredients,
         directions: directions,
-        url: urlController.text);
+        url: urlController.text,
+        imageURL: '');
     recipe.imageURL = localImageUrl;
     Provider.of<MainModel>(context, listen: false).addRecipe(recipe);
     dbHelper.insertRow(recipe);
