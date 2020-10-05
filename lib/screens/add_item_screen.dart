@@ -150,11 +150,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ),
                 onPressed: () {
                   Recipe recipe = Recipe(
-                      name: titleController.text,
-                      description: descController.text,
-                      ingredients: ingredients,
-                      directions: directions,
-                      url: urlController.text);
+                    name: titleController.text,
+                    description: descController.text,
+                    ingredients: ingredients,
+                    directions: directions,
+                    url: urlController.text,
+                    imageURL: '',
+                  );
                   Provider.of<MainModel>(context, listen: false)
                       .addRecipe(recipe);
                   Scaffold.of(context).showSnackBar(
