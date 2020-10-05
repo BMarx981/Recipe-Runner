@@ -8,7 +8,10 @@
 .buildlog/
 .history
 .svn/
-*pubspeck.lock
+*pubspec.lock
+*ios/Podfile.lock
+*ios/Flutter/.last_build_id
+*.gitignore
 
 # IntelliJ related
 *.iml
