@@ -38,50 +38,52 @@ class _SearchScreenState extends State<SearchScreen> {
         );
   }
 
-  List<String> extractDirections(List list) {
-    List<String> steps = [];
-    list.forEach((obj) {
-      List<dynamic> stepsData = obj['steps'];
-      stepsData.forEach((step) {
-        steps.add(step['step']);
-      });
-    });
-//    debugPrint('getNetworkData ${steps.toString()}', wrapWidth: 1000);
-    return steps;
-  }
+//   List<String> extractDirections(List list) {
+//     List<String> steps = [];
+//     list.forEach((obj) {
+//       List<dynamic> stepsData = obj['steps'];
+//       stepsData.forEach((step) {
+//         steps.add(step['step']);
+//       });
+//     });
+// //    debugPrint('getNetworkData ${steps.toString()}', wrapWidth: 1000);
+//     return steps;
+//   }
 
-  List<String> extractIngredients(Map<String, dynamic> data) {
-    List<String> newList = [];
-    data.keys.toList().forEach((ingredient) {
-      List<dynamic> objList = data[ingredient];
-      objList.forEach((obj) {
-        Map<String, dynamic> amountObj = obj['amount'];
-        Map<String, dynamic> metricObj = amountObj['us'];
-        String amount =
-            '${metricObj['value']} ${metricObj['unit']} ${obj['name']}';
-        newList.add(amount);
-      });
-    });
-    return newList;
-  }
+  // List<String> extractIngredients(Map<String, dynamic> data) {
+  //   List<String> newList = [];
+  //   data.keys.toList().forEach((ingredient) {
+  //     List<dynamic> objList = data[ingredient];
+  //     objList.forEach((obj) {
+  //       Map<String, dynamic> amountObj = obj['amount'];
+  //       Map<String, dynamic> metricObj = amountObj['us'];
+  //       String amount =
+  //           '${metricObj['value']} ${metricObj['unit']} ${obj['name']}';
+  //       newList.add(amount);
+  //     });
+  //   });
+  //   return newList;
+  // }
 
   getNetworkData(String query) async {
     Networking n = Networking();
     respMap = await n.getRequest(query);
-    List<dynamic> results = respMap['results'];
+    List<dynamic> results = respMap['receipes'];
     results.forEach((result) async {
-      dynamic id = result['id'];
-      List<String> directions =
-          extractDirections(await n.getDirections(id.toString()));
-      Map<String, dynamic> ingredientsData =
-          await n.getIngredients(id.toString());
-      List<String> ingredients = extractIngredients(ingredientsData);
+      List<String> directs = n.parseDirections(result['directions']);
+      List<String> ingreds = n.parseIngredients(result['ingredients']);
+      // List<String> directions =
+      //     extractDirections(await n.getDirections(id.toString()));
+      // Map<String, dynamic> ingredientsData =
+      //     await n.getIngredients(id.toString());
+      // List<String> ingredients = extractIngredients(ingredientsData);
       Recipe recipe = Recipe(
         id: math.Random().nextInt(100000000),
-        name: result['title'],
-        imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
-        ingredients: ingredients,
-        directions: directions,
+        name: result['name'],
+        url: result['url'],
+        // imageURL: 'https://spoonacular.com/recipeImages/${result['image']}',
+        ingredients: ingreds,
+        directions: directs,
       );
       _searchedRecipes.add(recipe);
       setState(() => _searchedList.insert(0, SearchResultTile(rec: recipe)));
