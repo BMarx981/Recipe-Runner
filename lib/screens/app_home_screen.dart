@@ -59,33 +59,25 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
               icon: Icon(
                 Icons.list,
               ),
-              title: Text(
-                'List',
-              ),
+              label: 'List',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.search,
               ),
-              title: Text(
-                'Search',
-              ),
+              label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.add,
               ),
-              title: Text(
-                'Add',
-              ),
+              label: 'Add',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.calendar_today,
               ),
-              title: Text(
-                'Planner',
-              ),
+              label: 'Planner',
             ),
           ],
         ),
