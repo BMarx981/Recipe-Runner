@@ -45,14 +45,12 @@ class _SearchScreenState extends State<SearchScreen> {
     respMap = await n.getRequest(query);
     List<dynamic> results = respMap['recipes'];
     results.forEach((result) async {
-      List<String> dir = List<String>.from(result['directions']);
-      List<String> ing = List<String>.from(result['ingredients']);
       Recipe recipe = Recipe(
         id: math.Random().nextInt(100000000),
         name: result['name'],
         url: result['url'],
-        ingredients: ing,
-        directions: dir,
+        ingredients: List<String>.from(result['ingredients']),
+        directions: List<String>.from(result['directions']),
       );
       _searchedRecipes.add(recipe);
       setState(() => _searchedList.insert(0, SearchResultTile(rec: recipe)));
