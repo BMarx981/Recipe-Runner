@@ -49,6 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
         id: math.Random().nextInt(100000000),
         name: result['name'],
         url: result['url'],
+        imageURL: result['imageurl'],
         ingredients: List<String>.from(result['ingredients']),
         directions: List<String>.from(result['directions']),
       );
