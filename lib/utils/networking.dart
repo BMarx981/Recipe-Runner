@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Networking {
-  String local = 'http://localhost:8080/?q=';
+  String local = 'https://coboserver.ue.r.appspot.com/?q=';
 
   Future<Map<String, dynamic>> getRequest(String query) async {
     String apiCall = '$local$query';
